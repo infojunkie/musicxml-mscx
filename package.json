@@ -1,0 +1,14 @@
+{
+  "name": "musicxml-mscx",
+  "version": "0.0.0",
+  "description": "MuseScore to MusicXML converter and back.",
+  "author": "Karim Ratib <karim.ratib@gmail.com> (https://github.com/infojunkie)",
+  "license": "GPL-3.0-only",
+  "dependencies": {
+    "saxon-js": "^2.6.0",
+    "xslt3": "^2.6.0"
+  },
+  "scripts": {
+    "convert:mscx": "run() { xslt3 -xsl:src/mscx.xsl -s:\"$1\" ${@:2}; }; run"
+  }
+}

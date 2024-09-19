@@ -1,0 +1,6 @@
+node_modules
+test/data/output/*
+cache/*
+!.gitkeep
+*.log
+instruments.xml
