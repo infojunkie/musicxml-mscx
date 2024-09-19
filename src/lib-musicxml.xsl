@@ -139,22 +139,6 @@
   </xsl:function>
 
   <!--
-    Convert measurements to mm/inch.
-  -->
-  <xsl:function name="musicxml:tenthsToMillimeters" as="xs:double">
-    <xsl:param name="value" as="xs:double"/>
-    <xsl:param name="scalingMillimeters" as="xs:double"/>
-    <xsl:param name="scalingTenths" as="xs:double"/>
-    <xsl:sequence select="$value * $scalingMillimeters div $scalingTenths"/>
-  </xsl:function>
-  <xsl:function name="musicxml:tenthsToInches" as="xs:double">
-    <xsl:param name="value" as="xs:double"/>
-    <xsl:param name="scalingMillimeters" as="xs:double"/>
-    <xsl:param name="scalingTenths" as="xs:double"/>
-    <xsl:sequence select="musicxml:tenthsToMillimeters($value, $scalingMillimeters, $scalingTenths) div 25.4"/>
-  </xsl:function>
-
-  <!--
     Debugging information.
   -->
   <!-- <xsl:template match="@*|node()">
