@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  Convert MuseScore mscx to MusicXML.
+  Convert MusicXML to MuseScore mscx.
 -->
 
 <xsl:stylesheet
