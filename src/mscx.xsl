@@ -177,15 +177,52 @@
         </LayoutBreak>
       </xsl:if>
       <voice>
-        <xsl:if test="attributes/time">
-          <TimeSig>
-            <sigN><xsl:value-of select="attributes/time/beats"/></sigN>
-            <sigD><xsl:value-of select="attributes/time/beat-type"/></sigD>
-          </TimeSig>
-        </xsl:if>
+        <xsl:apply-templates select="attributes/clef"/>
+        <xsl:apply-templates select="attributes/key"/>
+        <xsl:apply-templates select="attributes/time"/>
         <xsl:apply-templates select="note"/>
       </voice>
     </Measure>
+  </xsl:template>
+
+  <!--
+    Template: Clef.
+  -->
+  <xsl:template match="clef">
+    <xsl:variable name="clefType">
+      <xsl:choose>
+        <xsl:when test="sign='jianpu'"><xsl:message>[clef] Unsupported sign 'jianpu'.</xsl:message></xsl:when>
+        <xsl:when test="sign='percussion'">PERC</xsl:when>
+        <xsl:when test="sign='none'">G</xsl:when>
+        <xsl:when test="sign='C'"><xsl:value-of select="sign"/><xsl:value-of select="if (line) then line else 3"/></xsl:when>
+        <xsl:when test="clef-octave-change=1"><xsl:value-of select="sign"/>8va</xsl:when>
+        <xsl:when test="clef-octave-change=-1"><xsl:value-of select="sign"/>8vb</xsl:when>
+        <xsl:otherwise><xsl:value-of select="sign"/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <Clef>
+      <concertClefType><xsl:value-of select="$clefType"/></concertClefType>
+      <transposingClefType><xsl:value-of select="$clefType"/></transposingClefType>
+    </Clef>
+  </xsl:template>
+
+  <!--
+    Template: Key signature.
+  -->
+  <xsl:template match="key">
+    <KeySig>
+      <accidental><xsl:value-of select="fifths"/></accidental>
+    </KeySig>
+  </xsl:template>
+
+  <!--
+    Template: Time signature.
+  -->
+  <xsl:template match="time">
+    <TimeSig>
+      <sigN><xsl:value-of select="beats"/></sigN>
+      <sigD><xsl:value-of select="beat-type"/></sigD>
+    </TimeSig>
   </xsl:template>
 
   <!--
