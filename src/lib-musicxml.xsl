@@ -13,36 +13,57 @@
   exclude-result-prefixes="#all"
 >
   <!--
-    Global state.
+    State: Current divisions value.
   -->
   <xsl:accumulator name="divisions" as="xs:double" initial-value="1">
     <xsl:accumulator-rule match="attributes/divisions" select="text()"/>
   </xsl:accumulator>
 
+  <!--
+    State: Current tempo value.
+  -->
   <xsl:accumulator name="tempo" as="xs:double" initial-value="120">
     <xsl:accumulator-rule match="sound[@tempo]" select="@tempo"/>
   </xsl:accumulator>
 
+  <!--
+    State: Current metronome nodeset.
+  -->
   <xsl:accumulator name="metronome" as="element()*" initial-value="()">
     <xsl:accumulator-rule match="measure/direction[direction-type/metronome]" select="."/>
   </xsl:accumulator>
 
+  <!--
+    State: Current time signature nodeset.
+  -->
   <xsl:accumulator name="time" as="element()*" initial-value="()">
     <xsl:accumulator-rule match="measure/attributes/time" select="."/>
   </xsl:accumulator>
 
+  <!--
+    State: Current clef nodeset.
+  -->
   <xsl:accumulator name="clef" as="element()*" initial-value="()">
     <xsl:accumulator-rule match="measure/attributes/clef" select="."/>
   </xsl:accumulator>
 
+  <!--
+    State: Current key signature nodeset.
+  -->
   <xsl:accumulator name="key" as="element()*" initial-value="()">
     <xsl:accumulator-rule match="measure/attributes/key" select="."/>
   </xsl:accumulator>
 
+  <!--
+    State: Map of measure number to index.
+  -->
   <xsl:accumulator name="measureIndex" as="map(xs:string, xs:integer)" initial-value="map {}">
     <xsl:accumulator-rule match="measure" select="if (map:contains($value, @number)) then map:put($value, @number, map:get($value, @number)) else map:put($value, @number, map:size($value))"/>
   </xsl:accumulator>
 
+  <!--
+    State: Current measure duration / offset.
+  -->
   <xsl:accumulator name="measureDuration" as="xs:double" initial-value="0">
     <xsl:accumulator-rule match="measure" select="0"/>
     <xsl:accumulator-rule match="measure/forward" select="$value + duration"/>
@@ -55,11 +76,17 @@
     </xsl:accumulator-rule>
   </xsl:accumulator>
 
+  <!--
+    State: Current measure onset.
+  -->
   <xsl:accumulator name="measureOnset" as="xs:double" initial-value="0">
     <xsl:accumulator-rule match="measure" phase="start" select="$value"/>
     <xsl:accumulator-rule match="measure" phase="end" select="$value + accumulator-after('measureDuration')"/>
   </xsl:accumulator>
 
+  <!--
+    State: Current note duration.
+  -->
   <xsl:accumulator name="noteDuration" as="xs:double" initial-value="0">
     <xsl:accumulator-rule match="note">
       <xsl:choose>
@@ -70,8 +97,13 @@
     </xsl:accumulator-rule>
   </xsl:accumulator>
 
+  <!--
+    State: Current note onset (in divisions).
+  -->
   <xsl:accumulator name="noteOnset" as="xs:double" initial-value="0">
     <xsl:accumulator-rule match="measure" select="0"/>
+    <xsl:accumulator-rule match="measure/forward" select="$value + duration"/>
+    <xsl:accumulator-rule match="measure/backup" select="$value - duration"/>
     <xsl:accumulator-rule match="note" phase="end">
       <xsl:choose>
         <xsl:when test="chord"><xsl:sequence select="$value"/></xsl:when>
@@ -80,6 +112,9 @@
     </xsl:accumulator-rule>
   </xsl:accumulator>
 
+  <!--
+    State: Current note onset (in decimal).
+  -->
   <xsl:accumulator name="noteBeat" as="xs:double" initial-value="1">
     <xsl:accumulator-rule match="measure" select="1"/>
     <xsl:accumulator-rule match="note">
@@ -90,10 +125,16 @@
     </xsl:accumulator-rule>
   </xsl:accumulator>
 
+  <!--
+    State: Current harmony nodeset.
+  -->
   <xsl:accumulator name="harmony" as="element()*" initial-value="()">
     <xsl:accumulator-rule match="harmony" select="."/>
   </xsl:accumulator>
 
+  <!--
+    State: Previous harmony duration.
+  -->
   <xsl:accumulator name="harmonyPreviousDuration" as="xs:double" initial-value="0">
     <xsl:accumulator-rule match="measure" select="0"/>
     <xsl:accumulator-rule match="harmony" select="0"/>
@@ -106,10 +147,7 @@
   </xsl:accumulator>
 
   <!--
-    MusicXML functions.
-  -->
-  <!--
-    Convert MusicXML time units to milliseconds.
+    Function: Convert MusicXML time units to milliseconds.
   -->
   <xsl:function name="musicxml:timeToMillisecs" as="xs:double">
     <xsl:param name="time" as="xs:double"/>
@@ -119,7 +157,7 @@
   </xsl:function>
 
   <!--
-    Convert MusicXML time units to MIDI ticks.
+    Function: Convert MusicXML time units to MIDI ticks.
   -->
   <xsl:function name="musicxml:timeToMIDITicks" as="xs:double">
     <xsl:param name="time" as="xs:double"/>
@@ -128,13 +166,23 @@
   </xsl:function>
 
   <!--
-    Calculate harmony duration.
+    Function: Calculate measure duration.
+  -->
+  <xsl:function name="musicxml:measureDuration" as="xs:double">
+    <xsl:param name="measure"/>
+    <xsl:sequence select="
+      sum($measure/note[not(chord)]/duration) - sum($measure/backup/duration) + sum($measure/forward/duration)
+    "/>
+  </xsl:function>
+
+  <!--
+    Function: Calculate harmony duration.
   -->
   <xsl:function name="musicxml:harmonyDuration" as="xs:double">
     <xsl:param name="harmony"/>
     <xsl:variable name="id" select="generate-id($harmony)"/>
     <xsl:sequence select="
-        sum($harmony/following-sibling::note[not(chord) and generate-id(preceding-sibling::harmony[1]) = $id]/duration)
+      sum($harmony/following-sibling::note[not(chord) and generate-id(preceding-sibling::harmony[1]) = $id]/duration)
     "/>
   </xsl:function>
 

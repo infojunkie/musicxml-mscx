@@ -9,6 +9,7 @@
     "xslt3": "^2.6.0"
   },
   "scripts": {
-    "convert:mscx": "run() { xslt3 -xsl:src/mscx.xsl -s:\"$1\" ${@:2}; }; run"
+    "convert:mscx": "run() { xslt3 -xsl:src/mscx.xsl -s:\"$1\" ${@:2}; printf \"\n\"; }; run",
+    "debug:xpath": "run() { xslt3 -s:\"$1\" -xp:\"$2\"; printf \"\n\"; }; run"
   }
 }
