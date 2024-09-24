@@ -98,7 +98,7 @@
   </xsl:accumulator>
 
   <!--
-    State: Current note onset (in divisions).
+    State: Current note onset.
   -->
   <xsl:accumulator name="noteOnset" as="xs:double" initial-value="0">
     <xsl:accumulator-rule match="measure" select="0"/>
@@ -113,7 +113,7 @@
   </xsl:accumulator>
 
   <!--
-    State: Current note onset (in decimal).
+    State: Current note onset (in decimal units).
   -->
   <xsl:accumulator name="noteBeat" as="xs:double" initial-value="1">
     <xsl:accumulator-rule match="measure" select="1"/>
@@ -183,6 +183,16 @@
     <xsl:variable name="id" select="generate-id($harmony)"/>
     <xsl:sequence select="
       sum($harmony/following-sibling::note[not(chord) and generate-id(preceding-sibling::harmony[1]) = $id]/duration)
+    "/>
+  </xsl:function>
+
+  <!--
+    Function: Calculate note onset from measure start.
+  -->
+  <xsl:function name="musicxml:noteOnset" as="xs:double">
+    <xsl:param name="note"/>
+    <xsl:sequence select="
+      sum($note/preceding-sibling::note[not(chord)]/duration) - sum($note/preceding-sibling::backup/duration) + sum($note/preceding-sibling::forward/duration)
     "/>
   </xsl:function>
 

@@ -179,7 +179,7 @@
             </xsl:if>
             <xsl:apply-templates select="$measure/direction[staff/text()=$staff or not(staff)]/direction-type/dynamics"/>
           </xsl:if>
-          <xsl:apply-templates select="$measure/note[(staff/text()=$staff or not(staff)) and voice/text()=current() and not(chord)]" mode="chords"/>
+          <xsl:apply-templates select="$measure/note[(staff/text()=$staff or not(staff)) and voice/text()=current() and not(chord)]" mode="chord"/>
         </voice>
       </xsl:for-each>
     </Measure>
@@ -266,10 +266,10 @@
   <!--
     Template: Note.
   -->
-  <xsl:template match="note" mode="chords">
+  <xsl:template match="note" mode="chord">
     <xsl:if test="local-name(preceding-sibling::*[1])=('backup', 'forward')">
       <location>
-        <fractions><xsl:value-of select="accumulator-before('noteOnset')"/>/<xsl:value-of select="musicxml:measureDuration(..)"/></fractions>
+        <fractions><xsl:value-of select="accumulator-before('noteOnset')"/>/<xsl:value-of select="musicxml:measureDuration(ancestor::measure)"/></fractions>
       </location>
     </xsl:if>
     <xsl:choose>
@@ -280,6 +280,10 @@
       </xsl:when>
       <xsl:otherwise>
         <Chord>
+          <xsl:apply-templates select="notations/slur"/>
+          <xsl:if test="stem">
+            <StemDirection><xsl:value-of select="stem"/></StemDirection>
+          </xsl:if>
           <xsl:apply-templates select="current()" mode="inner"/>
         </Chord>
       </xsl:otherwise>
@@ -299,6 +303,62 @@
       </Note>
     </xsl:if>
     <xsl:apply-templates select="following-sibling::note[1][chord and (staff=current()/staff or not(staff)) and (voice=current()/voice or not(voice))]" mode="inner"/>
+  </xsl:template>
+
+  <!--
+    Template: Slur.
+  -->
+  <xsl:template match="slur">
+    <Spanner type="Slur">
+      <xsl:choose>
+        <xsl:when test="@type='start'">
+          <Slur>
+            <up><xsl:value-of select="if (placement='below') then 'down' else 'up'"/></up>
+          </Slur>
+          <next>
+            <location>
+              <xsl:variable name="end" select="current()/(ancestor::measure, ancestor::measure/following-sibling::measure)/note[
+                (staff=current()/ancestor::note/staff or not(staff)) and
+                (voice=current()/ancestor::note/voice or not(voice)) and
+                (notations/slur[@type='stop' and (not(number) or @number=current()/@number)])
+              ][1]"/>
+              <xsl:if test="generate-id(ancestor::measure) != generate-id($end/ancestor::measure)">
+                <measures>
+                  <xsl:value-of select="count(ancestor::measure/following-sibling::measure[generate-id(.) != generate-id($end/ancestor::measure)]) + 1"/>
+                </measures>
+              </xsl:if>
+              <fractions>
+                <xsl:value-of select="musicxml:noteOnset($end) - accumulator-after('noteOnset')"/>
+                <xsl:text>/</xsl:text>
+                <xsl:value-of select="musicxml:measureDuration($end/ancestor::measure)"/>
+              </fractions>
+            </location>
+          </next>
+        </xsl:when>
+        <xsl:when test="@type='stop'">
+          <prev>
+            <location>
+              <xsl:variable name="start" select="current()/(ancestor::measure, ancestor::measure/preceding-sibling::measure)/note[
+                (staff=current()/ancestor::note/staff or not(staff)) and
+                (voice=current()/ancestor::note/voice or not(voice)) and
+                (notations/slur[@type='start' and (not(number) or @number=current()/@number)])
+              ][1]"/>
+              <xsl:if test="generate-id(ancestor::measure) != generate-id($start/ancestor::measure)">
+                <measures>
+                  <xsl:value-of select="count(ancestor::measure/preceding-sibling::measure[generate-id(.) != generate-id($start/ancestor::measure)]) + 1"/>
+                </measures>
+              </xsl:if>
+              <fractions>
+                <xsl:value-of select="-1 * (accumulator-after('noteOnset') - musicxml:noteOnset($start))"/>
+                <xsl:text>/</xsl:text>
+                <xsl:value-of select="musicxml:measureDuration($start/ancestor::measure)"/>
+              </fractions>
+            </location>
+          </prev>
+        </xsl:when>
+        <xsl:otherwise><xsl:message>[slur] Unhandled slur type '<xsl:value-of select="@type"/>'.</xsl:message></xsl:otherwise>
+      </xsl:choose>
+    </Spanner>
   </xsl:template>
 
   <!--
