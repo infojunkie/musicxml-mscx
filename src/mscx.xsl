@@ -294,7 +294,15 @@
       <xsl:if test="dot">
         <dots><xsl:value-of select="count(dot)"/></dots>
       </xsl:if>
-      <durationType><xsl:value-of select="type"/></durationType>
+      <xsl:choose>
+        <xsl:when test="type">
+          <durationType><xsl:value-of select="type"/></durationType>
+        </xsl:when>
+        <xsl:when test="rest[@measure='yes']">
+          <durationType>measure</durationType>
+          <duration><xsl:value-of select="accumulator-after('time')/beats"/>/<xsl:value-of select="accumulator-after('time')/beat-type"/></duration>
+        </xsl:when>
+      </xsl:choose>
     </xsl:if>
     <xsl:if test="not(rest)">
       <Note>
