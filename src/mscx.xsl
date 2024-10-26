@@ -21,6 +21,7 @@
     Global variables.
   -->
   <xsl:param name="instrumentsFile" select="'instruments.xml'"/>
+  <xsl:param name="styleFile"/>
   <xsl:param name="museScoreVersion" select="'3.02'"/>
   <xsl:param name="divisions" select="480"/>
   <xsl:param name="scalingMillimeters" select="7.0"/>
@@ -29,11 +30,22 @@
   <xsl:param name="showUnprintable" select="1"/>
   <xsl:param name="showFrames" select="1"/>
   <xsl:param name="showMargins" select="0"/>
+  <xsl:param name="defaultVBox" select="true()"/>
 
   <!--
-    Open MuseScore instruments file.
+    Global: MuseScore instruments file.
   -->
   <xsl:variable name="instruments" select="doc($instrumentsFile)"/>
+
+  <!--
+    Global: MuseScore style file.
+  -->
+  <xsl:variable name="style" select="if ($styleFile) then doc($styleFile) else ()"/>
+
+  <!--
+    Global: Document root.
+  -->
+  <xsl:variable name="root" select="/"/>
 
   <!--
     State: Part serials.
@@ -77,76 +89,7 @@
         <LayerTag id="0" tag="default"></LayerTag>
         <currentLayer>0</currentLayer>
         <Division><xsl:value-of select="if (//attributes/divisions) then //attributes/divisions[1] else $divisions"/></Division>
-        <Style>
-          <xsl:if test="//defaults/page-layout/page-width">
-            <pageWidth><xsl:value-of select="format-number(mscx:tenthsToInches(
-              number(//defaults/page-layout/page-width),
-              if (//defaults/scaling) then number(//defaults/scaling/millimeters) else $scalingMillimeters,
-              if (//defaults/scaling) then number(//defaults/scaling/tenths) else $scalingTenths
-            ), '0.00')"/></pageWidth>
-          </xsl:if>
-          <xsl:if test="//defaults/page-layout/page-height">
-            <pageHeight><xsl:value-of select="format-number(mscx:tenthsToInches(
-              number(//defaults/page-layout/page-height),
-              if (//defaults/scaling) then number(//defaults/scaling/millimeters) else $scalingMillimeters,
-              if (//defaults/scaling) then number(//defaults/scaling/tenths) else $scalingTenths
-            ), '0.00')"/></pageHeight>
-          </xsl:if>
-          <!-- TODO Derive those from MusicXML or make them global params. -->
-          <pagePrintableWidth>7.5</pagePrintableWidth>
-          <pageEvenLeftMargin>0.5</pageEvenLeftMargin>
-          <pageOddLeftMargin>0.5</pageOddLeftMargin>
-          <pageEvenTopMargin>0.5</pageEvenTopMargin>
-          <pageEvenBottomMargin>0.5</pageEvenBottomMargin>
-          <pageOddTopMargin>0.5</pageOddTopMargin>
-          <pageOddBottomMargin>0.5</pageOddBottomMargin>
-          <pageTwosided>0</pageTwosided>
-          <staffDistance>8</staffDistance>
-          <minSystemDistance>12.7</minSystemDistance>
-          <chordSymbolAFontSize>8.25</chordSymbolAFontSize>
-          <chordSymbolBFontSize>8.25</chordSymbolBFontSize>
-          <nashvilleNumberFontSize>8.25</nashvilleNumberFontSize>
-          <tupletFontSize>8.25</tupletFontSize>
-          <fingeringFontSize>8.25</fingeringFontSize>
-          <lhGuitarFingeringFontSize>8.25</lhGuitarFingeringFontSize>
-          <rhGuitarFingeringFontSize>8.25</rhGuitarFingeringFontSize>
-          <stringNumberFontSize>8.25</stringNumberFontSize>
-          <longInstrumentFontSize>8.25</longInstrumentFontSize>
-          <shortInstrumentFontSize>8.25</shortInstrumentFontSize>
-          <partInstrumentFontSize>8.25</partInstrumentFontSize>
-          <dynamicsFontSize>8.25</dynamicsFontSize>
-          <expressionFontSize>8.25</expressionFontSize>
-          <tempoFontSize>8.25</tempoFontSize>
-          <metronomeFontSize>8.25</metronomeFontSize>
-          <measureNumberFontSize>8.25</measureNumberFontSize>
-          <mmRestRangeFontSize>8.25</mmRestRangeFontSize>
-          <translatorFontSize>8.25</translatorFontSize>
-          <systemFontSize>8.25</systemFontSize>
-          <staffFontSize>8.25</staffFontSize>
-          <rehearsalMarkFontSize>8.25</rehearsalMarkFontSize>
-          <repeatLeftFontSize>8.25</repeatLeftFontSize>
-          <repeatRightFontSize>8.25</repeatRightFontSize>
-          <frameFontSize>8.25</frameFontSize>
-          <glissandoFontSize>8.25</glissandoFontSize>
-          <bendFontSize>8.25</bendFontSize>
-          <headerFontSize>8.25</headerFontSize>
-          <footerFontSize>8.25</footerFontSize>
-          <instrumentChangeFontSize>8.25</instrumentChangeFontSize>
-          <stickingFontSize>8.25</stickingFontSize>
-          <user1FontSize>8.25</user1FontSize>
-          <user2FontSize>8.25</user2FontSize>
-          <user3FontSize>8.25</user3FontSize>
-          <user4FontSize>8.25</user4FontSize>
-          <user5FontSize>8.25</user5FontSize>
-          <user6FontSize>8.25</user6FontSize>
-          <user7FontSize>8.25</user7FontSize>
-          <user8FontSize>8.25</user8FontSize>
-          <user9FontSize>8.25</user9FontSize>
-          <user10FontSize>8.25</user10FontSize>
-          <user11FontSize>8.25</user11FontSize>
-          <user12FontSize>8.25</user12FontSize>
-          <Spatium>1.5875</Spatium>
-        </Style>
+        <xsl:call-template name="style"/>
         <showInvisible><xsl:value-of select="$showInvisible"/></showInvisible>
         <showUnprintable><xsl:value-of select="$showUnprintable"/></showUnprintable>
         <showFrames><xsl:value-of select="$showFrames"/></showFrames>
@@ -232,23 +175,55 @@
     Template: Part > Staff.
   -->
   <xsl:template match="part">
-    <xsl:variable name="credit" select="//credit"/>
     <xsl:variable name="part" select="current()"/>
     <xsl:for-each select="accumulator-after('staffIds')(@id)">
       <xsl:variable name="staff" select="position()"/>
       <Staff>
         <xsl:attribute name="id"><xsl:value-of select="."/></xsl:attribute>
-        <xsl:if test="$credit and $staff = 1">
-          <VBox>
-            <height>10</height><!-- TODO Derive -->
-            <xsl:apply-templates select="$credit"/>
-          </VBox>
+        <xsl:if test="$staff = 1">
+          <xsl:call-template name="vbox"/>
         </xsl:if>
         <xsl:apply-templates select="$part/measure">
           <xsl:with-param name="staff" select="$staff"/>
         </xsl:apply-templates>
       </Staff>
     </xsl:for-each>
+  </xsl:template>
+
+  <!--
+    Template: Staff > VBox.
+  -->
+  <xsl:template name="vbox">
+    <xsl:if test="$root//credit or $defaultVBox">
+      <VBox>
+        <height>10</height><!-- TODO -->
+        <xsl:choose>
+          <xsl:when test="$root//credit">
+            <xsl:apply-templates select="$root//credit"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:if test="$root//movement-title">
+              <Text>
+                <style>Title</style>
+                <text><xsl:value-of select="$root//movement-title"/></text>
+              </Text>
+            </xsl:if>
+            <xsl:if test="$root//work/work-title">
+              <Text>
+                <style>Title</style>
+                <text><xsl:value-of select="$root//work/work-title"/></text>
+              </Text>
+            </xsl:if>
+            <xsl:if test="$root//identification/creator[@type='composer']">
+              <Text>
+                <style>Composer</style>
+                <text><xsl:value-of select="$root//identification/creator[@type='composer']"/></text>
+              </Text>
+            </xsl:if>
+          </xsl:otherwise>
+        </xsl:choose>
+      </VBox>
+    </xsl:if>
   </xsl:template>
 
   <!--
@@ -281,7 +256,13 @@
         </LayoutBreak>
       </xsl:if>
       <xsl:variable name="measure" select="current()"/>
-      <xsl:for-each select="distinct-values(note[staff/text() = $staff or not(staff)]/voice)">
+      <xsl:if test="barline/repeat[@direction = 'forward']">
+        <startRepeat></startRepeat>
+      </xsl:if>
+      <xsl:if test="barline/repeat[@direction = 'backward']">
+        <endRepeat><xsl:value-of select="barline/repeat[@direction = 'backward']/@times"/></endRepeat>
+      </xsl:if>
+      <xsl:for-each select="distinct-values(note[staff = $staff or not(staff)]/voice)">
         <xsl:variable name="voice" select="."/>
         <voice>
           <xsl:if test="position() = 1">
@@ -289,14 +270,16 @@
             <xsl:apply-templates select="$measure/attributes/key[@number = $staff or not(@number)]"/>
             <xsl:apply-templates select="$measure/attributes/time[@number = $staff or not(@number)]"/>
           </xsl:if>
+          <xsl:apply-templates select="$measure/barline[@location = 'left']"/>
           <xsl:apply-templates select="$measure/note[
-            (staff/text() = $staff or not(staff)) and
-            voice/text() = $voice and
-            (not(chord) or preceding-sibling::note[1]/staff/text() != $staff)
+            (staff = $staff or not(staff)) and
+            voice = $voice and
+            (not(chord) or preceding-sibling::note[1]/staff != $staff)
           ]" mode="chord">
             <xsl:with-param name="staff" select="$staff"/>
             <xsl:with-param name="voice" select="$voice"/>
           </xsl:apply-templates>
+          <xsl:apply-templates select="$measure/barline[@location = 'right']"/>
         </voice>
       </xsl:for-each>
     </Measure>
@@ -308,12 +291,12 @@
   <xsl:template match="clef">
     <xsl:variable name="clefType">
       <xsl:choose>
-        <xsl:when test="sign='jianpu'"><xsl:message>[clef] Unhandled sign 'jianpu'.</xsl:message></xsl:when>
-        <xsl:when test="sign='percussion'">PERC</xsl:when>
-        <xsl:when test="sign='none'">G</xsl:when>
-        <xsl:when test="sign='C'"><xsl:value-of select="sign"/><xsl:value-of select="if (line) then line else 3"/></xsl:when>
-        <xsl:when test="clef-octave-change=1"><xsl:value-of select="sign"/>8va</xsl:when>
-        <xsl:when test="clef-octave-change=-1"><xsl:value-of select="sign"/>8vb</xsl:when>
+        <xsl:when test="sign = 'jianpu'"><xsl:message>[clef] Unhandled sign 'jianpu'.</xsl:message></xsl:when>
+        <xsl:when test="sign = 'percussion'">PERC</xsl:when>
+        <xsl:when test="sign = 'none'">G</xsl:when>
+        <xsl:when test="sign = 'C'"><xsl:value-of select="sign"/><xsl:value-of select="if (line) then line else 3"/></xsl:when>
+        <xsl:when test="clef-octave-change = 1"><xsl:value-of select="sign"/>8va</xsl:when>
+        <xsl:when test="clef-octave-change = -1"><xsl:value-of select="sign"/>8vb</xsl:when>
         <xsl:otherwise><xsl:value-of select="sign"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
@@ -340,14 +323,59 @@
   <xsl:template match="time">
     <TimeSig>
       <xsl:choose>
-        <xsl:when test="not(@symbol) or @symbol='normal'"></xsl:when>
-        <xsl:when test="@symbol='common'"><subtype>1</subtype></xsl:when>
-        <xsl:when test="@symbol='cut'"><subtype>2</subtype></xsl:when>
+        <xsl:when test="not(@symbol) or @symbol = 'normal'"></xsl:when>
+        <xsl:when test="@symbol = 'common'"><subtype>1</subtype></xsl:when>
+        <xsl:when test="@symbol = 'cut'"><subtype>2</subtype></xsl:when>
         <xsl:otherwise><xsl:message>[clef] Unhandled time symbol '<xsl:value-of select="@symbol"/>'</xsl:message></xsl:otherwise>
       </xsl:choose>
       <sigN><xsl:value-of select="beats"/></sigN>
       <sigD><xsl:value-of select="beat-type"/></sigD>
     </TimeSig>
+  </xsl:template>
+
+  <!--
+    Template: Measure > Barline.
+  -->
+  <xsl:template match="barline">
+    <BarLine>
+      <xsl:choose>
+        <xsl:when test="bar-style = 'dashed'"><xsl:message>[barline] Unhandled bar style '<xsl:value-of select="bar-style"/>'</xsl:message></xsl:when>
+        <xsl:when test="bar-style = 'dotted'"><xsl:message>[barline] Unhandled bar style '<xsl:value-of select="bar-style"/>'</xsl:message></xsl:when>
+        <xsl:when test="bar-style = 'heavy'"><xsl:message>[barline] Unhandled bar style '<xsl:value-of select="bar-style"/>'</xsl:message></xsl:when>
+        <xsl:when test="bar-style = 'heavy-heavy'"><xsl:message>[barline] Unhandled bar style '<xsl:value-of select="bar-style"/>'</xsl:message></xsl:when>
+        <xsl:when test="bar-style = 'heavy-light'"><xsl:message>[barline] Unhandled bar style '<xsl:value-of select="bar-style"/>'</xsl:message></xsl:when>
+        <xsl:when test="bar-style = 'light-heavy'"><subtype>end</subtype></xsl:when>
+        <xsl:when test="bar-style = 'light-light'"><subtype>double</subtype></xsl:when>
+        <xsl:when test="bar-style = 'none'"><visible>0</visible></xsl:when>
+        <xsl:when test="bar-style = 'regular'"><!-- Nothing to do here --></xsl:when>
+        <xsl:when test="bar-style = 'short'"><xsl:message>[barline] Unhandled bar style '<xsl:value-of select="bar-style"/>'</xsl:message></xsl:when>
+        <xsl:when test="bar-style = 'tick'"><xsl:message>[barline] Unhandled bar style '<xsl:value-of select="bar-style"/>'</xsl:message></xsl:when>
+        <xsl:otherwise><xsl:message>[barline] Unhandled bar style '<xsl:value-of select="bar-style"/>'</xsl:message></xsl:otherwise>
+      </xsl:choose>
+    </BarLine>
+  </xsl:template>
+
+  <!--
+    Template: Measure > Rehersal Mark.
+  -->
+  <xsl:template match="direction[direction-type/rehearsal]">
+    <RehearsalMark>
+      <text>
+        <xsl:call-template name="text">
+          <xsl:with-param name="node" select="direction-type/rehearsal"/>
+        </xsl:call-template>
+      </text>
+    </RehearsalMark>
+  </xsl:template>
+
+  <!--
+    Template: Measure > Harmony.
+  -->
+  <xsl:template match="harmony">
+    <Harmony>
+      <root><xsl:value-of select="mscx:noteToTpc(root)"/></root>
+      <name><xsl:value-of select="kind/@text"/></name>
+    </Harmony>
   </xsl:template>
 
   <!--
@@ -363,11 +391,11 @@
 
     <!-- Place previous measure's tailing directives at the head of this measure. -->
     <xsl:if test="not(preceding-sibling::note)">
-      <xsl:apply-templates select="musicxml:followingMeasureElements((ancestor::measure/preceding-sibling::measure/note[not(chord)])[last()])[not(local-name(.) = 'attributes')]"/>
+      <xsl:apply-templates select="musicxml:followingMeasureElements((ancestor::measure/preceding-sibling::measure/note[not(chord)])[last()])[not(local-name(.) = ('attributes', 'barline'))]"/>
     </xsl:if>
 
     <!-- Note directives. -->
-    <xsl:apply-templates select="musicxml:precedingMeasureElements(.)[not(local-name(.) = 'attributes')]"/>
+    <xsl:apply-templates select="musicxml:precedingMeasureElements(.)[not(local-name(.) = ('attributes', 'barline'))]"/>
 
     <!-- Tuplet -->
     <xsl:if test="notations/tuplet[@type = 'start']">
@@ -436,6 +464,7 @@
         <xsl:apply-templates select="notations/tied"/>
         <xsl:apply-templates select="pitch"/>
         <xsl:apply-templates select="accidental"/>
+        <xsl:apply-templates select="notehead"/>
       </Note>
     </xsl:if>
 
@@ -448,13 +477,25 @@
   </xsl:template>
 
   <!--
+    Template: Note > Notehead.
+  -->
+  <xsl:template match="notehead">
+    <head><xsl:value-of select="text()"/></head>
+  </xsl:template>
+
+  <!--
     Template: Note > Dynamics.
   -->
-  <xsl:template match="direction/sound[@dynamics] | sound[@dynamics]">
+  <xsl:template match="direction[sound[@dynamics]]">
     <Dynamic>
-      <xsl:if test="ancestor::direction[direction-type/dynamics]">
-        <subtype><xsl:value-of select="ancestor::direction/direction-type/dynamics/local-name(*[1])"/></subtype>
+      <xsl:if test="direction-type/dynamics">
+        <subtype><xsl:value-of select="direction-type/dynamics/local-name(*[1])"/></subtype>
       </xsl:if>
+      <velocity><xsl:value-of select="round(number(sound/@dynamics) * 90 div 100)"/></velocity>
+    </Dynamic>
+  </xsl:template>
+  <xsl:template match="sound[@dynamics]">
+    <Dynamic>
       <velocity><xsl:value-of select="round(number(@dynamics) * 90 div 100)"/></velocity>
     </Dynamic>
   </xsl:template>
@@ -462,16 +503,16 @@
   <!--
     Template: Note > Tempo.
   -->
-  <xsl:template match="direction/sound[@tempo] | sound[@tempo]">
+  <xsl:template match="direction[sound[@tempo]]">
     <Tempo>
-      <tempo><xsl:value-of select="@tempo div 60"/></tempo>
+      <tempo><xsl:value-of select="sound/@tempo div 60"/></tempo>
       <followText>1</followText>
-      <visible><xsl:value-of select="if (ancestor::direction) then 1 else 0"/></visible>
+      <visible>1</visible>
       <text>
         <xsl:choose>
-          <xsl:when test="ancestor::direction[direction-type/words]">
+          <xsl:when test="direction-type/words">
             <xsl:call-template name="text">
-              <xsl:with-param name="node" select="ancestor::direction/direction-type/words"/>
+              <xsl:with-param name="node" select="direction-type/words"/>
             </xsl:call-template>
           </xsl:when>
           <xsl:when test="accumulator-after('time')/beat-type='8'"><sym>metNote8thUp</sym> = <xsl:value-of select="@tempo * 2"/></xsl:when>
@@ -481,13 +522,20 @@
       </text>
     </Tempo>
   </xsl:template>
+  <xsl:template match="sound[@tempo]">
+    <Tempo>
+      <tempo><xsl:value-of select="@tempo div 60"/></tempo>
+      <followText>1</followText>
+      <visible>0</visible>
+    </Tempo>
+  </xsl:template>
 
   <!--
     Template: Note > Words.
   -->
-  <xsl:template match="direction/direction-type/words[not(../../sound)]">
+  <xsl:template match="direction[direction-type/words]">
     <StaffText>
-      <text><xsl:call-template name="text"><xsl:with-param name="node" select="."/></xsl:call-template></text>
+      <text><xsl:call-template name="text"><xsl:with-param name="node" select="direction-type/words"/></xsl:call-template></text>
     </StaffText>
   </xsl:template>
 
@@ -527,38 +575,38 @@
   <!--
     Template: Note > Wedge
   -->
-  <xsl:template match="direction/direction-type/wedge">
+  <xsl:template match="direction[direction-type/wedge]">
     <Spanner type="HairPin">
       <xsl:choose>
-        <xsl:when test="@type = ('crescendo', 'diminuendo')">
+        <xsl:when test="direction-type/wedge/@type = ('crescendo', 'diminuendo')">
           <HairPin>
-            <subtype><xsl:value-of select="if (@type = 'crescendo') then 0 else 1"/></subtype>
-            <placement><xsl:value-of select="ancestor::direction/@placement"/></placement>
+            <subtype><xsl:value-of select="if (direction-type/wedge/@type = 'crescendo') then 0 else 1"/></subtype>
+            <placement><xsl:value-of select="@placement"/></placement>
           </HairPin>
           <next>
             <xsl:variable name="end" select="((ancestor::measure, ancestor::measure/following-sibling::measure)/direction[
               direction-type/wedge[@type = 'stop' and (not(@number) or @number = current()/@number)]
             ])[1]"/>
             <xsl:call-template name="location">
-              <xsl:with-param name="start" select="ancestor::direction"/>
+              <xsl:with-param name="start" select="."/>
               <xsl:with-param name="end" select="$end"/>
               <xsl:with-param name="sign" select="1"/>
             </xsl:call-template>
           </next>
         </xsl:when>
-        <xsl:when test="@type = 'stop'">
+        <xsl:when test="direction-type/wedge/@type = 'stop'">
           <prev>
             <xsl:variable name="start" select="((ancestor::measure, ancestor::measure/preceding-sibling::measure)/direction[
-              (direction-type/wedge[@type = ('crescendo', 'diminuendo') and (not(@number) or @number = current()/@number)])
+              (direction-type/wedge[@type = ('crescendo', 'diminuendo') and (not(@number) or @number = current()/direction-type/wedge/@number)])
             ])[last()]"/>
             <xsl:call-template name="location">
               <xsl:with-param name="start" select="$start"/>
-              <xsl:with-param name="end" select="ancestor::direction"/>
+              <xsl:with-param name="end" select="."/>
               <xsl:with-param name="sign" select="-1"/>
             </xsl:call-template>
           </prev>
         </xsl:when>
-        <xsl:otherwise><xsl:message>[<xsl:value-of select="local-name()"/>] Unhandled type '<xsl:value-of select="@type"/>'.</xsl:message></xsl:otherwise>
+        <xsl:otherwise><xsl:message>[<xsl:value-of select="wedge"/>] Unhandled type '<xsl:value-of select="direction-type/wedge/@type"/>'.</xsl:message></xsl:otherwise>
       </xsl:choose>
     </Spanner>
   </xsl:template>
@@ -623,30 +671,8 @@
     @see https://github.com/musescore/MuseScore/blob/v4.4.2/src/engraving/dom/pitchspelling.cpp#step2tpc
   -->
   <xsl:template match="pitch">
-    <xsl:variable name="tpc" as="xs:integer">
-      <xsl:choose>
-        <xsl:when test="step='C'">14</xsl:when>
-        <xsl:when test="step='D'">16</xsl:when>
-        <xsl:when test="step='E'">18</xsl:when>
-        <xsl:when test="step='F'">13</xsl:when>
-        <xsl:when test="step='G'">15</xsl:when>
-        <xsl:when test="step='A'">17</xsl:when>
-        <xsl:when test="step='B'">19</xsl:when>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:variable name="pitch" as="xs:integer">
-      <xsl:choose>
-        <xsl:when test="step='C'">0</xsl:when>
-        <xsl:when test="step='D'">2</xsl:when>
-        <xsl:when test="step='E'">4</xsl:when>
-        <xsl:when test="step='F'">5</xsl:when>
-        <xsl:when test="step='G'">7</xsl:when>
-        <xsl:when test="step='A'">9</xsl:when>
-        <xsl:when test="step='B'">11</xsl:when>
-      </xsl:choose>
-    </xsl:variable>
-    <pitch><xsl:value-of select="$pitch + (12 * (octave + 1)) + xs:integer(floor(number(if (alter) then alter else 0)))"/></pitch>
-    <tpc><xsl:value-of select="$tpc + (7 * xs:integer(floor(number(if (alter) then alter else 0))))"/></tpc>
+    <pitch><xsl:value-of select="mscx:noteToPitch(.)"/></pitch>
+    <tpc><xsl:value-of select="mscx:noteToTpc(.)"/></tpc>
   </xsl:template>
 
   <!--
@@ -798,6 +824,89 @@
   </xsl:template>
 
   <!--
+    Template: Style.
+  -->
+  <xsl:template name="style">
+    <xsl:choose>
+      <xsl:when test="$styleFile != ''">
+        <xsl:copy-of select="$style//Style"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <Style>
+          <xsl:if test="//defaults/page-layout/page-width">
+            <pageWidth><xsl:value-of select="format-number(mscx:tenthsToInches(
+              number(//defaults/page-layout/page-width),
+              if (//defaults/scaling) then number(//defaults/scaling/millimeters) else $scalingMillimeters,
+              if (//defaults/scaling) then number(//defaults/scaling/tenths) else $scalingTenths
+            ), '0.00')"/></pageWidth>
+          </xsl:if>
+          <xsl:if test="//defaults/page-layout/page-height">
+            <pageHeight><xsl:value-of select="format-number(mscx:tenthsToInches(
+              number(//defaults/page-layout/page-height),
+              if (//defaults/scaling) then number(//defaults/scaling/millimeters) else $scalingMillimeters,
+              if (//defaults/scaling) then number(//defaults/scaling/tenths) else $scalingTenths
+            ), '0.00')"/></pageHeight>
+          </xsl:if>
+          <!-- TODO Derive those from MusicXML or make them global params. -->
+          <pagePrintableWidth>7.5</pagePrintableWidth>
+          <pageEvenLeftMargin>0.5</pageEvenLeftMargin>
+          <pageOddLeftMargin>0.5</pageOddLeftMargin>
+          <pageEvenTopMargin>0.5</pageEvenTopMargin>
+          <pageEvenBottomMargin>0.5</pageEvenBottomMargin>
+          <pageOddTopMargin>0.5</pageOddTopMargin>
+          <pageOddBottomMargin>0.5</pageOddBottomMargin>
+          <pageTwosided>0</pageTwosided>
+          <staffDistance>8</staffDistance>
+          <minSystemDistance>12.7</minSystemDistance>
+          <chordSymbolAFontSize>8.25</chordSymbolAFontSize>
+          <chordSymbolBFontSize>8.25</chordSymbolBFontSize>
+          <nashvilleNumberFontSize>8.25</nashvilleNumberFontSize>
+          <tupletFontSize>8.25</tupletFontSize>
+          <fingeringFontSize>8.25</fingeringFontSize>
+          <lhGuitarFingeringFontSize>8.25</lhGuitarFingeringFontSize>
+          <rhGuitarFingeringFontSize>8.25</rhGuitarFingeringFontSize>
+          <stringNumberFontSize>8.25</stringNumberFontSize>
+          <longInstrumentFontSize>8.25</longInstrumentFontSize>
+          <shortInstrumentFontSize>8.25</shortInstrumentFontSize>
+          <partInstrumentFontSize>8.25</partInstrumentFontSize>
+          <dynamicsFontSize>8.25</dynamicsFontSize>
+          <expressionFontSize>8.25</expressionFontSize>
+          <tempoFontSize>8.25</tempoFontSize>
+          <metronomeFontSize>8.25</metronomeFontSize>
+          <measureNumberFontSize>8.25</measureNumberFontSize>
+          <mmRestRangeFontSize>8.25</mmRestRangeFontSize>
+          <translatorFontSize>8.25</translatorFontSize>
+          <systemFontSize>8.25</systemFontSize>
+          <staffFontSize>8.25</staffFontSize>
+          <rehearsalMarkFontSize>8.25</rehearsalMarkFontSize>
+          <repeatLeftFontSize>8.25</repeatLeftFontSize>
+          <repeatRightFontSize>8.25</repeatRightFontSize>
+          <frameFontSize>8.25</frameFontSize>
+          <glissandoFontSize>8.25</glissandoFontSize>
+          <bendFontSize>8.25</bendFontSize>
+          <headerFontSize>8.25</headerFontSize>
+          <footerFontSize>8.25</footerFontSize>
+          <instrumentChangeFontSize>8.25</instrumentChangeFontSize>
+          <stickingFontSize>8.25</stickingFontSize>
+          <user1FontSize>8.25</user1FontSize>
+          <user2FontSize>8.25</user2FontSize>
+          <user3FontSize>8.25</user3FontSize>
+          <user4FontSize>8.25</user4FontSize>
+          <user5FontSize>8.25</user5FontSize>
+          <user6FontSize>8.25</user6FontSize>
+          <user7FontSize>8.25</user7FontSize>
+          <user8FontSize>8.25</user8FontSize>
+          <user9FontSize>8.25</user9FontSize>
+          <user10FontSize>8.25</user10FontSize>
+          <user11FontSize>8.25</user11FontSize>
+          <user12FontSize>8.25</user12FontSize>
+          <Spatium>1.5875</Spatium>
+        </Style>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <!--
     Function: Convert hyphenated-title to camelCase.
   -->
   <xsl:function name="mscx:toCamelCase" as="xs:string">
@@ -822,4 +931,43 @@
     <xsl:sequence select="mscx:tenthsToMillimeters($value, $scalingMillimeters, $scalingTenths) div 25.4"/>
   </xsl:function>
 
+  <!--
+    Function: Convert note to tpc.
+  -->
+  <xsl:function name="mscx:noteToTpc" as="xs:double">
+    <xsl:param name="note"/>
+    <xsl:variable name="step" select="if ($note/root-step) then $note/root-step else $note/step"/>
+    <xsl:variable name="alter" select="if ($note/root-alter) then $note/root-alter else $note/alter"/>
+    <xsl:variable name="tpc" as="xs:integer">
+      <xsl:choose>
+        <xsl:when test="$step='C'">14</xsl:when>
+        <xsl:when test="$step='D'">16</xsl:when>
+        <xsl:when test="$step='E'">18</xsl:when>
+        <xsl:when test="$step='F'">13</xsl:when>
+        <xsl:when test="$step='G'">15</xsl:when>
+        <xsl:when test="$step='A'">17</xsl:when>
+        <xsl:when test="$step='B'">19</xsl:when>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:sequence select="$tpc + (7 * floor(number(if ($alter) then $alter else 0)))"/>
+  </xsl:function>
+
+  <!--
+    Function: Convert note to pitch.
+  -->
+  <xsl:function name="mscx:noteToPitch" as="xs:double">
+    <xsl:param name="note"/>
+    <xsl:variable name="pitch" as="xs:integer">
+      <xsl:choose>
+        <xsl:when test="$note/step='C'">0</xsl:when>
+        <xsl:when test="$note/step='D'">2</xsl:when>
+        <xsl:when test="$note/step='E'">4</xsl:when>
+        <xsl:when test="$note/step='F'">5</xsl:when>
+        <xsl:when test="$note/step='G'">7</xsl:when>
+        <xsl:when test="$note/step='A'">9</xsl:when>
+        <xsl:when test="$note/step='B'">11</xsl:when>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:sequence select="$pitch + (12 * ($note/octave + 1)) + floor(number(if ($note/alter) then $note/alter else 0))"/>
+  </xsl:function>
 </xsl:stylesheet>

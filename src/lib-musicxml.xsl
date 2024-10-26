@@ -219,4 +219,10 @@
     <xsl:sequence select="$note/following-sibling::*[not(local-name() = 'note') and preceding-sibling::note[1][generate-id(.) = generate-id($note)]]"/>
   </xsl:function>
 
+  <!--
+    Template: Catch-all and issue a warning.
+  -->
+  <xsl:template match="*">
+    <xsl:message terminate="no">[<xsl:value-of select="name()"/>] Unhandled element</xsl:message>
+  </xsl:template>
 </xsl:stylesheet>

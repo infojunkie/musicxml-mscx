@@ -1,6 +1,6 @@
 {
   "name": "musicxml-mscx",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MuseScore to MusicXML converter and back.",
   "author": "Karim Ratib <karim.ratib@gmail.com> (https://github.com/infojunkie)",
   "license": "GPL-3.0-only",
@@ -9,6 +9,7 @@
     "xslt3": "^2.6.0"
   },
   "scripts": {
+    "build:sef": "for xsl in src/*.xsl; do sef=$(basename \"$xsl\"); xslt3 -relocate:on -xsl:$xsl -export:build/${sef/.xsl/.sef.json} -nogo:1 -t -ns:##html5; done",
     "convert:mscx": "run() { xslt3 -xsl:src/mscx.xsl -s:\"$1\" ${@:2}; printf \"\n\"; }; run",
     "debug:xpath": "run() { xslt3 -s:\"$1\" -xp:\"$2\"; printf \"\n\"; }; run"
   }
