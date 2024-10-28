@@ -12,6 +12,13 @@
   xmlns:map="http://www.w3.org/2005/xpath-functions/map"
   exclude-result-prefixes="#all"
 >
+
+  <!--
+    Global: Parameters.
+  -->
+  <xsl:param name="defaultScalingMillimeters" select="7.0"/>
+  <xsl:param name="defaultScalingTenths" select="40"/>
+
   <!--
     Template: Get accumulator value at node.
     Function: Get accumulator value at node.
@@ -174,6 +181,16 @@
         <xsl:otherwise><xsl:sequence select="$value + duration"/></xsl:otherwise>
       </xsl:choose>
     </xsl:accumulator-rule>
+  </xsl:accumulator>
+
+  <!--
+    State: Defaults.
+  -->
+  <xsl:accumulator name="scalingMillimeters" as="xs:double" initial-value="$defaultScalingMillimeters">
+    <xsl:accumulator-rule match="//defaults/scaling" select="number(millimeters)"/>
+  </xsl:accumulator>
+  <xsl:accumulator name="scalingTenths" as="xs:double" initial-value="$defaultScalingTenths">
+    <xsl:accumulator-rule match="//defaults/scaling" select="number(tenths)"/>
   </xsl:accumulator>
 
   <!--

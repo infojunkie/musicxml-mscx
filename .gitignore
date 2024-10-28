@@ -3,4 +3,4 @@ test/data/output/*
 cache/*
 !.gitkeep
 *.log
-instruments.xml
+.mscbackup

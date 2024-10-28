@@ -18,19 +18,18 @@
   <xsl:output omit-xml-declaration="no" indent="yes" suppress-indentation="text"/>
 
   <!--
-    Global variables.
+    Global: Parameters.
   -->
   <xsl:param name="instrumentsFile" select="'instruments.xml'"/>
   <xsl:param name="styleFile"/>
   <xsl:param name="museScoreVersion" select="'3.02'"/>
   <xsl:param name="divisions" select="480"/>
-  <xsl:param name="scalingMillimeters" select="7.0"/>
-  <xsl:param name="scalingTenths" select="40"/>
   <xsl:param name="showInvisible" select="1"/>
   <xsl:param name="showUnprintable" select="1"/>
   <xsl:param name="showFrames" select="1"/>
   <xsl:param name="showMargins" select="0"/>
   <xsl:param name="defaultVBox" select="true()"/>
+  <xsl:param name="defaultSpatium" select="1.5875"/>
 
   <!--
     Global: MuseScore instruments file.
@@ -38,9 +37,10 @@
   <xsl:variable name="instruments" select="doc($instrumentsFile)"/>
 
   <!--
-    Global: MuseScore style file.
+    Global: MuseScore style file and parameters.
   -->
   <xsl:variable name="style" select="if ($styleFile) then doc($styleFile) else ()"/>
+  <xsl:variable name="spatium" select="if ($styleFile) then $style//Spatium else $defaultSpatium"/>
 
   <!--
     Global: Document root.
@@ -136,6 +136,7 @@
   -->
   <xsl:template match="score-part">
     <Part>
+      <xsl:variable name="part" select="current()"/>
       <xsl:variable name="staffIds" select="accumulator-after('staffIds')(@id)"/>
       <xsl:for-each select="$staffIds">
         <xsl:variable name="staff" select="position()"/>
@@ -143,12 +144,27 @@
           <xsl:attribute name="id"><xsl:value-of select="."/></xsl:attribute>
           <StaffType group="pitched">
             <name>stdNormal</name>
+            <xsl:if test="$root//part[@id = $part/@id]//attributes/clef/@print-object = 'no'">
+              <clef>0</clef>
+            </xsl:if>
+            <xsl:if test="$root//part[@id = $part/@id]//attributes/time/@print-object = 'no'">
+              <timesig>0</timesig>
+            </xsl:if>
+            <xsl:if test="$root//part[@id = $part/@id]//attributes/staff-details/staff-lines = 0">
+              <invisible>1</invisible>
+            </xsl:if>
+            <xsl:if test="$root//part[@id = $part/@id]//attributes/key/@print-object = 'no'">
+              <keysig>0</keysig>
+            </xsl:if>
           </StaffType>
           <xsl:if test="count($staffIds) &gt; 1 and $staff = 1">
             <bracket type="1" col="1">
               <xsl:attribute name="span" select="count($staffIds)"/>
             </bracket>
             <barLineSpan><xsl:value-of select="count($staffIds)"/></barLineSpan>
+          </xsl:if>
+          <xsl:if test="$root//part[@id = $part/@id]//attributes/staff-details/staff-lines = 0">
+            <invisible>1</invisible>
           </xsl:if>
         </Staff>
       </xsl:for-each>
@@ -194,7 +210,7 @@
     Template: Staff > VBox.
   -->
   <xsl:template name="vbox">
-    <xsl:if test="$root//credit or $defaultVBox">
+    <xsl:if test="$root//credit or ($defaultVBox and ($root//movement-title or $root//work/work-title))">
       <VBox>
         <height>10</height><!-- TODO -->
         <xsl:choose>
@@ -248,6 +264,13 @@
   -->
   <xsl:template match="measure">
     <xsl:param name="staff"/>
+    <xsl:if test="number(.//system-layout//left-margin) != 0">
+      <HBox>
+        <width>
+          <xsl:value-of select="format-number(mscx:tenthsToMillimeters(number(.//system-layout//left-margin)) div $spatium, '0.00')"/>
+        </width>
+      </HBox>
+    </xsl:if>
     <Measure>
       <xsl:attribute name="number"><xsl:value-of select="@number"/></xsl:attribute>
       <xsl:if test="following-sibling::measure[1]/print[@new-system = 'yes']">
@@ -265,12 +288,12 @@
       <xsl:for-each select="distinct-values(note[staff = $staff or not(staff)]/voice)">
         <xsl:variable name="voice" select="."/>
         <voice>
+          <xsl:apply-templates select="$measure/barline[@location = 'left']"/>
           <xsl:if test="position() = 1">
             <xsl:apply-templates select="$measure/attributes/clef[@number = $staff or not(@number)]"/>
             <xsl:apply-templates select="$measure/attributes/key[@number = $staff or not(@number)]"/>
             <xsl:apply-templates select="$measure/attributes/time[@number = $staff or not(@number)]"/>
           </xsl:if>
-          <xsl:apply-templates select="$measure/barline[@location = 'left']"/>
           <xsl:apply-templates select="$measure/note[
             (staff = $staff or not(staff)) and
             voice = $voice and
@@ -283,6 +306,13 @@
         </voice>
       </xsl:for-each>
     </Measure>
+    <xsl:if test="number(.//system-layout//right-margin) != 0">
+      <HBox>
+        <width>
+          <xsl:value-of select="format-number(mscx:tenthsToMillimeters(number(.//system-layout//right-margin)) div $spatium, '0.00')"/>
+        </width>
+      </HBox>
+    </xsl:if>
   </xsl:template>
 
   <!--
@@ -339,6 +369,7 @@
   <xsl:template match="barline">
     <BarLine>
       <xsl:choose>
+        <xsl:when test="repeat and @location = 'left'"><visible>0</visible></xsl:when>
         <xsl:when test="bar-style = 'dashed'"><xsl:message>[barline] Unhandled bar style '<xsl:value-of select="bar-style"/>'</xsl:message></xsl:when>
         <xsl:when test="bar-style = 'dotted'"><xsl:message>[barline] Unhandled bar style '<xsl:value-of select="bar-style"/>'</xsl:message></xsl:when>
         <xsl:when test="bar-style = 'heavy'"><xsl:message>[barline] Unhandled bar style '<xsl:value-of select="bar-style"/>'</xsl:message></xsl:when>
@@ -355,10 +386,49 @@
     </BarLine>
   </xsl:template>
 
+  <xsl:template match="barline[ending]" mode="noteSibling">
+    <Spanner type="Volta">
+      <xsl:choose>
+        <xsl:when test="ending/@type = 'start'">
+          <xsl:variable name="end" select="((ancestor::measure, ancestor::measure/following-sibling::measure)/barline[
+            ending[@type = ('stop', 'discontinue') and @number = current()/ending/@number]
+          ])[1]"/>
+          <Volta>
+            <endHookType><xsl:value-of select="if ($end/ending/@type = 'stop') then 1 else 0"/></endHookType>
+            <beginText><xsl:value-of select="ending/text()"/></beginText>
+            <endings><xsl:value-of select="ending/@number"/></endings>
+          </Volta>
+          <next>
+            <xsl:call-template name="location">
+              <xsl:with-param name="start" select="."/>
+              <xsl:with-param name="end" select="$end"/>
+              <xsl:with-param name="sign" select="1"/>
+              <xsl:with-param name="fraction" select="false()"/>
+            </xsl:call-template>
+          </next>
+        </xsl:when>
+        <xsl:when test="ending/@type = ('stop', 'discontinue')">
+          <prev>
+            <xsl:variable name="start" select="((ancestor::measure, ancestor::measure/preceding-sibling::measure)/barline[
+              ending[@type = 'start' and @number = current()/ending/@number]
+            ])[last()]"/>
+            <xsl:call-template name="location">
+              <xsl:with-param name="start" select="$start"/>
+              <xsl:with-param name="end" select="."/>
+              <xsl:with-param name="sign" select="-1"/>
+              <xsl:with-param name="fraction" select="false()"/>
+            </xsl:call-template>
+          </prev>
+        </xsl:when>
+        <xsl:otherwise><xsl:message>[ending] Unhandled type '<xsl:value-of select="ending/@type"/>'.</xsl:message></xsl:otherwise>
+      </xsl:choose>
+    </Spanner>
+  </xsl:template>
+
   <!--
     Template: Measure > Rehersal Mark.
   -->
-  <xsl:template match="direction[direction-type/rehearsal]">
+  <xsl:template match="direction[direction-type/rehearsal]" mode="noteSibling">
     <RehearsalMark>
       <text>
         <xsl:call-template name="text">
@@ -371,7 +441,7 @@
   <!--
     Template: Measure > Harmony.
   -->
-  <xsl:template match="harmony">
+  <xsl:template match="harmony" mode="noteSibling">
     <Harmony>
       <root><xsl:value-of select="mscx:noteToTpc(root)"/></root>
       <name><xsl:value-of select="kind/@text"/></name>
@@ -391,11 +461,11 @@
 
     <!-- Place previous measure's tailing directives at the head of this measure. -->
     <xsl:if test="not(preceding-sibling::note)">
-      <xsl:apply-templates select="musicxml:followingMeasureElements((ancestor::measure/preceding-sibling::measure/note[not(chord)])[last()])[not(local-name(.) = ('attributes', 'barline'))]"/>
+      <xsl:apply-templates select="musicxml:followingMeasureElements((ancestor::measure/preceding-sibling::measure/note[not(chord)])[last()])[not(local-name(.) = ('attributes'))]" mode="noteSibling"/>
     </xsl:if>
 
     <!-- Note directives. -->
-    <xsl:apply-templates select="musicxml:precedingMeasureElements(.)[not(local-name(.) = ('attributes', 'barline'))]"/>
+    <xsl:apply-templates select="musicxml:precedingMeasureElements(.)[not(local-name(.) = ('attributes'))]" mode="noteSibling"/>
 
     <!-- Tuplet -->
     <xsl:if test="notations/tuplet[@type = 'start']">
@@ -486,7 +556,7 @@
   <!--
     Template: Note > Dynamics.
   -->
-  <xsl:template match="direction[sound[@dynamics]]">
+  <xsl:template match="direction[sound[@dynamics]]" mode="noteSibling">
     <Dynamic>
       <xsl:if test="direction-type/dynamics">
         <subtype><xsl:value-of select="direction-type/dynamics/local-name(*[1])"/></subtype>
@@ -494,6 +564,7 @@
       <velocity><xsl:value-of select="round(number(sound/@dynamics) * 90 div 100)"/></velocity>
     </Dynamic>
   </xsl:template>
+
   <xsl:template match="sound[@dynamics]">
     <Dynamic>
       <velocity><xsl:value-of select="round(number(@dynamics) * 90 div 100)"/></velocity>
@@ -503,7 +574,7 @@
   <!--
     Template: Note > Tempo.
   -->
-  <xsl:template match="direction[sound[@tempo]]">
+  <xsl:template match="direction[sound[@tempo]]" mode="noteSibling">
     <Tempo>
       <tempo><xsl:value-of select="sound/@tempo div 60"/></tempo>
       <followText>1</followText>
@@ -522,6 +593,7 @@
       </text>
     </Tempo>
   </xsl:template>
+
   <xsl:template match="sound[@tempo]">
     <Tempo>
       <tempo><xsl:value-of select="@tempo div 60"/></tempo>
@@ -533,7 +605,7 @@
   <!--
     Template: Note > Words.
   -->
-  <xsl:template match="direction[direction-type/words]">
+  <xsl:template match="direction[direction-type/words]" mode="noteSibling">
     <StaffText>
       <text><xsl:call-template name="text"><xsl:with-param name="node" select="direction-type/words"/></xsl:call-template></text>
     </StaffText>
@@ -544,7 +616,7 @@
 
     Only handle last directive to avoid confusing MuseScore.
   -->
-  <xsl:template match="backup | forward">
+  <xsl:template match="backup | forward" mode="noteSibling">
     <xsl:if test="following-sibling::note/(preceding-sibling::backup | preceding-sibling::forward)[last()]/generate-id() = generate-id()">
       <location>
         <fractions>
@@ -575,7 +647,7 @@
   <!--
     Template: Note > Wedge
   -->
-  <xsl:template match="direction[direction-type/wedge]">
+  <xsl:template match="direction[direction-type/wedge]" mode="noteSibling">
     <Spanner type="HairPin">
       <xsl:choose>
         <xsl:when test="direction-type/wedge/@type = ('crescendo', 'diminuendo')">
@@ -585,28 +657,30 @@
           </HairPin>
           <next>
             <xsl:variable name="end" select="((ancestor::measure, ancestor::measure/following-sibling::measure)/direction[
-              direction-type/wedge[@type = 'stop' and (not(@number) or @number = current()/@number)]
+              direction-type/wedge[@type = 'stop' and (not(@number) or @number = current()/direction-type/wedge/@number)]
             ])[1]"/>
             <xsl:call-template name="location">
               <xsl:with-param name="start" select="."/>
               <xsl:with-param name="end" select="$end"/>
               <xsl:with-param name="sign" select="1"/>
+              <xsl:with-param name="fraction" select="true()"/>
             </xsl:call-template>
           </next>
         </xsl:when>
         <xsl:when test="direction-type/wedge/@type = 'stop'">
           <prev>
             <xsl:variable name="start" select="((ancestor::measure, ancestor::measure/preceding-sibling::measure)/direction[
-              (direction-type/wedge[@type = ('crescendo', 'diminuendo') and (not(@number) or @number = current()/direction-type/wedge/@number)])
+              direction-type/wedge[@type = ('crescendo', 'diminuendo') and (not(@number) or @number = current()/direction-type/wedge/@number)]
             ])[last()]"/>
             <xsl:call-template name="location">
               <xsl:with-param name="start" select="$start"/>
               <xsl:with-param name="end" select="."/>
               <xsl:with-param name="sign" select="-1"/>
+              <xsl:with-param name="fraction" select="true()"/>
             </xsl:call-template>
           </prev>
         </xsl:when>
-        <xsl:otherwise><xsl:message>[<xsl:value-of select="wedge"/>] Unhandled type '<xsl:value-of select="direction-type/wedge/@type"/>'.</xsl:message></xsl:otherwise>
+        <xsl:otherwise><xsl:message>[wedge] Unhandled type '<xsl:value-of select="direction-type/wedge/@type"/>'.</xsl:message></xsl:otherwise>
       </xsl:choose>
     </Spanner>
   </xsl:template>
@@ -644,6 +718,7 @@
               <xsl:with-param name="start" select="ancestor::note"/>
               <xsl:with-param name="end" select="$end"/>
               <xsl:with-param name="sign" select="1"/>
+              <xsl:with-param name="fraction" select="true()"/>
             </xsl:call-template>
           </next>
         </xsl:when>
@@ -658,6 +733,7 @@
               <xsl:with-param name="start" select="$start"/>
               <xsl:with-param name="end" select="ancestor::note"/>
               <xsl:with-param name="sign" select="-1"/>
+              <xsl:with-param name="fraction" select="true()"/>
             </xsl:call-template>
           </prev>
         </xsl:when>
@@ -794,30 +870,40 @@
     <xsl:param name="start"/>
     <xsl:param name="end"/>
     <xsl:param name="sign" as="xs:integer"/>
+    <xsl:param name="fraction" as="xs:boolean"/>
     <location>
       <xsl:choose>
         <xsl:when test="generate-id($end/ancestor::measure) = generate-id($start/ancestor::measure)">
-          <xsl:variable name="notes" select="$end/preceding-sibling::note[
-            preceding-sibling::*[generate-id(.) = generate-id($start)] or
-            generate-id(.) = generate-id($start)
-          ]"/>
-          <fractions>
-            <xsl:value-of select="$sign * sum(for-each($notes, function($note) { musicxml:accumulatorAfter('noteDuration', $note) }))"/>
-            <xsl:text>/</xsl:text>
-            <xsl:value-of select="musicxml:accumulatorAfter('measureDuration', $start/ancestor::measure)"/>
-          </fractions>
+          <measures>
+            <xsl:value-of select="$sign"/>
+          </measures>
+          <xsl:if test="$fraction">
+            <xsl:variable name="notes" select="$end/preceding-sibling::note[
+              preceding-sibling::*[generate-id(.) = generate-id($start)] or
+              generate-id(.) = generate-id($start)
+            ]"/>
+            <fractions>
+              <xsl:value-of select="$sign * sum(for-each($notes, function($note) { musicxml:accumulatorAfter('noteDuration', $note) }))"/>
+              <xsl:text>/</xsl:text>
+              <xsl:value-of select="musicxml:accumulatorAfter('measureDuration', $start/ancestor::measure)"/>
+            </fractions>
+          </xsl:if>
         </xsl:when>
         <xsl:otherwise>
+          <xsl:variable name="ms" select="$start/(ancestor::measure, ancestor::measure/following-sibling::measure)"/>
+          <xsl:variable name="me" select="$end/(ancestor::measure, ancestor::measure/preceding-sibling::measure)"/>
           <measures>
-            <xsl:value-of select="count($start/ancestor::measure/following-sibling::measure[generate-id(.) != generate-id($end/ancestor::measure)]) + 1"/>
+            <xsl:value-of select="$sign * count($ms[count(.|$me) = count($me)])"/>
           </measures>
-          <xsl:variable name="notesStart" select="($start/following-sibling::note, $start[local-name()='note'])"/>
-          <xsl:variable name="notesEnd" select="$end/preceding-sibling::note"/>
-          <fractions>
-            <xsl:value-of select="$sign * sum(for-each(($notesStart, $notesEnd), function($note) { musicxml:accumulatorAfter('noteDuration', $note) }))"/>
-            <xsl:text>/</xsl:text>
-            <xsl:value-of select="musicxml:accumulatorAfter('measureDuration', $end/ancestor::measure)"/>
-          </fractions>
+          <xsl:if test="$fraction">
+            <xsl:variable name="notesStart" select="($start[self::note], $start/following-sibling::note)"/>
+            <xsl:variable name="notesEnd" select="$end/preceding-sibling::note"/>
+            <fractions>
+              <xsl:value-of select="$sign * sum(for-each(($notesStart, $notesEnd), function($note) { musicxml:accumulatorAfter('noteDuration', $note) }))"/>
+              <xsl:text>/</xsl:text>
+              <xsl:value-of select="musicxml:accumulatorAfter('measureDuration', $end/ancestor::measure)"/>
+            </fractions>
+          </xsl:if>
         </xsl:otherwise>
       </xsl:choose>
     </location>
@@ -834,18 +920,10 @@
       <xsl:otherwise>
         <Style>
           <xsl:if test="//defaults/page-layout/page-width">
-            <pageWidth><xsl:value-of select="format-number(mscx:tenthsToInches(
-              number(//defaults/page-layout/page-width),
-              if (//defaults/scaling) then number(//defaults/scaling/millimeters) else $scalingMillimeters,
-              if (//defaults/scaling) then number(//defaults/scaling/tenths) else $scalingTenths
-            ), '0.00')"/></pageWidth>
+            <pageWidth><xsl:value-of select="format-number(mscx:tenthsToInches(number(//defaults/page-layout/page-width)), '0.00')"/></pageWidth>
           </xsl:if>
           <xsl:if test="//defaults/page-layout/page-height">
-            <pageHeight><xsl:value-of select="format-number(mscx:tenthsToInches(
-              number(//defaults/page-layout/page-height),
-              if (//defaults/scaling) then number(//defaults/scaling/millimeters) else $scalingMillimeters,
-              if (//defaults/scaling) then number(//defaults/scaling/tenths) else $scalingTenths
-            ), '0.00')"/></pageHeight>
+            <pageHeight><xsl:value-of select="format-number(mscx:tenthsToInches(number(//defaults/page-layout/page-height)), '0.00')"/></pageHeight>
           </xsl:if>
           <!-- TODO Derive those from MusicXML or make them global params. -->
           <pagePrintableWidth>7.5</pagePrintableWidth>
@@ -900,7 +978,7 @@
           <user10FontSize>8.25</user10FontSize>
           <user11FontSize>8.25</user11FontSize>
           <user12FontSize>8.25</user12FontSize>
-          <Spatium>1.5875</Spatium>
+          <Spatium><xsl:value-of select="$defaultSpatium"/></Spatium>
         </Style>
       </xsl:otherwise>
     </xsl:choose>
@@ -920,15 +998,11 @@
   -->
   <xsl:function name="mscx:tenthsToMillimeters" as="xs:double">
     <xsl:param name="value" as="xs:double"/>
-    <xsl:param name="scalingMillimeters" as="xs:double"/>
-    <xsl:param name="scalingTenths" as="xs:double"/>
-    <xsl:sequence select="$value * $scalingMillimeters div $scalingTenths"/>
+    <xsl:sequence select="$value * musicxml:accumulatorAfter('scalingMillimeters', $root) div musicxml:accumulatorAfter('scalingTenths', $root)"/>
   </xsl:function>
   <xsl:function name="mscx:tenthsToInches" as="xs:double">
     <xsl:param name="value" as="xs:double"/>
-    <xsl:param name="scalingMillimeters" as="xs:double"/>
-    <xsl:param name="scalingTenths" as="xs:double"/>
-    <xsl:sequence select="mscx:tenthsToMillimeters($value, $scalingMillimeters, $scalingTenths) div 25.4"/>
+    <xsl:sequence select="mscx:tenthsToMillimeters($value) div 25.4"/>
   </xsl:function>
 
   <!--

@@ -7,8 +7,8 @@
   <identification>
     <creator type="composer">Earl Warren</creator>
     <encoding>
-      <software>@infojunkie/ireal-musicxml 1.14.0</software>
-      <encoding-date>2024-10-19</encoding-date>
+      <software>@infojunkie/ireal-musicxml 2.0.2</software>
+      <encoding-date>2024-10-26</encoding-date>
       <supports element="accidental" type="no"/>
       <supports element="transpose" type="no"/>
       <supports attribute="new-page" element="print" type="yes" value="yes"/>
@@ -108,7 +108,7 @@
         <kind text="m6" use-symbols="no">minor-sixth</kind>
       </harmony>
       <barline location="left">
-        <bar-style>regular</bar-style>
+        <bar-style>none</bar-style>
       </barline>
       <note>
         <cue/>
@@ -134,7 +134,7 @@
         <kind text="9" use-symbols="no">dominant-ninth</kind>
       </harmony>
       <barline location="left">
-        <bar-style>regular</bar-style>
+        <bar-style>none</bar-style>
       </barline>
       <note>
         <cue/>
@@ -160,7 +160,7 @@
         <kind text="m6" use-symbols="no">minor-sixth</kind>
       </harmony>
       <barline location="left">
-        <bar-style>regular</bar-style>
+        <bar-style>none</bar-style>
       </barline>
       <note>
         <cue/>
@@ -213,7 +213,7 @@
         <kind text="7" use-symbols="no">dominant</kind>
       </harmony>
       <barline location="left">
-        <bar-style>regular</bar-style>
+        <bar-style>none</bar-style>
       </barline>
       <note>
         <cue/>
@@ -294,7 +294,7 @@
         <kind text="9" use-symbols="no">dominant-ninth</kind>
       </harmony>
       <barline location="left">
-        <bar-style>regular</bar-style>
+        <bar-style>none</bar-style>
         <ending number="1" type="start">1.</ending>
       </barline>
       <note>
@@ -321,7 +321,7 @@
         <kind text="7" use-symbols="no">dominant</kind>
       </harmony>
       <barline location="left">
-        <bar-style>regular</bar-style>
+        <bar-style>none</bar-style>
       </barline>
       <note>
         <cue/>
@@ -422,7 +422,7 @@
         <kind text="7" use-symbols="no">dominant</kind>
       </harmony>
       <barline location="left">
-        <bar-style>regular</bar-style>
+        <bar-style>none</bar-style>
       </barline>
       <note>
         <cue/>
@@ -461,7 +461,7 @@
     <measure number="11">
       <print new-system="yes"/>
       <barline location="left">
-        <bar-style>light-light</bar-style>
+        <bar-style>regular</bar-style>
       </barline>
       <direction placement="above">
         <direction-type>
@@ -498,7 +498,7 @@
         <kind text="7" use-symbols="no">dominant</kind>
       </harmony>
       <barline location="left">
-        <bar-style>regular</bar-style>
+        <bar-style>none</bar-style>
       </barline>
       <note>
         <cue/>
@@ -524,7 +524,7 @@
         <kind text="6" use-symbols="no">major-sixth</kind>
       </harmony>
       <barline location="left">
-        <bar-style>regular</bar-style>
+        <bar-style>none</bar-style>
       </barline>
       <note>
         <cue/>
@@ -550,7 +550,7 @@
         <kind text="6" use-symbols="no">major-sixth</kind>
       </harmony>
       <barline location="left">
-        <bar-style>regular</bar-style>
+        <bar-style>none</bar-style>
       </barline>
       <note>
         <cue/>
@@ -603,7 +603,7 @@
         <kind text="7" use-symbols="no">dominant</kind>
       </harmony>
       <barline location="left">
-        <bar-style>regular</bar-style>
+        <bar-style>none</bar-style>
       </barline>
       <note>
         <cue/>
@@ -629,7 +629,7 @@
         <kind text="7" use-symbols="no">dominant</kind>
       </harmony>
       <barline location="left">
-        <bar-style>regular</bar-style>
+        <bar-style>none</bar-style>
       </barline>
       <note>
         <cue/>
@@ -655,7 +655,7 @@
         <kind text="7" use-symbols="no">dominant</kind>
       </harmony>
       <barline location="left">
-        <bar-style>regular</bar-style>
+        <bar-style>none</bar-style>
       </barline>
       <note>
         <cue/>
@@ -676,7 +676,7 @@
     <measure number="19">
       <print new-system="yes"/>
       <barline location="left">
-        <bar-style>light-light</bar-style>
+        <bar-style>regular</bar-style>
       </barline>
       <direction placement="above">
         <direction-type>
@@ -713,7 +713,7 @@
         <kind text="m6" use-symbols="no">minor-sixth</kind>
       </harmony>
       <barline location="left">
-        <bar-style>regular</bar-style>
+        <bar-style>none</bar-style>
       </barline>
       <note>
         <cue/>
@@ -739,7 +739,7 @@
         <kind text="9" use-symbols="no">dominant-ninth</kind>
       </harmony>
       <barline location="left">
-        <bar-style>regular</bar-style>
+        <bar-style>none</bar-style>
       </barline>
       <note>
         <cue/>
@@ -765,7 +765,7 @@
         <kind text="m6" use-symbols="no">minor-sixth</kind>
       </harmony>
       <barline location="left">
-        <bar-style>regular</bar-style>
+        <bar-style>none</bar-style>
       </barline>
       <note>
         <cue/>
@@ -818,7 +818,7 @@
         <kind text="7" use-symbols="no">dominant</kind>
       </harmony>
       <barline location="left">
-        <bar-style>regular</bar-style>
+        <bar-style>none</bar-style>
       </barline>
       <note>
         <cue/>
@@ -899,7 +899,7 @@
         <kind text="9" use-symbols="no">dominant-ninth</kind>
       </harmony>
       <barline location="left">
-        <bar-style>regular</bar-style>
+        <bar-style>none</bar-style>
       </barline>
       <note>
         <cue/>
@@ -925,7 +925,7 @@
         <kind text="7" use-symbols="no">dominant</kind>
       </harmony>
       <barline location="left">
-        <bar-style>regular</bar-style>
+        <bar-style>none</bar-style>
       </barline>
       <note>
         <cue/>
