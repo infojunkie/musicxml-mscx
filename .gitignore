@@ -1,5 +1,5 @@
 node_modules
-test/data/output/*
+test/output/*
 cache/*
 !.gitkeep
 *.log

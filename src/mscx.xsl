@@ -565,7 +565,7 @@
     </Dynamic>
   </xsl:template>
 
-  <xsl:template match="sound[@dynamics]">
+  <xsl:template match="sound[@dynamics]" mode="noteSibling">
     <Dynamic>
       <velocity><xsl:value-of select="round(number(@dynamics) * 90 div 100)"/></velocity>
     </Dynamic>
@@ -594,7 +594,7 @@
     </Tempo>
   </xsl:template>
 
-  <xsl:template match="sound[@tempo]">
+  <xsl:template match="sound[@tempo]" mode="noteSibling">
     <Tempo>
       <tempo><xsl:value-of select="@tempo div 60"/></tempo>
       <followText>1</followText>
