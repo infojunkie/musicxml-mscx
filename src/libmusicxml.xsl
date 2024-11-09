@@ -100,6 +100,20 @@
   </xsl:accumulator>
 
   <!--
+    State: Current segno.
+  -->
+  <xsl:accumulator name="segno" as="xs:string" initial-value="''">
+    <xsl:accumulator-rule match="sound[@segno]" select="@segno"/>
+  </xsl:accumulator>
+
+  <!--
+    State: Current coda.
+  -->
+  <xsl:accumulator name="coda" as="xs:string" initial-value="''">
+    <xsl:accumulator-rule match="sound[@coda]" select="@coda"/>
+  </xsl:accumulator>
+
+  <!--
     State: Map of measure number to index.
   -->
   <xsl:accumulator name="measureIndex" as="map(xs:string, xs:integer)" initial-value="map {}">

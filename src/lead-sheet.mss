@@ -15,7 +15,7 @@
     <staffLowerBorder>7</staffLowerBorder>
     <staffDistance>6.5</staffDistance>
     <akkoladeDistance>6.5</akkoladeDistance>
-    <minSystemDistance>8.5</minSystemDistance>
+    <minSystemDistance>7</minSystemDistance>
     <maxSystemDistance>15</maxSystemDistance>
     <lyricsPlacement>1</lyricsPlacement>
     <lyricsPosAbove x="0" y="-2"/>
@@ -192,10 +192,10 @@
     <romanNumeralPlacement>1</romanNumeralPlacement>
     <nashvilleNumberPlacement>0</nashvilleNumberPlacement>
     <harmonyPlay>1</harmonyPlay>
-    <harmonyVoiceLiteral>1</harmonyVoiceLiteral>
+    <harmonyVoiceLiteral>0</harmonyVoiceLiteral>
     <harmonyVoicing>0</harmonyVoicing>
     <harmonyDuration>0</harmonyDuration>
-    <chordSymbolPosAbove x="0" y="-2.5"/>
+    <chordSymbolPosAbove x="0" y="-1"/>
     <chordSymbolPosBelow x="0" y="3.5"/>
     <chordSymbolBPosAbove x="0" y="-5"/>
     <chordSymbolBPosBelow x="0" y="3.5"/>
@@ -334,13 +334,13 @@
     <oddHeaderR></oddHeaderR>
     <showFooter>1</showFooter>
     <footerFirstPage>1</footerFirstPage>
-    <footerOddEven>1</footerOddEven>
-    <evenFooterL>$p</evenFooterL>
-    <evenFooterC>$:copyright:</evenFooterC>
+    <footerOddEven>0</footerOddEven>
+    <evenFooterL></evenFooterL>
+    <evenFooterC></evenFooterC>
     <evenFooterR></evenFooterR>
-    <oddFooterL></oddFooterL>
-    <oddFooterC>$:copyright:</oddFooterC>
-    <oddFooterR>$p</oddFooterR>
+    <oddFooterL>$P / $n</oddFooterL>
+    <oddFooterC></oddFooterC>
+    <oddFooterR>$:workTitle:</oddFooterR>
     <voltaPosAbove x="0" y="-3"/>
     <voltaHook>1.9</voltaHook>
     <voltaLineWidth>0.1</voltaLineWidth>
@@ -1099,6 +1099,8 @@
     <figuredBassMinDistance>0.5</figuredBassMinDistance>
     <tupletMinDistance>0.5</tupletMinDistance>
     <autoplaceEnabled>1</autoplaceEnabled>
+    <enableIndentationOnFirstSystem>0</enableIndentationOnFirstSystem>
+    <firstSystemIndentationValue>5.00</firstSystemIndentationValue>
     <Spatium>1.76389</Spatium>
     </Style>
   </museScore>
