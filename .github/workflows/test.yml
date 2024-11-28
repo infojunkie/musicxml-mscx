@@ -18,9 +18,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install MuseScore
       run: |
-        sudo apt-get update
-        sudo apt-get -y install musescore3
-        sudo ln -s /usr/bin/mscore3 /usr/bin/mscore
+        wget https://github.com/musescore/MuseScore/releases/download/v4.4.3/MuseScore-Studio-4.4.3.242971445-x86_64.AppImage
+        chmod +x MuseScore-Studio-4.4.3.242971445-x86_64.AppImage
+        sudo ln -s MuseScore-Studio-4.4.3.242971445-x86_64.AppImage /usr/bin/mscore
     - run: npm install
     - run: QT_QPA_PLATFORM=offscreen npm test
       env:
