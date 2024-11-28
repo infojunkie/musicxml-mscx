@@ -19,7 +19,7 @@ jobs:
     - name: Install MuseScore
       run: |
         sudo apt update -y
-        sudo apt install -y software-properties-common
+        sudo apt install -y software-properties-common libjack0 libasound2 libgl1 libglib2.0-0 libnss3 libfontconfig1 libegl1-mesa
         sudo add-apt-repository universe
         sudo apt install -y libfuse2
         wget https://github.com/musescore/MuseScore/releases/download/v4.4.3/MuseScore-Studio-4.4.3.242971445-x86_64.AppImage
