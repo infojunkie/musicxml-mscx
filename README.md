@@ -11,14 +11,13 @@ MusicXML to MuseScore converter and back.
 - `npm run --silent convert:mscx /path/to/score.musicxml instrumentsFile=/path/to/MuseScore/share/instruments/instruments.xml styleFile=/path/to/MuseScore/stylesheet.mss`
 
 # Examples
+Screenshot of a score converted with a specialized stylesheet file.
 
 ![Screenshot of a score converted with a specialized stylesheet file.](https://github.com/infojunkie/musicxml-mscx/blob/main/9-20-special.png?raw=true)
 
-Screenshot of a score converted with a specialized stylesheet file.
+Screenshot of a score with accidentals, including microtonal accidentals.
 
 ![Screenshot of a score with accidentals, including microtonal accidentals.](https://github.com/infojunkie/musicxml-mscx/blob/main/01f-Pitches-ParenthesizedMicrotoneAccidentals.png?raw=true)
-
-Screenshot of a score with accidentals, including microtonal accidentals.
 
 # Theory of operation
 Why write a new converter between MusicXML and MuseScore, when MuseScore itself already does 2-way conversion?
