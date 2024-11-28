@@ -19,7 +19,7 @@ jobs:
     - name: Install MuseScore
       run: |
         sudo apt-get update
-        sudo apt-get -y install musescore
+        sudo apt-get -y install musescore3
     - run: npm install
     - run: QT_QPA_PLATFORM=offscreen npm test
       env:
