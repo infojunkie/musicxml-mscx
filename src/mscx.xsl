@@ -293,25 +293,28 @@
         <endRepeat><xsl:value-of select="barline/repeat[@direction = 'backward']/@times"/></endRepeat>
       </xsl:if>
       <xsl:apply-templates select="direction[sound[@coda | @tocoda | @segno | @dalsegno | @dacapo]]"/>
-      <xsl:for-each select="distinct-values(note[staff = $staff or not(staff)]/voice)">
+      <xsl:for-each select="(distinct-values(note[staff = $staff or not(staff)]/voice), '__default__')">
         <xsl:variable name="voice" select="."/>
-        <voice>
-          <xsl:apply-templates select="$measure/barline[@location = 'left']"/>
-          <xsl:if test="position() = 1">
-            <xsl:apply-templates select="$measure/attributes/clef[@number = $staff or not(@number)]"/>
-            <xsl:apply-templates select="$measure/attributes/key[@number = $staff or not(@number)]"/>
-            <xsl:apply-templates select="$measure/attributes/time[@number = $staff or not(@number)]"/>
-          </xsl:if>
-          <xsl:apply-templates select="$measure/note[
-            (staff = $staff or not(staff)) and
-            voice = $voice and
-            (not(chord) or preceding-sibling::note[1]/staff != $staff)
-          ]" mode="chord">
-            <xsl:with-param name="staff" select="$staff"/>
-            <xsl:with-param name="voice" select="$voice"/>
-          </xsl:apply-templates>
-          <xsl:apply-templates select="$measure/barline[@location = 'right']"/>
-        </voice>
+        <!-- Skip default voice if it's not the only one. -->
+        <xsl:if test="$voice != '__default__' or position() = 1">
+          <voice>
+            <xsl:apply-templates select="$measure/barline[@location = 'left']"/>
+            <xsl:if test="position() = 1">
+              <xsl:apply-templates select="$measure/attributes/clef[@number = $staff or not(@number)]"/>
+              <xsl:apply-templates select="$measure/attributes/key[@number = $staff or not(@number)]"/>
+              <xsl:apply-templates select="$measure/attributes/time[@number = $staff or not(@number)]"/>
+            </xsl:if>
+            <xsl:apply-templates select="$measure/note[
+              (staff = $staff or not(staff)) and
+              (voice = $voice or not(voice)) and
+              (not(chord) or preceding-sibling::note[1]/staff != $staff)
+            ]" mode="chord">
+              <xsl:with-param name="staff" select="$staff"/>
+              <xsl:with-param name="voice" select="$voice"/>
+            </xsl:apply-templates>
+            <xsl:apply-templates select="$measure/barline[@location = 'right']"/>
+          </voice>
+        </xsl:if>
       </xsl:for-each>
     </Measure>
     <xsl:if test="number(.//system-layout//right-margin) != 0">
@@ -365,8 +368,16 @@
     <TimeSig>
       <xsl:choose>
         <xsl:when test="not(@symbol) or @symbol = 'normal'"></xsl:when>
-        <xsl:when test="@symbol = 'common'"><subtype>1</subtype></xsl:when>
-        <xsl:when test="@symbol = 'cut'"><subtype>2</subtype></xsl:when>
+        <xsl:when test="@symbol = 'common'">
+          <xsl:if test="beats = '4' and beat-type = '4'">
+            <subtype>1</subtype>
+          </xsl:if>
+        </xsl:when>
+        <xsl:when test="@symbol = 'cut'">
+          <xsl:if test="beats = '2' and beat-type = '2'">
+            <subtype>2</subtype>
+          </xsl:if>
+        </xsl:when>
         <xsl:otherwise><xsl:message>[clef] Unhandled time symbol '<xsl:value-of select="@symbol"/>'</xsl:message></xsl:otherwise>
       </xsl:choose>
       <sigN><xsl:value-of select="beats"/></sigN>
@@ -859,6 +870,23 @@
   <xsl:template match="pitch">
     <pitch><xsl:value-of select="mscx:noteToPitch(.)"/></pitch>
     <tpc><xsl:value-of select="mscx:noteToTpc(.)"/></tpc>
+    <tuning><xsl:value-of select="mscx:noteToTuning(.)"/></tuning>
+    <xsl:if test="not(../accidental)">
+      <xsl:choose>
+        <xsl:when test="number(alter) = -1.5">
+          <Accidental><role>1</role><subtype>accidentalThreeQuarterTonesFlatZimmermann</subtype></Accidental>
+        </xsl:when>
+        <xsl:when test="number(alter) = -0.5">
+          <Accidental><role>1</role><subtype>accidentalQuarterToneFlatStein</subtype></Accidental>
+        </xsl:when>
+        <xsl:when test="number(alter) = 1.5">
+          <Accidental><role>1</role><subtype>accidentalThreeQuarterTonesSharpStein</subtype></Accidental>
+        </xsl:when>
+        <xsl:when test="number(alter) = 0.5">
+          <Accidental><role>1</role><subtype>accidentalQuarterToneSharpStein</subtype></Accidental>
+        </xsl:when>
+      </xsl:choose>
+    </xsl:if>
   </xsl:template>
 
   <!--
@@ -866,55 +894,60 @@
     @see https://github.com/musescore/MuseScore/blob/v4.4.2/src/importexport/musicxml/internal/musicxml/musicxmlsupport.cpp#mxmlString2accSymId
 
     TODO
-    - Handle user-created accidentals with <role>1</role>
-    - Handle brackets
     - Handle small
     - Handle offset
   -->
   <xsl:template match="accidental">
     <Accidental>
+      <xsl:if test="@editorial = 'yes' or @bracket = 'yes' or @cautionary = 'yes' or @parentheses = 'yes' or text() = 'natural'">
+        <role>1</role>
+      </xsl:if>
+      <xsl:choose>
+        <xsl:when test="@bracket = 'yes' or (@editorial = 'yes' and not(@bracket = 'no'))"><bracket>2</bracket></xsl:when>
+        <xsl:when test="@parentheses = 'yes' or (@cautionary = 'yes' and not(@parentheses = 'no'))"><bracket>1</bracket></xsl:when>
+      </xsl:choose>
       <xsl:choose>
         <xsl:when test="@smufl"><subtype><xsl:value-of select="@smufl"/></subtype></xsl:when>
-        <xsl:when test="text()='sharp'"><subtype>accidentalSharp</subtype></xsl:when>
-        <xsl:when test="text()='natural'"><subtype>accidentalNatural</subtype></xsl:when>
-        <xsl:when test="text()='flat'"><subtype>accidentalFlat</subtype></xsl:when>
-        <xsl:when test="text()='double-sharp'"><subtype>accidentalDoubleSharp</subtype></xsl:when>
-        <xsl:when test="text()='sharp-sharp'"><subtype>accidentalDoubleSharp</subtype></xsl:when>
-        <xsl:when test="text()='flat-flat'"><subtype>accidentalDoubleFlat</subtype></xsl:when>
-        <xsl:when test="text()='natural-sharp'"><subtype>accidentalNaturalSharp</subtype></xsl:when>
-        <xsl:when test="text()='natural-flat'"><subtype>accidentalNaturalFlat</subtype></xsl:when>
-        <xsl:when test="text()='quarter-flat'"><subtype>accidentalQuarterToneFlatStein</subtype></xsl:when>
-        <xsl:when test="text()='quarter-sharp'"><subtype>accidentalQuarterToneSharpStein</subtype></xsl:when>
-        <xsl:when test="text()='three-quarters-flat'"><subtype>accidentalThreeQuarterTonesFlatZimmermann</subtype></xsl:when>
-        <xsl:when test="text()='three-quarters-sharp'"><subtype>accidentalThreeQuarterTonesSharpStein</subtype></xsl:when>
-        <xsl:when test="text()='sharp-down'"><subtype>accidentalQuarterToneSharpArrowDown</subtype></xsl:when>
-        <xsl:when test="text()='sharp-up'"><subtype>accidentalThreeQuarterTonesSharpArrowUp</subtype></xsl:when>
-        <xsl:when test="text()='natural-down'"><subtype>accidentalQuarterToneFlatNaturalArrowDown</subtype></xsl:when>
-        <xsl:when test="text()='natural-up'"><subtype>accidentalQuarterToneFlatNaturalArrowUp</subtype></xsl:when>
-        <xsl:when test="text()='flat-down'"><subtype>accidentalThreeQuarterTonesFlatArrowDown</subtype></xsl:when>
-        <xsl:when test="text()='flat-up'"><subtype>accidentalQuarterToneFlatArrowUp</subtype></xsl:when>
-        <xsl:when test="text()='double-sharp-down'"><subtype>accidentalThreeQuarterTonesSharpArrowDown</subtype></xsl:when>
-        <xsl:when test="text()='double-sharp-up'"><subtype>accidentalFiveQuarterTonesSharpArrowUp</subtype></xsl:when>
-        <xsl:when test="text()='flat-flat-down'"><subtype>accidentalFiveQuarterTonesFlatArrowDown</subtype></xsl:when>
-        <xsl:when test="text()='flat-flat-up'"><subtype>accidentalThreeQuarterTonesFlatArrowUp</subtype></xsl:when>
-        <xsl:when test="text()='arrow-down'"><subtype>accidentalArrowDown</subtype></xsl:when>
-        <xsl:when test="text()='arrow-up'"><subtype>accidentalArrowUp</subtype></xsl:when>
-        <xsl:when test="text()='triple-sharp'"><subtype>accidentalTripleSharp</subtype></xsl:when>
-        <xsl:when test="text()='triple-flat'"><subtype>accidentalTripleFlat</subtype></xsl:when>
-        <xsl:when test="text()='slash-quarter-sharp'"><subtype>accidentalKucukMucennebSharp</subtype></xsl:when>
-        <xsl:when test="text()='slash-sharp'"><subtype>accidentalBuyukMucennebSharp</subtype></xsl:when>
-        <xsl:when test="text()='slash-flat'"><subtype>accidentalBakiyeFlat</subtype></xsl:when>
-        <xsl:when test="text()='double-slash-flat'"><subtype>accidentalBuyukMucennebFlat</subtype></xsl:when>
-        <xsl:when test="text()='sharp-1'"><subtype>accidental1CommaSharp</subtype></xsl:when>
-        <xsl:when test="text()='sharp-2'"><subtype>accidental2CommaSharp</subtype></xsl:when>
-        <xsl:when test="text()='sharp-3'"><subtype>accidental3CommaSharp</subtype></xsl:when>
-        <xsl:when test="text()='sharp-5'"><subtype>accidental5CommaSharp</subtype></xsl:when>
-        <xsl:when test="text()='flat-1'"><subtype>accidental1CommaFlat</subtype></xsl:when>
-        <xsl:when test="text()='flat-2'"><subtype>accidental2CommaFlat</subtype></xsl:when>
-        <xsl:when test="text()='flat-3'"><subtype>accidental3CommaFlat</subtype></xsl:when>
-        <xsl:when test="text()='flat-4'"><subtype>accidental4CommaFlat</subtype></xsl:when>
-        <xsl:when test="text()='sori'"><subtype>accidentalSori</subtype></xsl:when>
-        <xsl:when test="text()='koron'"><subtype>accidentalKoron</subtype></xsl:when>
+        <xsl:when test="text() = 'sharp'"><subtype>accidentalSharp</subtype></xsl:when>
+        <xsl:when test="text() = 'natural'"><subtype>accidentalNatural</subtype></xsl:when>
+        <xsl:when test="text() = 'flat'"><subtype>accidentalFlat</subtype></xsl:when>
+        <xsl:when test="text() = 'double-sharp'"><subtype>accidentalDoubleSharp</subtype></xsl:when>
+        <xsl:when test="text() = 'sharp-sharp'"><subtype>accidentalDoubleSharp</subtype></xsl:when>
+        <xsl:when test="text() = 'flat-flat'"><subtype>accidentalDoubleFlat</subtype></xsl:when>
+        <xsl:when test="text() = 'natural-sharp'"><subtype>accidentalNaturalSharp</subtype></xsl:when>
+        <xsl:when test="text() = 'natural-flat'"><subtype>accidentalNaturalFlat</subtype></xsl:when>
+        <xsl:when test="text() = 'quarter-flat'"><subtype>accidentalQuarterToneFlatStein</subtype></xsl:when>
+        <xsl:when test="text() = 'quarter-sharp'"><subtype>accidentalQuarterToneSharpStein</subtype></xsl:when>
+        <xsl:when test="text() = 'three-quarters-flat'"><subtype>accidentalThreeQuarterTonesFlatZimmermann</subtype></xsl:when>
+        <xsl:when test="text() = 'three-quarters-sharp'"><subtype>accidentalThreeQuarterTonesSharpStein</subtype></xsl:when>
+        <xsl:when test="text() = 'sharp-down'"><subtype>accidentalQuarterToneSharpArrowDown</subtype></xsl:when>
+        <xsl:when test="text() = 'sharp-up'"><subtype>accidentalThreeQuarterTonesSharpArrowUp</subtype></xsl:when>
+        <xsl:when test="text() = 'natural-down'"><subtype>accidentalQuarterToneFlatNaturalArrowDown</subtype></xsl:when>
+        <xsl:when test="text() = 'natural-up'"><subtype>accidentalQuarterToneFlatNaturalArrowUp</subtype></xsl:when>
+        <xsl:when test="text() = 'flat-down'"><subtype>accidentalThreeQuarterTonesFlatArrowDown</subtype></xsl:when>
+        <xsl:when test="text() = 'flat-up'"><subtype>accidentalQuarterToneFlatArrowUp</subtype></xsl:when>
+        <xsl:when test="text() = 'double-sharp-down'"><subtype>accidentalThreeQuarterTonesSharpArrowDown</subtype></xsl:when>
+        <xsl:when test="text() = 'double-sharp-up'"><subtype>accidentalFiveQuarterTonesSharpArrowUp</subtype></xsl:when>
+        <xsl:when test="text() = 'flat-flat-down'"><subtype>accidentalFiveQuarterTonesFlatArrowDown</subtype></xsl:when>
+        <xsl:when test="text() = 'flat-flat-up'"><subtype>accidentalThreeQuarterTonesFlatArrowUp</subtype></xsl:when>
+        <xsl:when test="text() = 'arrow-down'"><subtype>accidentalArrowDown</subtype></xsl:when>
+        <xsl:when test="text() = 'arrow-up'"><subtype>accidentalArrowUp</subtype></xsl:when>
+        <xsl:when test="text() = 'triple-sharp'"><subtype>accidentalTripleSharp</subtype></xsl:when>
+        <xsl:when test="text() = 'triple-flat'"><subtype>accidentalTripleFlat</subtype></xsl:when>
+        <xsl:when test="text() = 'slash-quarter-sharp'"><subtype>accidentalKucukMucennebSharp</subtype></xsl:when>
+        <xsl:when test="text() = 'slash-sharp'"><subtype>accidentalBuyukMucennebSharp</subtype></xsl:when>
+        <xsl:when test="text() = 'slash-flat'"><subtype>accidentalBakiyeFlat</subtype></xsl:when>
+        <xsl:when test="text() = 'double-slash-flat'"><subtype>accidentalBuyukMucennebFlat</subtype></xsl:when>
+        <xsl:when test="text() = 'sharp-1'"><subtype>accidental1CommaSharp</subtype></xsl:when>
+        <xsl:when test="text() = 'sharp-2'"><subtype>accidental2CommaSharp</subtype></xsl:when>
+        <xsl:when test="text() = 'sharp-3'"><subtype>accidental3CommaSharp</subtype></xsl:when>
+        <xsl:when test="text() = 'sharp-5'"><subtype>accidental5CommaSharp</subtype></xsl:when>
+        <xsl:when test="text() = 'flat-1'"><subtype>accidental1CommaFlat</subtype></xsl:when>
+        <xsl:when test="text() = 'flat-2'"><subtype>accidental2CommaFlat</subtype></xsl:when>
+        <xsl:when test="text() = 'flat-3'"><subtype>accidental3CommaFlat</subtype></xsl:when>
+        <xsl:when test="text() = 'flat-4'"><subtype>accidental4CommaFlat</subtype></xsl:when>
+        <xsl:when test="text() = 'sori'"><subtype>accidentalSori</subtype></xsl:when>
+        <xsl:when test="text() = 'koron'"><subtype>accidentalKoron</subtype></xsl:when>
         <xsl:otherwise><xsl:message>[accidental] Unhandled value '<xsl:value-of select="text()"/>'</xsl:message></xsl:otherwise>
       </xsl:choose>
     </Accidental>
@@ -1073,7 +1106,8 @@
   <xsl:function name="mscx:noteToTpc" as="xs:double">
     <xsl:param name="note"/>
     <xsl:variable name="step" select="($note/root-step, $note/bass-step, $note/step)[1]"/>
-    <xsl:variable name="alter" select="($note/root-alter, $note/bass-alter, $note/alter)[1]"/>
+    <xsl:variable name="alter" select="number(($note/root-alter, $note/bass-alter, $note/alter, 0)[1])"/>
+    <xsl:variable name="useAlter" select="$alter - round($alter) = 0 and abs($alter) &lt;= 2"/>
     <xsl:variable name="tpc" as="xs:integer">
       <xsl:choose>
         <xsl:when test="$step='C'">14</xsl:when>
@@ -1085,7 +1119,7 @@
         <xsl:when test="$step='B'">19</xsl:when>
       </xsl:choose>
     </xsl:variable>
-    <xsl:sequence select="$tpc + (7 * floor(number(if ($alter) then $alter else 0)))"/>
+    <xsl:sequence select="$tpc + (7 * (if ($useAlter) then $alter else 0))"/>
   </xsl:function>
 
   <!--
@@ -1093,6 +1127,8 @@
   -->
   <xsl:function name="mscx:noteToPitch" as="xs:double">
     <xsl:param name="note"/>
+    <xsl:variable name="alter" select="number(($note/alter, 0)[1])"/>
+    <xsl:variable name="useAlter" select="$alter - round($alter) = 0 and abs($alter) &lt;= 2"/>
     <xsl:variable name="pitch" as="xs:integer">
       <xsl:choose>
         <xsl:when test="$note/step='C'">0</xsl:when>
@@ -1104,6 +1140,17 @@
         <xsl:when test="$note/step='B'">11</xsl:when>
       </xsl:choose>
     </xsl:variable>
-    <xsl:sequence select="$pitch + (12 * ($note/octave + 1)) + floor(number(if ($note/alter) then $note/alter else 0))"/>
+    <xsl:sequence select="$pitch + (12 * ($note/octave + 1)) + (if ($useAlter) then $alter else 0)"/>
   </xsl:function>
+
+  <!--
+    Function: Convert note to tuning.
+  -->
+  <xsl:function name="mscx:noteToTuning" as="xs:double">
+    <xsl:param name="note"/>
+    <xsl:variable name="alter" select="number(($note/alter, 0)[1])"/>
+    <xsl:variable name="useAlter" select="$alter - round($alter) != 0 or abs($alter) &gt; 2"/>
+    <xsl:sequence select="100 * (if ($useAlter) then $alter else 0)"/>
+  </xsl:function>
+
 </xsl:stylesheet>

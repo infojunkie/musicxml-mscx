@@ -16,6 +16,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Install MuseScore
+      run: |
+        sudo apt-get update
+        sudo apt-get -y install musescore
     - run: npm install
     - run: npm test
       env:
