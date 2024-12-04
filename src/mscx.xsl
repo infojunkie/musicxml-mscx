@@ -217,9 +217,6 @@
     <xsl:param name="lines"/>
     <xsl:variable name="midi-instrument" select="../midi-instrument[@id = current()/@id]"/>
     <xsl:variable name="note" select="($root//note[instrument/@id = current()/@id])[1]"/>
-    <xsl:message>
-    NOTE <xsl:value-of select="count($note)"/>
-    </xsl:message>
     <Drum>
       <xsl:choose>
         <xsl:when test="$note/notehead"><xsl:apply-templates select="$note/notehead"/></xsl:when>
