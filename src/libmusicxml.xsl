@@ -114,6 +114,14 @@
   </xsl:accumulator>
 
   <!--
+    State: Current measure repeat mode.
+  -->
+  <xsl:accumulator name="measureRepeat" as="element()*" initial-value="()">
+    <xsl:accumulator-rule match="measure/attributes/measure-style/measure-repeat[@type = 'start']" select="."/>
+    <xsl:accumulator-rule match="measure/attributes/measure-style/measure-repeat[@type = 'stop']" select="()"/>
+  </xsl:accumulator>
+
+  <!--
     State: Map of measure number to index.
   -->
   <xsl:accumulator name="measureIndex" as="map(xs:string, xs:integer)" initial-value="map {}">

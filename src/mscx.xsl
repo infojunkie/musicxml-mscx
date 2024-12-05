@@ -196,13 +196,12 @@
           <clef>PERC</clef>
         </xsl:if>
         <xsl:copy-of select="$instruments/museScore/Articulation"/>
-        <!-- TODO Channel -->
         <Channel>
-          <controller ctrl="0" value="1"/>
-          <controller ctrl="32" value="0"/>
-          <program value="0"/>
-          <controller ctrl="7" value="101"/>
-          <controller ctrl="10" value="63"/>
+          <controller ctrl="0"><xsl:attribute name="value" select="floor(number((midi-instrument/midi-bank[1], 128)[1]) div 128)"/></controller>
+          <controller ctrl="32"><xsl:attribute name="value" select="number((midi-instrument/midi-bank[1], 0)[1]) mod 128"/></controller>
+          <program><xsl:attribute name="value" select="number((midi-instrument/midi-program[1], 1)[1]) - 1"/></program>
+          <controller ctrl="7"><xsl:attribute name="value" select="floor(number((midi-instrument/volume[1], 80)[1]) * 127 div 100)"/></controller>
+          <controller ctrl="10"><xsl:attribute name="value" select="floor((number((midi-instrument/pan[1], 0)[1]) + 180) * 127 div 360)"/></controller>
           <synti>Fluid</synti>
         </Channel>
        </Instrument>
@@ -215,9 +214,10 @@
   <xsl:template match="score-instrument" mode="drum">
     <xsl:param name="clef"/>
     <xsl:param name="lines"/>
-    <xsl:variable name="midi-instrument" select="../midi-instrument[@id = current()/@id]"/>
+    <xsl:variable name="instrument" select="../midi-instrument[@id = current()/@id]"/>
     <xsl:variable name="note" select="($root//note[instrument/@id = current()/@id])[1]"/>
     <Drum>
+      <xsl:attribute name="pitch" select="number($instrument/midi-unpitched) - 1"/>
       <xsl:choose>
         <xsl:when test="$note/notehead"><xsl:apply-templates select="$note/notehead"/></xsl:when>
         <xsl:otherwise><head>normal</head></xsl:otherwise>
@@ -329,35 +329,47 @@
       </xsl:if>
       <xsl:variable name="measure" select="current()"/>
       <xsl:if test="barline/repeat[@direction = 'forward']">
-        <startRepeat></startRepeat>
+        <startRepeat/>
       </xsl:if>
       <xsl:if test="barline/repeat[@direction = 'backward']">
         <endRepeat><xsl:value-of select="barline/repeat[@direction = 'backward']/@times"/></endRepeat>
       </xsl:if>
       <xsl:apply-templates select="direction[sound[@coda | @tocoda | @segno | @dalsegno | @dacapo]]"/>
-      <xsl:for-each select="(distinct-values(note[staff = $staff or not(staff)]/voice), '__default__')">
-        <xsl:variable name="voice" select="."/>
-        <!-- Skip default voice if it's not the only one. -->
-        <xsl:if test="$voice != '__default__' or position() = 1">
+      <xsl:choose>
+        <xsl:when test="accumulator-after('measureRepeat')">
           <voice>
-            <xsl:apply-templates select="$measure/barline[@location = 'left']"/>
-            <xsl:if test="position() = 1">
-              <xsl:apply-templates select="$measure/attributes/clef[@number = $staff or not(@number)]"/>
-              <xsl:apply-templates select="$measure/attributes/key[@number = $staff or not(@number)]"/>
-              <xsl:apply-templates select="$measure/attributes/time[@number = $staff or not(@number)]"/>
-            </xsl:if>
-            <xsl:apply-templates select="$measure/note[
-              (staff = $staff or not(staff)) and
-              (voice = $voice or not(voice)) and
-              (not(chord) or preceding-sibling::note[1]/staff != $staff)
-            ]" mode="chord">
-              <xsl:with-param name="staff" select="$staff"/>
-              <xsl:with-param name="voice" select="$voice"/>
-            </xsl:apply-templates>
-            <xsl:apply-templates select="$measure/barline[@location = 'right']"/>
+            <RepeatMeasure>
+              <durationType>measure</durationType>
+              <duration><xsl:value-of select="number((accumulator-after('measureRepeat')/text(), 1)[1]) * number(accumulator-after('time')/beats)"/>/<xsl:value-of select="accumulator-after('time')/beat-type"/></duration>
+            </RepeatMeasure>
           </voice>
-        </xsl:if>
-      </xsl:for-each>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:for-each select="(distinct-values(note[staff = $staff or not(staff)]/voice), '__default__')">
+            <xsl:variable name="voice" select="."/>
+            <!-- Skip default voice if it's not the only one. -->
+            <xsl:if test="$voice != '__default__' or position() = 1">
+              <voice>
+                <xsl:apply-templates select="$measure/barline[@location = 'left']"/>
+                <xsl:if test="position() = 1">
+                  <xsl:apply-templates select="$measure/attributes/clef[@number = $staff or not(@number)]"/>
+                  <xsl:apply-templates select="$measure/attributes/key[@number = $staff or not(@number)]"/>
+                  <xsl:apply-templates select="$measure/attributes/time[@number = $staff or not(@number)]"/>
+                </xsl:if>
+                <xsl:apply-templates select="$measure/note[
+                  (staff = $staff or not(staff)) and
+                  (voice = $voice or not(voice)) and
+                  (not(chord) or preceding-sibling::note[1]/staff != $staff)
+                ]" mode="chord">
+                  <xsl:with-param name="staff" select="$staff"/>
+                  <xsl:with-param name="voice" select="$voice"/>
+                </xsl:apply-templates>
+                <xsl:apply-templates select="$measure/barline[@location = 'right']"/>
+              </voice>
+            </xsl:if>
+          </xsl:for-each>
+        </xsl:otherwise>
+      </xsl:choose>
     </Measure>
     <xsl:if test="number(.//system-layout//right-margin) != 0">
       <HBox>
@@ -1160,11 +1172,22 @@
 
   <!--
     Function: Convert hyphenated-title to camelCase.
+
+    https://stackoverflow.com/a/489387/209184
   -->
   <xsl:function name="mscx:toCamelCase" as="xs:string">
     <xsl:param name="text" as="xs:string"/>
-    <xsl:variable name="caps" select="string-join(for $t in tokenize($text, '-') return concat(upper-case(substring($t, 1, 1)), substring($t, 2)), '')"/>
-    <xsl:sequence select="concat(lower-case(substring($caps, 1, 1)), substring($caps, 2))"/>
+    <xsl:sequence select="string-join(
+      (for $i in 1 to count(tokenize($text, '-')),
+        $s in tokenize($text, '-')[$i],
+        $fl in substring($s, 1, 1),
+        $tail in substring($s, 2)
+        return
+          if ($i eq 1)
+          then $s
+          else concat(upper-case($fl), $tail)
+      ), ''
+    )"/>
   </xsl:function>
 
   <!--

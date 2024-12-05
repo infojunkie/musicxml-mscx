@@ -38,6 +38,7 @@ const tests = {
   },
   'tutorial-apres-un-reve.musicxml': {},
   'tutorial-chopin-prelude.musicxml': {},
+  'tutorial-percussion.musicxml': {},
   'lilypond/01a-Pitches-Pitches.xml': {},
   'lilypond/01b-Pitches-Intervals.xml': {},
   'lilypond/01c-Pitches-NoVoiceElement.xml': {},
