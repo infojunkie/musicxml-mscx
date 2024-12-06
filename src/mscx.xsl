@@ -645,9 +645,9 @@
       <xsl:otherwise>
         <Chord>
           <xsl:apply-templates select="notations/slur"/>
-          <xsl:if test="stem">
-            <StemDirection><xsl:value-of select="stem"/></StemDirection>
-          </xsl:if>
+          <xsl:apply-templates select="stem"/>
+          <xsl:apply-templates select="beam"/>
+          <xsl:apply-templates select="preceding-sibling::note[not(chord) and current()/chord]/beam"/>
           <xsl:apply-templates select="current()" mode="inner">
             <xsl:with-param name="overrideChord" select="true()"/>
           </xsl:apply-templates>
@@ -703,6 +703,28 @@
       (staff = current()/staff or not(staff)) and
       (voice = current()/voice or not(voice))
     ]" mode="inner"/>
+  </xsl:template>
+
+  <!--
+    Template: Note > Stem.
+  -->
+  <xsl:template match="stem">
+    <StemDirection><xsl:value-of select="text()"/></StemDirection>
+  </xsl:template>
+
+  <!--
+    Template: Note > Beam.
+  -->
+  <xsl:template match="beam">
+    <xsl:if test="not(@number) or @number = '1'">
+      <BeamMode>
+        <xsl:choose>
+          <xsl:when test="text() = 'begin'">begin</xsl:when>
+          <xsl:when test="text() = 'continue'">mid</xsl:when>
+          <xsl:when test="text() = 'end'">end</xsl:when>
+        </xsl:choose>
+      </BeamMode>
+    </xsl:if>
   </xsl:template>
 
   <!--

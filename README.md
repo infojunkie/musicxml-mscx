@@ -11,13 +11,17 @@ MusicXML to MuseScore converter and back.
 - `npm run --silent convert:mscx /path/to/score.musicxml instrumentsFile=/path/to/MuseScore/share/instruments/instruments.xml styleFile=/path/to/MuseScore/stylesheet.mss`
 
 # Examples
+Screenshot of an official MusicXML example converted to MuseScore format. There are subtle differences from what MuseScore itself would import from MusicXML.
+
+![Screenshot of an official MusicXML example converted to MuseScore format.](https://github.com/infojunkie/musicxml-mscx/blob/main/doc/screenshots/tutorial-percussion.png?raw=true)
+
+Screenshot of a Lilypond test snippet with microtonal accidentals. Not shown are the note tunings that are converted correctly and that MuseScore would miss when it imports the MusicXML.
+
+![Screenshot of a Lilypond test snippet with microtonal accidentals.](https://github.com/infojunkie/musicxml-mscx/blob/main/doc/screenshots/01f-Pitches-ParenthesizedMicrotoneAccidentals.png?raw=true)
+
 Screenshot of a score converted with a specialized stylesheet file.
 
-![Screenshot of a score converted with a specialized stylesheet file.](https://github.com/infojunkie/musicxml-mscx/blob/main/9-20-special.png?raw=true)
-
-Screenshot of a Lilypond test snippet with microtonal accidentals.
-
-![Screenshot of a Lilypond test snippet with microtonal accidentals.](https://github.com/infojunkie/musicxml-mscx/blob/main/01f-Pitches-ParenthesizedMicrotoneAccidentals.png?raw=true)
+![Screenshot of a score converted with a specialized stylesheet file.](https://github.com/infojunkie/musicxml-mscx/blob/main/doc/screenshots/9-20-special.png?raw=true)
 
 # Theory of operation
 Why write a new converter between MusicXML and MuseScore, when MuseScore itself already does 2-way conversion?
