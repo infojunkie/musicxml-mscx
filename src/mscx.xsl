@@ -136,24 +136,30 @@
   -->
   <xsl:template match="score-part">
     <Part>
-      <xsl:variable name="part" select="current()"/>
+      <xsl:variable name="part" select="//part[@id = current()/@id]"/>
+      <xsl:variable name="clef" select="$part//attributes/clef[1]"/>
+      <xsl:variable name="staffType" select="if ($clef/sign = 'percussion') then 'percussion' else 'pitched'"/>
       <xsl:variable name="staffIds" select="accumulator-after('staffIds')(@id)"/>
       <xsl:for-each select="$staffIds">
         <xsl:variable name="staff" select="position()"/>
         <Staff>
           <xsl:attribute name="id"><xsl:value-of select="."/></xsl:attribute>
-          <StaffType group="pitched">
-            <name>stdNormal</name>
-            <xsl:if test="$root//part[@id = $part/@id]//attributes/clef/@print-object = 'no'">
+          <StaffType>
+            <xsl:attribute name="group" select="$staffType"/>
+            <name><xsl:value-of select="if ($staffType = 'percussion') then 'perc5Line' else 'stdNormal'"/></name>
+            <xsl:if test="$part//attributes/staff-details/staff-lines > 0">
+              <lines><xsl:value-of select="$part//attributes/staff-details/staff-lines"/></lines>
+            </xsl:if>
+            <xsl:if test="$part//attributes/clef/@print-object = 'no'">
               <clef>0</clef>
             </xsl:if>
-            <xsl:if test="$root//part[@id = $part/@id]//attributes/time/@print-object = 'no'">
+            <xsl:if test="$part//attributes/time/@print-object = 'no'">
               <timesig>0</timesig>
             </xsl:if>
-            <xsl:if test="$root//part[@id = $part/@id]//attributes/staff-details/staff-lines = 0">
+            <xsl:if test="$part//attributes/staff-details/staff-lines = 0">
               <invisible>1</invisible>
             </xsl:if>
-            <xsl:if test="$root//part[@id = $part/@id]//attributes/key/@print-object = 'no'">
+            <xsl:if test="$part//attributes/key/@print-object = 'no' or $staffType = 'percussion'">
               <keysig>0</keysig>
             </xsl:if>
           </StaffType>
@@ -163,28 +169,64 @@
             </bracket>
             <barLineSpan><xsl:value-of select="count($staffIds)"/></barLineSpan>
           </xsl:if>
-          <xsl:if test="$root//part[@id = $part/@id]//attributes/staff-details/staff-lines = 0">
+          <xsl:if test="$part//attributes/staff-details/staff-lines = 0">
             <invisible>1</invisible>
           </xsl:if>
         </Staff>
       </xsl:for-each>
       <trackName><xsl:value-of select="part-name"/></trackName>
-      <xsl:apply-templates select="$instruments//Instrument[trackName=current()/part-name]"/>
+      <Instrument>
+        <xsl:attribute name="id" select="mscx:toHyphenated(part-name)"/>
+        <trackName><xsl:value-of select="part-name"/></trackName>
+        <longName><xsl:value-of select="if (part-name/@print-object = 'no') then '' else part-name"/></longName>
+        <xsl:choose>
+          <xsl:when test="score-instrument/instrument-sound">
+            <instrumentId><xsl:value-of select="score-instrument[1]/instrument-sound"/></instrumentId>
+          </xsl:when>
+          <xsl:when test="$instruments//Instrument[@id = mscx:toHyphenated(part-name)]">
+            <instrumentId><xsl:value-of select="$instruments//Instrument[@id = mscx:toHyphenated(part-name)]/musicXMLid"/></instrumentId>
+          </xsl:when>
+        </xsl:choose>
+        <xsl:if test="midi-instrument/midi-unpitched">
+          <useDrumset>1</useDrumset>
+          <xsl:apply-templates select="score-instrument" mode="drum">
+            <xsl:with-param name="clef" select="$clef"/>
+            <xsl:with-param name="lines" select="($part//attributes/staff-details/staff-lines, 5)[1]"/>
+          </xsl:apply-templates>
+          <clef>PERC</clef>
+        </xsl:if>
+        <xsl:copy-of select="$instruments/museScore/Articulation"/>
+        <Channel>
+          <controller ctrl="0"><xsl:attribute name="value" select="floor(number((midi-instrument/midi-bank[1], 128)[1]) div 128)"/></controller>
+          <controller ctrl="32"><xsl:attribute name="value" select="number((midi-instrument/midi-bank[1], 0)[1]) mod 128"/></controller>
+          <program><xsl:attribute name="value" select="number((midi-instrument/midi-program[1], 1)[1]) - 1"/></program>
+          <controller ctrl="7"><xsl:attribute name="value" select="floor(number((midi-instrument/volume[1], 80)[1]) * 127 div 100)"/></controller>
+          <controller ctrl="10"><xsl:attribute name="value" select="floor((number((midi-instrument/pan[1], 0)[1]) + 180) * 127 div 360)"/></controller>
+          <synti>Fluid</synti>
+        </Channel>
+       </Instrument>
     </Part>
   </xsl:template>
 
   <!--
-    Template: Part > Instrument.
+    Template: Part > Drum.
   -->
-  <xsl:template match="Instrument">
-    <Instrument>
-      <xsl:copy-of select="@id|longName|shortName|trackName|Channel|Articulation"/>
-      <instrumentId><xsl:value-of select="musicXMLid"/></instrumentId>
-      <minPitchP><xsl:value-of select="tokenize(pPitchRange, '-')[1]"/></minPitchP>
-      <maxPitchP><xsl:value-of select="tokenize(pPitchRange, '-')[2]"/></maxPitchP>
-      <minPitchA><xsl:value-of select="tokenize(aPitchRange, '-')[1]"/></minPitchA>
-      <maxPitchA><xsl:value-of select="tokenize(aPitchRange, '-')[2]"/></maxPitchA>
-    </Instrument>
+  <xsl:template match="score-instrument" mode="drum">
+    <xsl:param name="clef"/>
+    <xsl:param name="lines"/>
+    <xsl:variable name="instrument" select="../midi-instrument[@id = current()/@id]"/>
+    <xsl:variable name="note" select="($root//note[instrument/@id = current()/@id])[1]"/>
+    <Drum>
+      <xsl:attribute name="pitch" select="number($instrument/midi-unpitched) - 1"/>
+      <xsl:choose>
+        <xsl:when test="$note/notehead"><xsl:apply-templates select="$note/notehead"/></xsl:when>
+        <xsl:otherwise><head>normal</head></xsl:otherwise>
+      </xsl:choose>
+      <line><xsl:value-of select="mscx:noteToLine($note/unpitched, $clef, $lines)"/></line>
+      <voice>0</voice>
+      <name><xsl:value-of select="instrument-name"/></name>
+      <stem><xsl:value-of select="if ($note/stem = 'up') then 1 else 2"/></stem>
+    </Drum>
   </xsl:template>
 
   <!--
@@ -287,35 +329,47 @@
       </xsl:if>
       <xsl:variable name="measure" select="current()"/>
       <xsl:if test="barline/repeat[@direction = 'forward']">
-        <startRepeat></startRepeat>
+        <startRepeat/>
       </xsl:if>
       <xsl:if test="barline/repeat[@direction = 'backward']">
         <endRepeat><xsl:value-of select="barline/repeat[@direction = 'backward']/@times"/></endRepeat>
       </xsl:if>
       <xsl:apply-templates select="direction[sound[@coda | @tocoda | @segno | @dalsegno | @dacapo]]"/>
-      <xsl:for-each select="(distinct-values(note[staff = $staff or not(staff)]/voice), '__default__')">
-        <xsl:variable name="voice" select="."/>
-        <!-- Skip default voice if it's not the only one. -->
-        <xsl:if test="$voice != '__default__' or position() = 1">
+      <xsl:choose>
+        <xsl:when test="accumulator-after('measureRepeat')">
           <voice>
-            <xsl:apply-templates select="$measure/barline[@location = 'left']"/>
-            <xsl:if test="position() = 1">
-              <xsl:apply-templates select="$measure/attributes/clef[@number = $staff or not(@number)]"/>
-              <xsl:apply-templates select="$measure/attributes/key[@number = $staff or not(@number)]"/>
-              <xsl:apply-templates select="$measure/attributes/time[@number = $staff or not(@number)]"/>
-            </xsl:if>
-            <xsl:apply-templates select="$measure/note[
-              (staff = $staff or not(staff)) and
-              (voice = $voice or not(voice)) and
-              (not(chord) or preceding-sibling::note[1]/staff != $staff)
-            ]" mode="chord">
-              <xsl:with-param name="staff" select="$staff"/>
-              <xsl:with-param name="voice" select="$voice"/>
-            </xsl:apply-templates>
-            <xsl:apply-templates select="$measure/barline[@location = 'right']"/>
+            <RepeatMeasure>
+              <durationType>measure</durationType>
+              <duration><xsl:value-of select="number((accumulator-after('measureRepeat')/text(), 1)[1]) * number(accumulator-after('time')/beats)"/>/<xsl:value-of select="accumulator-after('time')/beat-type"/></duration>
+            </RepeatMeasure>
           </voice>
-        </xsl:if>
-      </xsl:for-each>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:for-each select="(distinct-values(note[staff = $staff or not(staff)]/voice), '__default__')">
+            <xsl:variable name="voice" select="."/>
+            <!-- Skip default voice if it's not the only one. -->
+            <xsl:if test="$voice != '__default__' or position() = 1">
+              <voice>
+                <xsl:apply-templates select="$measure/barline[@location = 'left']"/>
+                <xsl:if test="position() = 1">
+                  <xsl:apply-templates select="$measure/attributes/clef[@number = $staff or not(@number)]"/>
+                  <xsl:apply-templates select="$measure/attributes/key[@number = $staff or not(@number)]"/>
+                  <xsl:apply-templates select="$measure/attributes/time[@number = $staff or not(@number)]"/>
+                </xsl:if>
+                <xsl:apply-templates select="$measure/note[
+                  (staff = $staff or not(staff)) and
+                  (voice = $voice or not(voice)) and
+                  (not(chord) or preceding-sibling::note[1]/staff != $staff)
+                ]" mode="chord">
+                  <xsl:with-param name="staff" select="$staff"/>
+                  <xsl:with-param name="voice" select="$voice"/>
+                </xsl:apply-templates>
+                <xsl:apply-templates select="$measure/barline[@location = 'right']"/>
+              </voice>
+            </xsl:if>
+          </xsl:for-each>
+        </xsl:otherwise>
+      </xsl:choose>
     </Measure>
     <xsl:if test="number(.//system-layout//right-margin) != 0">
       <HBox>
@@ -584,15 +638,16 @@
     <xsl:choose>
       <xsl:when test="rest">
         <Rest>
+          <xsl:apply-templates select="rest/display-step" mode="rest"/>
           <xsl:apply-templates select="current()" mode="inner"/>
         </Rest>
       </xsl:when>
       <xsl:otherwise>
         <Chord>
           <xsl:apply-templates select="notations/slur"/>
-          <xsl:if test="stem">
-            <StemDirection><xsl:value-of select="stem"/></StemDirection>
-          </xsl:if>
+          <xsl:apply-templates select="stem"/>
+          <xsl:apply-templates select="beam"/>
+          <xsl:apply-templates select="preceding-sibling::note[not(chord) and current()/chord]/beam"/>
           <xsl:apply-templates select="current()" mode="inner">
             <xsl:with-param name="overrideChord" select="true()"/>
           </xsl:apply-templates>
@@ -633,6 +688,7 @@
       <Note>
         <xsl:apply-templates select="notations/tied"/>
         <xsl:apply-templates select="pitch"/>
+        <xsl:apply-templates select="instrument"/>
         <xsl:apply-templates select="accidental"/>
         <xsl:apply-templates select="notehead"/>
         <xsl:if test="cue">
@@ -650,10 +706,52 @@
   </xsl:template>
 
   <!--
+    Template: Note > Stem.
+  -->
+  <xsl:template match="stem">
+    <StemDirection><xsl:value-of select="text()"/></StemDirection>
+  </xsl:template>
+
+  <!--
+    Template: Note > Beam.
+  -->
+  <xsl:template match="beam">
+    <xsl:if test="not(@number) or @number = '1'">
+      <BeamMode>
+        <xsl:choose>
+          <xsl:when test="text() = 'begin'">begin</xsl:when>
+          <xsl:when test="text() = 'continue'">mid</xsl:when>
+          <xsl:when test="text() = 'end'">end</xsl:when>
+        </xsl:choose>
+      </BeamMode>
+    </xsl:if>
+  </xsl:template>
+
+  <!--
+    Template: Rest > Offset.
+  -->
+  <xsl:template match="display-step" mode="rest">
+    <offset x="0">
+      <xsl:attribute name="y" select="mscx:noteToYOffset(.., accumulator-after('clef'))"/>
+    </offset>
+  </xsl:template>
+
+  <!--
     Template: Note > Notehead.
   -->
   <xsl:template match="notehead">
-    <head><xsl:value-of select="text()"/></head>
+    <head>
+      <xsl:choose>
+        <xsl:when test="text() = 'x'">cross</xsl:when>
+        <xsl:otherwise><xsl:value-of select="text()"/></xsl:otherwise>
+      </xsl:choose>
+    </head>
+    <headType>
+      <xsl:choose>
+        <xsl:when test="@filled = 'no'">half</xsl:when>
+        <xsl:otherwise>auto</xsl:otherwise>
+      </xsl:choose>
+    </headType>
   </xsl:template>
 
   <!--
@@ -889,6 +987,13 @@
     </xsl:if>
   </xsl:template>
 
+  <xsl:template match="instrument">
+    <xsl:variable name="instrument" select="//midi-instrument[@id = current()/@id]"/>
+    <pitch><xsl:value-of select="number($instrument/midi-unpitched) - 1"/></pitch>
+    <tpc>-9</tpc>
+    <tpc2><xsl:value-of select="mscx:midiToTpc(number($instrument/midi-unpitched) - 1)"/></tpc2>
+  </xsl:template>
+
   <!--
     Template: Note > Accidental.
     @see https://github.com/musescore/MuseScore/blob/v4.4.2/src/importexport/musicxml/internal/musicxml/musicxmlsupport.cpp#mxmlString2accSymId
@@ -1080,12 +1185,31 @@
   </xsl:template>
 
   <!--
+    Function: Convert English Title to hyphenated-title.
+  -->
+  <xsl:function name="mscx:toHyphenated" as="xs:string">
+    <xsl:param name="text" as="xs:string"/>
+    <xsl:sequence select="replace(replace(lower-case($text), '\P{L}+', '-'), '^-|-$', '')"/>
+  </xsl:function>
+
+  <!--
     Function: Convert hyphenated-title to camelCase.
+
+    https://stackoverflow.com/a/489387/209184
   -->
   <xsl:function name="mscx:toCamelCase" as="xs:string">
     <xsl:param name="text" as="xs:string"/>
-    <xsl:variable name="caps" select="string-join(for $t in tokenize($text,'-') return concat(upper-case(substring($t, 1, 1)), substring($t, 2)),'')"/>
-    <xsl:sequence select="concat(lower-case(substring($caps, 1, 1)), substring($caps, 2))"/>
+    <xsl:sequence select="string-join(
+      (for $i in 1 to count(tokenize($text, '-')),
+        $s in tokenize($text, '-')[$i],
+        $fl in substring($s, 1, 1),
+        $tail in substring($s, 2)
+        return
+          if ($i eq 1)
+          then $s
+          else concat(upper-case($fl), $tail)
+      ), ''
+    )"/>
   </xsl:function>
 
   <!--
@@ -1105,21 +1229,32 @@
   -->
   <xsl:function name="mscx:noteToTpc" as="xs:double">
     <xsl:param name="note"/>
-    <xsl:variable name="step" select="($note/root-step, $note/bass-step, $note/step)[1]"/>
+    <xsl:variable name="step" select="($note/root-step, $note/bass-step, $note/step, $note/display-step)[1]"/>
     <xsl:variable name="alter" select="number(($note/root-alter, $note/bass-alter, $note/alter, 0)[1])"/>
     <xsl:variable name="useAlter" select="$alter - round($alter) = 0 and abs($alter) &lt;= 2"/>
     <xsl:variable name="tpc" as="xs:integer">
       <xsl:choose>
-        <xsl:when test="$step='C'">14</xsl:when>
-        <xsl:when test="$step='D'">16</xsl:when>
-        <xsl:when test="$step='E'">18</xsl:when>
-        <xsl:when test="$step='F'">13</xsl:when>
-        <xsl:when test="$step='G'">15</xsl:when>
-        <xsl:when test="$step='A'">17</xsl:when>
-        <xsl:when test="$step='B'">19</xsl:when>
+        <xsl:when test="$step = 'C'">14</xsl:when>
+        <xsl:when test="$step = 'D'">16</xsl:when>
+        <xsl:when test="$step = 'E'">18</xsl:when>
+        <xsl:when test="$step = 'F'">13</xsl:when>
+        <xsl:when test="$step = 'G'">15</xsl:when>
+        <xsl:when test="$step = 'A'">17</xsl:when>
+        <xsl:when test="$step = 'B'">19</xsl:when>
       </xsl:choose>
     </xsl:variable>
     <xsl:sequence select="$tpc + (7 * (if ($useAlter) then $alter else 0))"/>
+  </xsl:function>
+
+  <!--
+    Function: Convert MIDI note to tpc.
+  -->
+  <xsl:function name="mscx:midiToTpc" as="xs:double">
+    <xsl:param name="midi"/>
+    <xsl:variable name="step" select="$midi mod 12"/>
+    <xsl:variable name="alter" select="(0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0)[$step + 1]"/>
+    <xsl:variable name="tpc" as="xs:integer" select="(14, 14, 16, 16, 18, 13, 13, 15, 15, 17, 17, 19)[$step + 1]"/>
+    <xsl:sequence select="$tpc + (7 * $alter)"/>
   </xsl:function>
 
   <!--
@@ -1127,20 +1262,22 @@
   -->
   <xsl:function name="mscx:noteToPitch" as="xs:double">
     <xsl:param name="note"/>
+    <xsl:variable name="step" select="($note/step, $note/display-step)[1]"/>
+    <xsl:variable name="octave" select="($note/octave, $note/display-octave)[1]"/>
     <xsl:variable name="alter" select="number(($note/alter, 0)[1])"/>
     <xsl:variable name="useAlter" select="$alter - round($alter) = 0 and abs($alter) &lt;= 2"/>
     <xsl:variable name="pitch" as="xs:integer">
       <xsl:choose>
-        <xsl:when test="$note/step='C'">0</xsl:when>
-        <xsl:when test="$note/step='D'">2</xsl:when>
-        <xsl:when test="$note/step='E'">4</xsl:when>
-        <xsl:when test="$note/step='F'">5</xsl:when>
-        <xsl:when test="$note/step='G'">7</xsl:when>
-        <xsl:when test="$note/step='A'">9</xsl:when>
-        <xsl:when test="$note/step='B'">11</xsl:when>
+        <xsl:when test="$step = 'C'">0</xsl:when>
+        <xsl:when test="$step = 'D'">2</xsl:when>
+        <xsl:when test="$step = 'E'">4</xsl:when>
+        <xsl:when test="$step = 'F'">5</xsl:when>
+        <xsl:when test="$step = 'G'">7</xsl:when>
+        <xsl:when test="$step = 'A'">9</xsl:when>
+        <xsl:when test="$step = 'B'">11</xsl:when>
       </xsl:choose>
     </xsl:variable>
-    <xsl:sequence select="$pitch + (12 * ($note/octave + 1)) + (if ($useAlter) then $alter else 0)"/>
+    <xsl:sequence select="$pitch + (12 * ($octave + 1)) + (if ($useAlter) then $alter else 0)"/>
   </xsl:function>
 
   <!--
@@ -1151,6 +1288,95 @@
     <xsl:variable name="alter" select="number(($note/alter, 0)[1])"/>
     <xsl:variable name="useAlter" select="$alter - round($alter) != 0 or abs($alter) &gt; 2"/>
     <xsl:sequence select="100 * (if ($useAlter) then $alter else 0)"/>
+  </xsl:function>
+
+  <!--
+    Function: Convert note to ledger line.
+
+    In MuseScore, lines are counted from the top. Spaces are also counted:
+
+                       .
+                       .
+                       .
+                      -1
+    __________________ 0
+                       1
+    __________________ 2
+                       3
+    __________________ 4
+                       5
+    __________________ 6
+                       7
+    __________________ 8
+                       9
+                       .
+                       .
+                       .
+
+    In MusicXML, lines are counted from the bottom and do not include spaces:
+    https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/line/
+
+    __________________ 5
+
+    __________________ 4
+
+    __________________ 3
+
+    __________________ 2
+
+    __________________ 1
+
+
+  ALGORITHM:
+
+  - We choose F5 to be canonical line 0. This corresponds to a G clef. For other keys we compute the offset for the
+    note that sits at line 0. For example, in F clef, it's A3 which has offset -12 from F5 (in MuseScore line space).
+  - Then, we handle the case of staves with less than 5 lines. MusicXML removes lines from top to bottom,
+
+  FIXME: Handle @line and @clef-octave-change.
+
+  -->
+  <xsl:function name="mscx:noteToLine" as="xs:double">
+    <xsl:param name="note"/>
+    <xsl:param name="clef"/>
+    <xsl:param name="lines"/>
+    <xsl:variable name="step" select="($note/step, $note/display-step)[1]"/>
+    <xsl:variable name="octave" select="($note/octave, $note/display-octave)[1]"/>
+    <xsl:variable name="offset" as="xs:integer">
+      <xsl:choose>
+        <xsl:when test="$clef/sign = ('none', 'percussion', 'G')">0</xsl:when>
+        <xsl:when test="$clef/sign = 'F'">-12</xsl:when>
+        <xsl:otherwise><xsl:message>[mscx:noteToLine] Unhandled clef '<xsl:value-of select="$clef/sign"/>'</xsl:message></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="line" as="xs:integer">
+      <xsl:choose>
+        <xsl:when test="$step = 'C'">3</xsl:when>
+        <xsl:when test="$step = 'D'">2</xsl:when>
+        <xsl:when test="$step = 'E'">1</xsl:when>
+        <xsl:when test="$step = 'F'">0</xsl:when>
+        <xsl:when test="$step = 'G'">-1</xsl:when>
+        <xsl:when test="$step = 'A'">-2</xsl:when>
+        <xsl:when test="$step = 'B'">-3</xsl:when>
+        <xsl:otherwise><xsl:message>[mscx:noteToLine] Unhandled step '<xsl:value-of select="$step"/>'</xsl:message></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:sequence select="$line + $offset + 7 * (5 - number($octave)) - 2 * (5 - number($lines))"/>
+  </xsl:function>
+
+  <!--
+    Function: Convert note to y-offset.
+
+    MuseScore <offset> @y attribute starts at the bottom ledger line and increases downward, 1 per line (not counting spaces).
+    This is contrast with the <lines> element above with starts at the top ledger line and increases downward, counting the spaces.
+    Since we already have an algorithm to convert notes to <lines>, we can reuse it to compute the y-offset here.
+
+    FIXME: Assumes 5 lines.
+  -->
+  <xsl:function name="mscx:noteToYOffset" as="xs:double">
+    <xsl:param name="note"/>
+    <xsl:param name="clef"/>
+    <xsl:sequence select="(mscx:noteToLine($note, $clef, 5) - 8) div 2"/>
   </xsl:function>
 
 </xsl:stylesheet>
