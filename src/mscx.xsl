@@ -182,9 +182,11 @@
         <xsl:choose>
           <xsl:when test="score-instrument/instrument-sound">
             <instrumentId><xsl:value-of select="score-instrument[1]/instrument-sound"/></instrumentId>
+            <xsl:apply-templates select="$instruments//Instrument[musicXMLid = current()/score-instrument[1]/instrument-sound]" mode="pitchRange"/>
           </xsl:when>
-          <xsl:when test="$instruments//Instrument[@id = mscx:toHyphenated(part-name)]">
-            <instrumentId><xsl:value-of select="$instruments//Instrument[@id = mscx:toHyphenated(part-name)]/musicXMLid"/></instrumentId>
+          <xsl:when test="$instruments//Instrument[@id = mscx:toHyphenated(current()/part-name)]">
+            <instrumentId><xsl:value-of select="$instruments//Instrument[@id = mscx:toHyphenated(current()/part-name)]/musicXMLid"/></instrumentId>
+            <xsl:apply-templates select="$instruments//Instrument[@id = mscx:toHyphenated(current()/part-name)]" mode="pitchRange"/>
           </xsl:when>
         </xsl:choose>
         <xsl:if test="midi-instrument/midi-unpitched">
@@ -206,6 +208,20 @@
         </Channel>
        </Instrument>
     </Part>
+  </xsl:template>
+
+  <!--
+    Template: Instrument > Pitch Range
+  -->
+  <xsl:template match="Instrument" mode="pitchRange">
+    <xsl:if test="pPitchRange">
+      <minPitchP><xsl:value-of select="tokenize(pPitchRange, '-')[1]"/></minPitchP>
+      <maxPitchP><xsl:value-of select="tokenize(pPitchRange, '-')[2]"/></maxPitchP>
+    </xsl:if>
+    <xsl:if test="aPitchRange">
+      <minPitchA><xsl:value-of select="tokenize(aPitchRange, '-')[1]"/></minPitchA>
+      <maxPitchA><xsl:value-of select="tokenize(aPitchRange, '-')[2]"/></maxPitchA>
+    </xsl:if>
   </xsl:template>
 
   <!--
@@ -389,13 +405,16 @@
   <xsl:template match="clef">
     <xsl:variable name="clefType">
       <xsl:choose>
-        <xsl:when test="sign = 'jianpu'"><xsl:message>[clef] Unhandled sign 'jianpu'.</xsl:message></xsl:when>
+        <xsl:when test="sign = 'none'">G<xsl:message>[clef] Deprecated sign 'none'.</xsl:message></xsl:when>
         <xsl:when test="sign = 'percussion'">PERC</xsl:when>
-        <xsl:when test="sign = 'none'">G</xsl:when>
-        <xsl:when test="sign = 'C'"><xsl:value-of select="sign"/><xsl:value-of select="if (line) then line else 3"/></xsl:when>
         <xsl:when test="clef-octave-change = 1"><xsl:value-of select="sign"/>8va</xsl:when>
         <xsl:when test="clef-octave-change = -1"><xsl:value-of select="sign"/>8vb</xsl:when>
-        <xsl:otherwise><xsl:value-of select="sign"/></xsl:otherwise>
+        <xsl:when test="clef-octave-change = 2"><xsl:value-of select="sign"/>15ma</xsl:when>
+        <xsl:when test="clef-octave-change = -2"><xsl:value-of select="sign"/>15mb</xsl:when>
+        <xsl:when test="sign = 'C'"><xsl:value-of select="sign"/><xsl:value-of select="if (line = (1,2,3,4,5)) then line else ''"/></xsl:when>
+        <xsl:when test="sign = 'G'"><xsl:value-of select="sign"/><xsl:value-of select="if (line = (1)) then line else ''"/></xsl:when>
+        <xsl:when test="sign = 'F'"><xsl:value-of select="sign"/><xsl:value-of select="if (line = (3,5)) then line else ''"/></xsl:when>
+        <xsl:otherwise><xsl:message>[clef] Unhandled sign '<xsl:value-of select="sign"/>'.</xsl:message></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     <Clef>
@@ -646,8 +665,7 @@
         <Chord>
           <xsl:apply-templates select="notations/slur"/>
           <xsl:apply-templates select="stem"/>
-          <xsl:apply-templates select="beam"/>
-          <xsl:apply-templates select="preceding-sibling::note[not(chord) and current()/chord]/beam"/>
+          <xsl:apply-templates select="(beam, preceding-sibling::note[current()/chord and not(chord)][1]/beam)[1]"/>
           <xsl:apply-templates select="current()" mode="inner">
             <xsl:with-param name="overrideChord" select="true()"/>
           </xsl:apply-templates>
@@ -1177,6 +1195,92 @@
           </xsl:if>
           <xsl:if test="//defaults/page-layout/page-height">
             <pageHeight><xsl:value-of select="format-number(mscx:tenthsToInches(number(//defaults/page-layout/page-height)), '0.00')"/></pageHeight>
+          </xsl:if>
+          <xsl:if test="//defaults/page-layout/page-margins[@type = ('even', 'both')]">
+            <pageEvenLeftMargin>
+              <xsl:value-of select="format-number(mscx:tenthsToInches(number(//defaults/page-layout/page-margins[@type = ('even', 'both')]/left-margin)), '0.00')"/>
+            </pageEvenLeftMargin>
+            <pageEvenTopMargin>
+              <xsl:value-of select="format-number(mscx:tenthsToInches(number(//defaults/page-layout/page-margins[@type = ('even', 'both')]/top-margin)), '0.00')"/>
+            </pageEvenTopMargin>
+            <pageEvenBottomMargin>
+              <xsl:value-of select="format-number(mscx:tenthsToInches(number(//defaults/page-layout/page-margins[@type = ('even', 'both')]/bottom-margin)), '0.00')"/>
+            </pageEvenBottomMargin>
+          </xsl:if>
+          <xsl:if test="//defaults/page-layout/page-margins[@type = ('odd', 'both')]">
+            <pageOddLeftMargin>
+              <xsl:value-of select="format-number(mscx:tenthsToInches(number(//defaults/page-layout/page-margins[@type = ('odd', 'both')]/left-margin)), '0.00')"/>
+            </pageOddLeftMargin>
+            <pageOddTopMargin>
+              <xsl:value-of select="format-number(mscx:tenthsToInches(number(//defaults/page-layout/page-margins[@type = ('odd', 'both')]/top-margin)), '0.00')"/>
+            </pageOddTopMargin>
+            <pageOddBottomMargin>
+              <xsl:value-of select="format-number(mscx:tenthsToInches(number(//defaults/page-layout/page-margins[@type = ('odd', 'both')]/bottom-margin)), '0.00')"/>
+            </pageOddBottomMargin>
+          </xsl:if>
+          <xsl:if test="//defaults/page-layout/page-width and //defaults/page-layout/page-margins">
+            <pagePrintableWidth>
+              <xsl:value-of select="format-number(mscx:tenthsToInches(min((
+                number(//defaults/page-layout/page-width) - number(//defaults/page-layout/page-margins[@type = ('odd', 'both')]/left-margin) - number(//defaults/page-layout/page-margins[@type = ('odd', 'both')]/right-margin),
+                number(//defaults/page-layout/page-width) - number(//defaults/page-layout/page-margins[@type = ('even', 'both')]/left-margin) - number(//defaults/page-layout/page-margins[@type = ('even', 'both')]/right-margin)
+              ))), '0.00')"/>
+            </pagePrintableWidth>
+          </xsl:if>
+          <pageTwosided>0</pageTwosided>
+          <xsl:if test="//defaults/staff-layout/staff-distance">
+            <staffDistance>
+              <xsl:value-of select="format-number(number(//defaults/staff-layout/staff-distance) div 10, '0.00')"/>
+            </staffDistance>
+          </xsl:if>
+          <xsl:if test="//defaults/system-layout/system-distance">
+            <minSystemDistance>
+              <xsl:value-of select="format-number(number(//defaults/system-layout/system-distance) div 10, '0.00')"/>
+            </minSystemDistance>
+          </xsl:if>
+          <xsl:if test="//defaults/word-font[@font-size]">
+            <xsl:variable name="size" select="//defaults/word-font/@font-size"/>
+            <chordSymbolAFontSize><xsl:value-of select="$size"/></chordSymbolAFontSize>
+            <chordSymbolBFontSize><xsl:value-of select="$size"/></chordSymbolBFontSize>
+            <nashvilleNumberFontSize><xsl:value-of select="$size"/></nashvilleNumberFontSize>
+            <tupletFontSize><xsl:value-of select="$size"/></tupletFontSize>
+            <fingeringFontSize><xsl:value-of select="$size"/></fingeringFontSize>
+            <lhGuitarFingeringFontSize><xsl:value-of select="$size"/></lhGuitarFingeringFontSize>
+            <rhGuitarFingeringFontSize><xsl:value-of select="$size"/></rhGuitarFingeringFontSize>
+            <stringNumberFontSize><xsl:value-of select="$size"/></stringNumberFontSize>
+            <longInstrumentFontSize><xsl:value-of select="$size"/></longInstrumentFontSize>
+            <shortInstrumentFontSize><xsl:value-of select="$size"/></shortInstrumentFontSize>
+            <partInstrumentFontSize><xsl:value-of select="$size"/></partInstrumentFontSize>
+            <dynamicsFontSize><xsl:value-of select="$size"/></dynamicsFontSize>
+            <expressionFontSize><xsl:value-of select="$size"/></expressionFontSize>
+            <tempoFontSize><xsl:value-of select="$size"/></tempoFontSize>
+            <metronomeFontSize><xsl:value-of select="$size"/></metronomeFontSize>
+            <measureNumberFontSize><xsl:value-of select="$size"/></measureNumberFontSize>
+            <mmRestRangeFontSize><xsl:value-of select="$size"/></mmRestRangeFontSize>
+            <translatorFontSize><xsl:value-of select="$size"/></translatorFontSize>
+            <systemFontSize><xsl:value-of select="$size"/></systemFontSize>
+            <staffFontSize><xsl:value-of select="$size"/></staffFontSize>
+            <rehearsalMarkFontSize><xsl:value-of select="$size"/></rehearsalMarkFontSize>
+            <repeatLeftFontSize><xsl:value-of select="$size"/></repeatLeftFontSize>
+            <repeatRightFontSize><xsl:value-of select="$size"/></repeatRightFontSize>
+            <frameFontSize><xsl:value-of select="$size"/></frameFontSize>
+            <glissandoFontSize><xsl:value-of select="$size"/></glissandoFontSize>
+            <bendFontSize><xsl:value-of select="$size"/></bendFontSize>
+            <headerFontSize><xsl:value-of select="$size"/></headerFontSize>
+            <footerFontSize><xsl:value-of select="$size"/></footerFontSize>
+            <instrumentChangeFontSize><xsl:value-of select="$size"/></instrumentChangeFontSize>
+            <stickingFontSize><xsl:value-of select="$size"/></stickingFontSize>
+            <user1FontSize><xsl:value-of select="$size"/></user1FontSize>
+            <user2FontSize><xsl:value-of select="$size"/></user2FontSize>
+            <user3FontSize><xsl:value-of select="$size"/></user3FontSize>
+            <user4FontSize><xsl:value-of select="$size"/></user4FontSize>
+            <user5FontSize><xsl:value-of select="$size"/></user5FontSize>
+            <user6FontSize><xsl:value-of select="$size"/></user6FontSize>
+            <user7FontSize><xsl:value-of select="$size"/></user7FontSize>
+            <user8FontSize><xsl:value-of select="$size"/></user8FontSize>
+            <user9FontSize><xsl:value-of select="$size"/></user9FontSize>
+            <user10FontSize><xsl:value-of select="$size"/></user10FontSize>
+            <user11FontSize><xsl:value-of select="$size"/></user11FontSize>
+            <user12FontSize><xsl:value-of select="$size"/></user12FontSize>
           </xsl:if>
           <Spatium><xsl:value-of select="$defaultSpatium"/></Spatium>
         </Style>

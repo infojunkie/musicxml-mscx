@@ -11,9 +11,13 @@ MusicXML to MuseScore converter and back.
 - `npm run --silent convert:mscx /path/to/score.musicxml instrumentsFile=/path/to/MuseScore/share/instruments/instruments.xml styleFile=/path/to/MuseScore/stylesheet.mss`
 
 # Examples
-Screenshot of an [official MusicXML example](https://w3c.github.io/musicxml/musicxml-reference/examples/tutorial-percussion/) converted to MuseScore format. There are subtle differences from what MuseScore itself would import from MusicXML.
+Screenshot of an [official MusicXML example](https://w3c.github.io/musicxml/musicxml-reference/examples/tutorial-apres-un-reve/) converted to MuseScore format. There are subtle differences from what MuseScore itself would import from MusicXML.
 
-![Screenshot of an official MusicXML example converted to MuseScore format.](https://github.com/infojunkie/musicxml-mscx/blob/main/doc/screenshots/tutorial-percussion.png?raw=true)
+![Screenshot of an official MusicXML example converted to MuseScore format.](https://github.com/infojunkie/musicxml-mscx/blob/main/doc/screenshots/tutorial-apres-un-reve.png?raw=true)
+
+Screenshot of another [official MusicXML example](https://w3c.github.io/musicxml/musicxml-reference/examples/tutorial-percussion/) converted to MuseScore format. There are subtle differences from what MuseScore itself would import from MusicXML.
+
+![Screenshot of another official MusicXML example converted to MuseScore format.](https://github.com/infojunkie/musicxml-mscx/blob/main/doc/screenshots/tutorial-percussion.png?raw=true)
 
 Screenshot of a [Lilypond test snippet with microtonal accidentals](https://lilypond.org/doc/v2.24/input/regression/musicxml/collated-files.html#t_g01-_002e_002e_002e-pitches). Not shown are the note tunings that are converted correctly and that MuseScore would miss when it imports the MusicXML.
 
