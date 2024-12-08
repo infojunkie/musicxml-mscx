@@ -199,8 +199,6 @@
         </xsl:if>
         <xsl:copy-of select="$instruments/museScore/Articulation"/>
         <Channel>
-          <controller ctrl="0"><xsl:attribute name="value" select="floor(number((midi-instrument/midi-bank[1], 128)[1]) div 128)"/></controller>
-          <controller ctrl="32"><xsl:attribute name="value" select="number((midi-instrument/midi-bank[1], 0)[1]) mod 128"/></controller>
           <program><xsl:attribute name="value" select="number((midi-instrument/midi-program[1], 1)[1]) - 1"/></program>
           <controller ctrl="7"><xsl:attribute name="value" select="floor(number((midi-instrument/volume[1], 80)[1]) * 127 div 100)"/></controller>
           <controller ctrl="10"><xsl:attribute name="value" select="floor((number((midi-instrument/pan[1], 0)[1]) + 180) * 127 div 360)"/></controller>
