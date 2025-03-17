@@ -1,8 +1,10 @@
 import assert from 'node:assert';
 import { describe, it } from 'node:test';
-import fs from 'fs';
+import fs from 'node:fs';
 import SaxonJS from 'saxon-js';
 import { spawnSync } from 'node:child_process';
+import os from 'node:os';
+import process from 'node:process';
 
 async function convert(file, params = {}) {
   const score = SaxonJS.transform({
@@ -48,11 +50,22 @@ const tests = {
 };
 
 describe('MusicXML to MuseScore converter', () => {
+  it('verifies the dependencies', async () => {
+    const exec = spawnSync('mscore', ['--version'], { shell: true });
+    assert.strictEqual(exec.status, 0, exec.stderr?.toString());
+    console.log({
+      os: `${os.type} ${os.release}`,
+      nodejs: `${process.versions.node}`,
+      saxonjs: `${SaxonJS.getProcessorInfo().productName} ${SaxonJS.getProcessorInfo().productVersion} with XPath ${SaxonJS.getProcessorInfo().xPathVersion}`,
+      mscore: `${exec.stdout.toString()}`
+    });
+  });
+
   it('should create a valid, complete and correct file for test files', async () => {
     for (const [filename, params] of Object.entries(tests)) {
       const { output, doc } = await convert(filename, params);
-      const exec = spawnSync('mscore', ['--score-meta', output]);
-      assert.strictEqual(exec.status, 0, exec.stderr);
+      const exec = spawnSync('mscore', ['--score-meta', output], { shell: true });
+      assert.strictEqual(exec.status, 0, exec.stderr?.toString());
     }
   });
 });
