@@ -468,6 +468,7 @@
     Template: Measure > Barline.
   -->
   <xsl:template match="barline">
+    <xsl:apply-templates select="fermata"/>
     <BarLine>
       <xsl:choose>
         <xsl:when test="repeat and @location = 'left'"><visible>0</visible></xsl:when>
