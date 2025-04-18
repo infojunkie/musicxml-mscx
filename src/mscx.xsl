@@ -41,6 +41,12 @@
   -->
   <xsl:variable name="style" select="if ($styleFile) then doc($styleFile) else ()"/>
   <xsl:variable name="spatium" select="if ($styleFile) then $style//Spatium else $defaultSpatium"/>
+  <xsl:variable name="pagePrintableWidthInches">
+    <xsl:value-of select="if ($styleFile) then $style//pagePrintableWidth else format-number(mscx:tenthsToInches(min((
+      number(//defaults/page-layout/page-width) - number(//defaults/page-layout/page-margins[@type = ('odd', 'both')]/left-margin) - number(//defaults/page-layout/page-margins[@type = ('odd', 'both')]/right-margin),
+      number(//defaults/page-layout/page-width) - number(//defaults/page-layout/page-margins[@type = ('even', 'both')]/left-margin) - number(//defaults/page-layout/page-margins[@type = ('even', 'both')]/right-margin)
+    ))), '0.00')"/>
+  </xsl:variable>
 
   <!--
     Global: Document root.
@@ -388,7 +394,9 @@
     <xsl:if test="number(.//system-layout//right-margin) != 0">
       <HBox>
         <width>
-          <xsl:value-of select="format-number(mscx:tenthsToMillimeters(number(.//system-layout//right-margin)) div $spatium, '0.00')"/>
+          <xsl:value-of select="
+            format-number(($pagePrintableWidthInches * 25.4 - mscx:tenthsToMillimeters(number(.//system-layout//right-margin))) div $spatium, '0.00')
+          "/>
         </width>
         <LayoutBreak>
           <subtype>line</subtype>
@@ -638,6 +646,9 @@
     <!-- Note directives. -->
     <xsl:apply-templates select="musicxml:precedingMeasureElements(.)[not(local-name(.) = ('attributes'))]" mode="noteSibling"/>
 
+    <!-- Fermata -->
+    <xsl:apply-templates select="notations/fermata"/>
+
     <!-- Tuplet -->
     <xsl:if test="notations/tuplet[@type = 'start']">
       <Tuplet>
@@ -726,6 +737,49 @@
   -->
   <xsl:template match="stem">
     <StemDirection><xsl:value-of select="text()"/></StemDirection>
+  </xsl:template>
+
+  <!--
+    Template: Note > Fermata.
+  -->
+  <xsl:template match="fermata">
+    <Fermata>
+      <subtype>
+        <xsl:choose>
+          <xsl:when test="text() = 'normal' and @type = 'inverted'">fermataBelow</xsl:when>
+          <xsl:when test="text() = 'normal'">fermataAbove</xsl:when>
+          <xsl:when test="text() = 'angled' and @type = 'inverted'">fermataShortBelow</xsl:when>
+          <xsl:when test="text() = 'angled'">fermataShortAbove</xsl:when>
+          <xsl:when test="text() = 'square' and @type = 'inverted'">fermataLongBelow</xsl:when>
+          <xsl:when test="text() = 'square'">fermataLongAbove</xsl:when>
+          <xsl:when test="text() = 'double-angled' and @type = 'inverted'">fermataVeryShortBelow</xsl:when>
+          <xsl:when test="text() = 'double-angled'">fermataVeryShortAbove</xsl:when>
+          <xsl:when test="text() = 'double-square' and @type = 'inverted'">fermataVeryLongBelow</xsl:when>
+          <xsl:when test="text() = 'double-square'">fermataVeryLongAbove</xsl:when>
+          <xsl:when test="text() = 'double-dot' and @type = 'inverted'">fermataLongHenzeBelow</xsl:when>
+          <xsl:when test="text() = 'double-dot'">fermataLongHenzeAbove</xsl:when>
+          <xsl:when test="text() = 'half-curve' and @type = 'inverted'">fermataShortHenzeBelow</xsl:when>
+          <xsl:when test="text() = 'half-curve'">fermataShortHenzeAbove</xsl:when>
+          <xsl:when test="text() = 'curlew' and @type = 'inverted'">
+            <xsl:message>[fermata] Unhandled type 'curlew'.</xsl:message>
+            <xsl:text>fermataBelow</xsl:text>
+          </xsl:when>
+          <xsl:when test="text() = 'curlew'">
+            <xsl:message>[fermata] Unhandled type 'curlew'.</xsl:message>
+            <xsl:text>fermataAbove</xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:if test="text() != ''">
+              <xsl:message>[fermata] Unhandled type '<xsl:value-of select="text()"/>'.</xsl:message>
+            </xsl:if>
+            <xsl:text>fermataAbove</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
+      </subtype>
+      <xsl:if test="@type = 'inverted'">
+        <placement>below</placement>
+      </xsl:if>
+    </Fermata>
   </xsl:template>
 
   <!--
@@ -1217,12 +1271,7 @@
             </pageOddBottomMargin>
           </xsl:if>
           <xsl:if test="//defaults/page-layout/page-width and //defaults/page-layout/page-margins">
-            <pagePrintableWidth>
-              <xsl:value-of select="format-number(mscx:tenthsToInches(min((
-                number(//defaults/page-layout/page-width) - number(//defaults/page-layout/page-margins[@type = ('odd', 'both')]/left-margin) - number(//defaults/page-layout/page-margins[@type = ('odd', 'both')]/right-margin),
-                number(//defaults/page-layout/page-width) - number(//defaults/page-layout/page-margins[@type = ('even', 'both')]/left-margin) - number(//defaults/page-layout/page-margins[@type = ('even', 'both')]/right-margin)
-              ))), '0.00')"/>
-            </pagePrintableWidth>
+            <pagePrintableWidth><xsl:value-of select="$pagePrintableWidthInches"/></pagePrintableWidth>
           </xsl:if>
           <pageTwosided>0</pageTwosided>
           <xsl:if test="//defaults/staff-layout/staff-distance">
