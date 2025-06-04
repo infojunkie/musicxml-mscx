@@ -9,723 +9,728 @@ The table below is copied from [alphaTab's documentation of supported MusicXML f
 | Compressed MusicXML (.mxl) | ❌ Not Supported | |
 | score-partwise | ✅ Supported | |
 | score-timewise | ❌ Not Supported | As a workaround, use [timepart.xsl](https://www.w3.org/2021/06/musicxml40/listings/timepart.xsl/) to first convert to partwise. |
-| **score-partwise** | | |
-| @version | | |
-| work | | |
-| movement-number | | |
-| movement-title | | |
-| identification | | |
-| defaults | | |
-| credit | | |
-| part-list | | |
-| part | | |
-| **score-timewise** | | |
-| @version | | |
-| work | | |
-| movement-number | | |
-| movement-title | | |
-| identification | | |
-| defaults | | |
-| credit | | |
-| part-list | | |
-| measure | | |
-| **work** | | |
-| work-number | | |
-| work-title | | |
-| opus | | |
-| **identification** | | |
-| creator | | |
-| rights | | |
-| encoding | | |
-| source | | |
-| relation | | |
-| miscellaneous | | |
-| **creator** | | |
-| No @type | | |
-| @type=composer | | |
-| @type=lyricist | | |
-| @type=arranger | | |
-| **rights** | | |
-| @type | | |
-| **encoding** | | |
-| encoding-date | | |
-| **encoder** | | |
-| software | | |
-| encoding-description | | |
-| supports | | |
-| encoder | | |
-| @type | | |
-| **credit** | | |
-| credit-type | | |
-| credit-type > 'part name' | | |
-| credit-image | | |
-| credit-words | | |
-| credit-symbol | | |
-| **credit-words** | | |
-| @dir | | |
-| @enclosure | | |
-| @halign | | |
-| @justify | | |
-| @letter-spacing | | |
-| @line-height | | |
-| @line-through | | |
-| @overline | | |
-| @rotation | | |
-| @underline | | |
-| @valign | | |
-| **part-list** | | |
-| part-group | | |
-| score-part | | |
-| **score-part** | | |
-| identification | | |
-| part-link | | |
-| part-name | | |
-| part-name-display | | |
-| part-abbreviation | | |
-| part-abbreviation-display | | |
-| group | | |
-| score-instrument | | |
-| player | | |
-| midi-device | | |
-| midi-instrument | | |
-| **part-name** | | |
-| display-text | | |
-| accidental-text | | |
-| **score-instrument** | | |
-| @id | | |
-| instrument-name | | |
-| instrument-abbreviation | | |
-| instrument-sound | | |
-| solo | | |
-| ensemble | | |
-| virtual-instrument | | |
-| **midi-device** | | |
-| @port | | |
-| **midi-instrument** | | |
-| @id | | |
-| midi-channel | | |
-| midi-name | | |
-| midi-bank | | |
-| midi-program | | |
-| midi-unpitched | | |
-| volume | | |
-| pan | | |
-| elevation | | |
-| **part (partwise)** | | |
-| @id | | |
-| measure (partwise) | | |
-| **measure (partwise)** | | |
-| note | | |
-| backup | | |
-| forward | | |
-| direction | | |
-| attributes | | |
-| harmony | | |
-| figured-bass | | |
-| print | | |
-| sound | | |
-| listening | | |
-| barline | | |
-| grouping | | |
-| @number | | |
-| @implicit | | |
-| @non-controlling | | |
-| @text | | |
-| @width | | |
-| **measure (timewise)** | | |
-| part (timewise) | | |
-| @number | | |
-| @implicit | | |
-| @non-controlling | | |
-| @text | | |
-| @width | | |
-| **part (timewise)** | | |
-| @id | | |
-| note | | |
-| backup | | |
-| forward | | |
-| direction | | |
-| attributes | | |
-| harmony | | |
-| figured-bass | | |
-| print | | |
-| sound | | |
-| listening | | |
-| barline | | |
-| grouping | | |
-| **note** | | |
-| grace | | |
-| chord | | |
-| pitch | | |
-| unpitched | | |
-| rest | | |
-| cue | | |
-| duration | | |
-| tie | | |
-| instrument | | |
-| voice | | |
-| type | | |
-| dot | | |
-| accidental | | |
-| time-modification | | |
-| stem | | |
-| notehead | | |
-| notehead-text | | |
-| staff | | |
-| beam | | |
-| notations | | |
-| lyric | | |
-| play | | |
-| listen | | |
-| **play (note)** | | |
-| ipa | | |
-| mute | | |
-| semi-pitched | | |
-| other-sound | | |
-| **grace** | | |
-| @make-time | | |
-| @slash | | |
-| @steal-time-following | | |
-| @steal-time-previous | | |
-| **pitch** | | |
-| step | | |
-| alter | | |
-| octave | | |
-| **unpitched** | | |
-| display-step | | |
-| display-octave | | |
-| **rest** | | |
-| display-step | | |
-| display-octave | | |
-| @measure | | |
-| **type** | | |
-| @size | | |
-| **accidental** | | |
-| sharp | | |
-| natural | | |
-| flat | | |
-| double-sharp | | |
-| flat-flat | | |
-| sharp-flat | | |
-| natural-sharp natural-flat | | |
-| quarter-flat quarter-sharp three-quarters-flat three-quarters-sharp | | |
-| sharp-down sharp-up natural-down natural-up flat-down flat-up | | |
-| double-sharp-down double-sharp-up flat-flat-down flat-flat-up | | |
-| arrow-down arrow-up | | |
-| triple-sharp triple-flat | | |
-| slash-quarter-sharp slash-sharp slash-flat double-slash-flat | | |
-| sharp-1 sharp-2 sharp-3 sharp-4 sharp-5 | | |
-| flat-1 flat-2 flat-3 flat-4 flat-5 | | |
-| sori kokon other | | |
-| @bracket | | |
-| @cautionary | | |
-| @editorial | | |
-| @parentheses | | |
-| @size | | |
-| **time-modification** | | |
-| actual-notes | | |
-| normal-notes | | |
-| normal-type | | |
-| normal-dot | | |
-| **stem** | | |
-| up | | |
-| down | | |
-| default | | |
-| none | | |
-| **notehead** | | |
-| arrow down | | |
-| arrow up | | |
-| back slashed | | |
-| circle dot | | |
-| circle-x | | |
-| circled | | |
-| cluster | | |
-| cross | | |
-| diamond | | |
-| do | | |
-| fa | | |
-| fa up | | |
-| inverted triangle | | |
-| la | | |
-| left triangle | | |
-| mi | | |
-| none | | |
-| normal | | |
-| re | | |
-| rectangle | | |
-| slashed | | |
-| so | | |
-| square | | |
-| ti | | |
-| triangle | | |
-| x | | |
-| @filled | | |
-| @parentheses | | |
-| **notations** | | |
-| tied | | |
-| slur | | |
-| tuplet | | |
-| glissando | | |
-| slide | | |
-| ornaments | | |
-| technical | | |
-| articulations | | |
-| dynamics | | |
-| fermata | | |
-| arpeggiate | | |
-| non-arpeggiate | | |
-| accidental-mark | | |
-| other-notation | | |
-| **tied** | | |
-| @type | | |
-| @bezier-offset | | |
-| @bezier-offset2 | | |
-| @bezier-x | | |
-| @bezier-x2 | | |
-| @bezier-y | | |
-| @bezier-y2 | | |
-| @line-type | | |
-| @number | | |
-| @orientation | | |
-| @space-length | | |
-| **slur** | | |
-| @type | | |
-| @bezier-offset | | |
-| @bezier-offset2 | | |
-| @bezier-x | | |
-| @bezier-x2 | | |
-| @bezier-y | | |
-| @bezier-y2 | | |
-| @dash-length | | |
-| @line-type | | |
-| @number | | |
-| @orientation | | |
-| @space-length | | |
-| **glissando** | | |
-| @type | | |
-| @dash-length | | |
-| @line-type | | |
-| @number | | |
-| @space-length | | |
-| **slide** | | |
-| @type | | |
-| @accelerate | | |
-| @beats | | |
-| @dash-length | | |
-| @first-beat | | |
-| @last-beat | | |
-| @line-type | | |
-| @number | | |
-| @space-length | | |
-| **ornaments** | | |
-| trill-mark | | |
-| turn | | |
-| delayed-turn | | |
-| inverted-turn | | |
-| delayed-inverted-turn | | |
-| vertical-turn | | |
-| inverted-vertical-turn | | |
-| shake | | |
-| wavy-line | | |
-| mordent | | |
-| inverted-mordent | | |
-| schleifer | | |
-| tremolo | | |
-| hadyn | | |
-| other-element | | |
-| **trill-mark** | | |
-| @accelerate | | |
-| @beats | | |
-| @last-beat | | |
-| @second-beat | | |
-| @start-note | | |
-| @trill-step | | |
-| @two-note-turn | | |
-| **turn** | | |
-| @accelerate | | |
-| @beats | | |
-| @last-beat | | |
-| @second-beat | | |
-| @slash | | |
-| @start-note | | |
-| @trill-step | | |
-| @two-note-turn | | |
-| **inverted-turn** | | |
-| @accelerate | | |
-| @beats | | |
-| @last-beat | | |
-| @second-beat | | |
-| @slash | | |
-| @start-note | | |
-| @trill-step | | |
-| @two-note-turn | | |
-| **wavy-line** | | |
-| @type | | |
-| @accelerate | | |
-| @beats | | |
-| @last-beat | | |
-| @number | | |
-| @second-beat | | |
-| @start-note | | |
-| @trill-step | | |
-| @two-note-turn | | |
-| **mordent** | | |
-| @accelerate | | |
-| @approach | | |
-| @departure | | |
-| @beats | | |
-| @last-beat | | |
-| @long | | |
-| @second-beat | | |
-| @slash | | |
-| @start-note | | |
-| @trill-step | | |
-| @two-note-turn | | |
-| **inverted-mordent** | | |
-| @accelerate | | |
-| @approach | | |
-| @departure | | |
-| @beats | | |
-| @last-beat | | |
-| @long | | |
-| @second-beat | | |
-| @slash | | |
-| @start-note | | |
-| @trill-step | | |
-| @two-note-turn | | |
-| **tremolo** | | |
-| @type | | |
-| **technical** | | |
-| up-bow | | |
-| down-bow | | |
-| harmonic | | |
-| open-string | | |
-| thumb-position | | |
-| fingering | | |
-| pluck | | |
-| double-tongue | | |
-| triple-tongue | | |
-| stopped | | |
-| snap-pizzicato | | |
-| fret | | |
-| string | | |
-| hammer-on | | |
-| pull-off | | |
-| bend | | |
-| tap | | |
-| heel | | |
-| toe | | |
-| fingernails | | |
-| hole | | |
-| arrow | | |
-| handbell | | |
-| brass-bend | | |
-| flip | | |
-| smear | | |
-| open | | |
-| half-muted | | |
-| harmon-mute | | |
-| golpe | | |
-| other-technical | | |
-| **articulations** | | |
-| accent | | |
-| strong-accent | | |
-| staccato | | |
-| tenuto | | |
-| detached-legato | | |
-| staccatissimo | | |
-| spiccato | | |
-| scoop | | |
-| plop | | |
-| doit | | |
-| falloff | | |
-| breath-mark | | |
-| caesura | | |
-| stress | | |
-| unstress | | |
-| soft-accent | | |
-| other-articulation | | |
-| **fermata** | | |
-| normal | | |
-| angled | | |
-| square | | |
-| double-angled | | |
-| double-square | | |
-| double-dot | | |
-| half-curve | | |
-| curlew | | |
-| @type | | |
-| **arpeggiate** | | |
-| @direction | | |
-| @number | | |
-| @unbroken | | |
-| **lyric** | | |
-| syllabic | | |
-| text | | |
-| elision | | |
-| extend | | |
-| laughing | | |
-| humming | | |
-| end-line | | |
-| end-paragraph | | |
-| @number | | |
-| @time-only | | |
-| **backup** | | |
-| duration | | |
-| **forward** | | |
-| duration | | |
-| voice | | |
-| staff | | |
-| **direction** | | |
-| direction-type | | |
-| offset | | |
-| voice | | |
-| staff | | |
-| sound | | |
-| listening | | |
-| **direction-type** | | |
-| rehearsal | | |
-| segno | | |
-| coda | | |
-| words | | |
-| symbol | | |
-| wedge | | |
-| dynamics | | |
-| dynamics > other-dynamics | | |
-| dashes (if preceeded by words LetRing) | | |
-| dashes (if preceeded by words P.M.) | | |
-| bracket | | |
-| pedal | | |
-| metronome | | |
-| octave-shift | | |
-| harp-pedals | | |
-| damp | | |
-| damp-all | | |
-| eyeglasses | | |
-| string-mute | | |
-| scordatura | | |
-| image | | |
-| principal-voice | | |
-| percussion | | |
-| accordion-registration | | |
-| staff-divide | | |
-| other-direction | | |
-| **wedge** | | |
-| @type=crescendo | | |
-| @type=diminuendo | | |
-| @type=stop | | |
-| @type=continue | | |
-| @type=continue | | |
-| @dash-length | | |
-| @line-type | | |
-| @niente | | |
-| @number | | |
-| @space-length | | |
-| @spread | | |
-| **dynamics** | | |
-| p | | |
-| pp | | |
-| ppp | | |
-| pppp | | |
-| ppppp | | |
-| pppppp | | |
-| f | | |
-| ff | | |
-| fff | | |
-| ffff | | |
-| fffff | | |
-| ffffff | | |
-| mp | | |
-| mf | | |
-| sf | | |
-| sfp | | |
-| sfpp | | |
-| fp | | |
-| rf | | |
-| rfz | | |
-| sfz | | |
-| sffz | | |
-| fz | | |
-| n | | |
-| pf | | |
-| sfzp | | |
-| other-dynamics | | |
-| **metronome** | | |
-| beat-unit | | |
-| beat-unit-dot | | |
-| beat-unit-tied | | |
-| per-minute | | |
-| metronome-arrows | | |
-| metronome-note | | |
-| metronome-relation | | |
-| @parentheses | | |
-| **octave-shift** | | |
-| @size=8 | | |
-| @size=15 | | |
-| @size=22 | | |
-| **attributes (at measure start)** | | |
-| divisions | | |
-| key | | |
-| time | | |
-| staves | | |
-| part-symbol | | |
-| instruments | | |
-| clef | | |
-| staff-details | | |
-| transpose | | |
-| for-part | | |
-| directive | | |
-| measure-style | | |
-| **attributes (mid-measure)** | | |
-| divisions | | |
-| key | | |
-| time | | |
-| part-symbol | | |
-| instruments | | |
-| clef | | |
-| staff-details | | |
-| transpose | | |
-| for-part | | |
-| measure-style | | |
-| **key** | | |
-| cancel | | |
-| fifths | | |
-| mode | | |
-| key-step | | |
-| key-alter | | |
-| key-accidental | | |
-| key-octave | | |
-| @number | | |
-| **time** | | |
-| beats | | |
-| beat-type | | |
-| interchangable | | |
-| senza-misura | | |
-| @symbol=common | | |
-| @symbol=cut | | |
-| @symbol=dotted-note | | |
-| @symbol=normal | | |
-| @symbol=note | | |
-| @symbol=single-number | | |
-| @number | | |
-| **clef** | | |
-| sign | | |
-| line | | |
-| clef-octave-change | | |
-| @additional | | |
-| @after-barline | | |
-| @number | | |
-| @symbol-size | | |
-| **staff-details** | | |
-| staff-type | | |
-| staff-lines | | |
-| line-detail | | |
-| staff-tuning | | |
-| capo | | |
-| staff-size | | |
-| **transpose** | | |
-| @number | | |
-| diatonic | | |
-| chromatic | | |
-| octave-change | | |
-| double | | |
-| **measure-style** | | |
-| multiple-rest | | |
-| measure-repeat | | |
-| beat-repeat | | |
-| slash | | |
-| **harmony** | | |
-| root | | |
-| numeral | | |
-| function | | |
-| kind | | |
-| inversion | | |
-| bass | | |
-| degree | | |
-| staff | | |
-| **print** | | |
-| page-layout | | |
-| system-layout | | |
-| staff-layout | | |
-| measure-layout | | |
-| measure-numbering | | |
-| part-name-display | | |
-| part-abbreviation-display | | |
-| @blank-page | | |
-| @new-page | | |
-| @new-system | | |
-| @page-number | | |
-| @staff-spacing | | |
-| **sound**  | | |
-| instrument-change | | |
-| midi-device | | |
-| midi-instrument | | |
-| play | | |
-| swing | | |
-| offset | | |
-| @coda | | |
-| @dacapo | | |
-| @dalsegno | | |
-| @damper-pedal | | |
-| @divisions | | |
-| @dynamics | | |
-| @elevation | | |
-| @fine | | |
-| @forward-repeat | | |
-| @pan | | |
-| @pizzicato | | |
-| @segno | | |
-| @soft-pedal | | |
-| @sostenuto-pedal | | |
-| @tempo | | |
-| @time-only | | |
-| @tocoda | | |
-| **barline** | | |
-| bar-style | | |
-| wavy-line | | |
-| segno | | |
-| coda | | |
-| fermata | | |
-| ending | | |
-| repeat | | |
-| **ending** | | |
-| @number | | |
-| @type | | |
-| @system | | |
-| @end-length | | |
-| **repeat** | | |
-| @direction | | |
-| @after-jump | | |
-| @times | | |
-| @wigned | | |
-| **Commonly unsupported elements and attributes** | | |
-| link | | |
-| bookmark | | |
-| @color | | |
-| @default-x | | |
-| @default-y | | |
-| @relative-x | | |
-| @relative-y | | |
-| @xml:lang | | |
-| @xml:space | | |
-| @print-object | | |
-| @font-family | | |
-| @font-size | | |
-| @font-style | | |
-| @font-weight | | |
-| @justify | | |
-| @dir | | |
-| @enclosure | | |
-| @halign | | |
-| @justify | | |
-| @letter-spacing | | |
-| @line-height | | |
-| @line-through | | |
-| @overline | | |
-| @rotation | | |
-| @underline | | |
-| @valign | | |
-| @smufl | | |
-| @placement | | |
-| footnote | | |
-| level | | |
+| **score-partwise** | ❌ Not Supported | |
+| @version | ❌ Not Supported | |
+| work | ❌ Not Supported | |
+| movement-number | ❌ Not Supported | |
+| movement-title | ❌ Not Supported | |
+| identification | ❌ Not Supported | |
+| defaults | ❌ Not Supported | |
+| credit | ❌ Not Supported | |
+| part-list | ❌ Not Supported | |
+| part | ❌ Not Supported | |
+| **score-timewise** | ❌ Not Supported | |
+| @version | ❌ Not Supported | |
+| work | ❌ Not Supported | |
+| movement-number | ❌ Not Supported | |
+| movement-title | ❌ Not Supported | |
+| identification | ❌ Not Supported | |
+| defaults | ❌ Not Supported | |
+| credit | ❌ Not Supported | |
+| part-list | ❌ Not Supported | |
+| measure | ❌ Not Supported | |
+| **work** | ❌ Not Supported | |
+| work-number | ❌ Not Supported | |
+| work-title | ❌ Not Supported | |
+| opus | ❌ Not Supported | |
+| **identification** | ❌ Not Supported | |
+| creator | ❌ Not Supported | |
+| rights | ❌ Not Supported | |
+| encoding | ❌ Not Supported | |
+| source | ❌ Not Supported | |
+| relation | ❌ Not Supported | |
+| miscellaneous | ❌ Not Supported | |
+| **creator** | ❌ Not Supported | |
+| No @type | ❌ Not Supported | |
+| @type=composer | ❌ Not Supported | |
+| @type=lyricist | ❌ Not Supported | |
+| @type=arranger | ❌ Not Supported | |
+| **rights** | ❌ Not Supported | |
+| @type | ❌ Not Supported | |
+| **encoding** | ❌ Not Supported | |
+| encoding-date | ❌ Not Supported | |
+| encoder | ❌ Not Supported | |
+| software | ❌ Not Supported | |
+| encoding-description | ❌ Not Supported | |
+| supports | ❌ Not Supported | |
+| **encoder** | ❌ Not Supported | |
+| @type | ❌ Not Supported | |
+| **credit** | ❌ Not Supported | |
+| credit-type | ❌ Not Supported | |
+| credit-type > 'part name' | ❌ Not Supported | |
+| credit-image | ❌ Not Supported | |
+| credit-words | ❌ Not Supported | |
+| credit-symbol | ❌ Not Supported | |
+| **credit-words** | ❌ Not Supported | |
+| @dir | ❌ Not Supported | |
+| @enclosure | ❌ Not Supported | |
+| @halign | ❌ Not Supported | |
+| @justify | ❌ Not Supported | |
+| @letter-spacing | ❌ Not Supported | |
+| @line-height | ❌ Not Supported | |
+| @line-through | ❌ Not Supported | |
+| @overline | ❌ Not Supported | |
+| @rotation | ❌ Not Supported | |
+| @underline | ❌ Not Supported | |
+| @valign | ❌ Not Supported | |
+| **part-list** | ❌ Not Supported | |
+| part-group | ❌ Not Supported | |
+| score-part | ❌ Not Supported | |
+| **score-part** | ❌ Not Supported | |
+| identification | ❌ Not Supported | |
+| part-link | ❌ Not Supported | |
+| part-name | ❌ Not Supported | |
+| part-name-display | ❌ Not Supported | |
+| part-abbreviation | ❌ Not Supported | |
+| part-abbreviation-display | ❌ Not Supported | |
+| group | ❌ Not Supported | |
+| score-instrument | ❌ Not Supported | |
+| player | ❌ Not Supported | |
+| midi-device | ❌ Not Supported | |
+| midi-instrument | ❌ Not Supported | |
+| **part-name** | ❌ Not Supported | |
+| display-text | ❌ Not Supported | |
+| accidental-text | ❌ Not Supported | |
+| **score-instrument** | ❌ Not Supported | |
+| @id | ❌ Not Supported | |
+| instrument-name | ❌ Not Supported | |
+| instrument-abbreviation | ❌ Not Supported | |
+| instrument-sound | ❌ Not Supported | |
+| solo | ❌ Not Supported | |
+| ensemble | ❌ Not Supported | |
+| virtual-instrument | ❌ Not Supported | |
+| **midi-device** | ❌ Not Supported | |
+| @port | ❌ Not Supported | |
+| **midi-instrument** | ❌ Not Supported | |
+| @id | ❌ Not Supported | |
+| midi-channel | ❌ Not Supported | |
+| midi-name | ❌ Not Supported | |
+| midi-bank | ❌ Not Supported | |
+| midi-program | ❌ Not Supported | |
+| midi-unpitched | ❌ Not Supported | |
+| volume | ❌ Not Supported | |
+| pan | ❌ Not Supported | |
+| elevation | ❌ Not Supported | |
+| **part (partwise)** | ❌ Not Supported | |
+| @id | ❌ Not Supported | |
+| measure (partwise) | ❌ Not Supported | |
+| **measure (partwise)** | ❌ Not Supported | |
+| note | ❌ Not Supported | |
+| backup | ❌ Not Supported | |
+| forward | ❌ Not Supported | |
+| direction | ❌ Not Supported | |
+| attributes | ❌ Not Supported | |
+| harmony | ❌ Not Supported | |
+| figured-bass | ❌ Not Supported | |
+| print | ❌ Not Supported | |
+| sound | ❌ Not Supported | |
+| listening | ❌ Not Supported | |
+| barline | ❌ Not Supported | |
+| grouping | ❌ Not Supported | |
+| @number | ❌ Not Supported | |
+| @implicit | ❌ Not Supported | |
+| @non-controlling | ❌ Not Supported | |
+| @text | ❌ Not Supported | |
+| @width | ❌ Not Supported | |
+| **measure (timewise)** | ❌ Not Supported | |
+| part (timewise) | ❌ Not Supported | |
+| @number | ❌ Not Supported | |
+| @implicit | ❌ Not Supported | |
+| @non-controlling | ❌ Not Supported | |
+| @text | ❌ Not Supported | |
+| @width | ❌ Not Supported | |
+| **part (timewise)** | ❌ Not Supported | |
+| @id | ❌ Not Supported | |
+| note | ❌ Not Supported | |
+| backup | ❌ Not Supported | |
+| forward | ❌ Not Supported | |
+| direction | ❌ Not Supported | |
+| attributes | ❌ Not Supported | |
+| harmony | ❌ Not Supported | |
+| figured-bass | ❌ Not Supported | |
+| print | ❌ Not Supported | |
+| sound | ❌ Not Supported | |
+| listening | ❌ Not Supported | |
+| barline | ❌ Not Supported | |
+| grouping | ❌ Not Supported | |
+| **note** | ❌ Not Supported | |
+| grace | ❌ Not Supported | |
+| chord | ❌ Not Supported | |
+| pitch | ❌ Not Supported | |
+| unpitched | ❌ Not Supported | |
+| rest | ❌ Not Supported | |
+| cue | ❌ Not Supported | |
+| duration | ❌ Not Supported | |
+| tie | ❌ Not Supported | |
+| instrument | ❌ Not Supported | |
+| voice | ❌ Not Supported | |
+| type | ❌ Not Supported | |
+| dot | ❌ Not Supported | |
+| accidental | ❌ Not Supported | |
+| time-modification | ❌ Not Supported | |
+| stem | ❌ Not Supported | |
+| notehead | ❌ Not Supported | |
+| notehead-text | ❌ Not Supported | |
+| staff | ❌ Not Supported | |
+| beam | ❌ Not Supported | |
+| notations | ❌ Not Supported | |
+| lyric | ❌ Not Supported | |
+| play | ❌ Not Supported | |
+| listen | ❌ Not Supported | |
+| **play (note)** | ❌ Not Supported | |
+| ipa | ❌ Not Supported | |
+| mute | ❌ Not Supported | |
+| semi-pitched | ❌ Not Supported | |
+| other-sound | ❌ Not Supported | |
+| **grace** | ❌ Not Supported | |
+| @make-time | ❌ Not Supported | |
+| @slash | ❌ Not Supported | |
+| @steal-time-following | ❌ Not Supported | |
+| @steal-time-previous | ❌ Not Supported | |
+| **pitch** | ❌ Not Supported | |
+| step | ❌ Not Supported | |
+| alter | ❌ Not Supported | |
+| octave | ❌ Not Supported | |
+| **unpitched** | ❌ Not Supported | |
+| display-step | ❌ Not Supported | |
+| display-octave | ❌ Not Supported | |
+| **rest** | ❌ Not Supported | |
+| display-step | ❌ Not Supported | |
+| display-octave | ❌ Not Supported | |
+| @measure | ❌ Not Supported | |
+| **type** | ❌ Not Supported | |
+| @size | ❌ Not Supported | |
+| **accidental** | ❌ Not Supported | |
+| sharp | ❌ Not Supported | |
+| natural | ❌ Not Supported | |
+| flat | ❌ Not Supported | |
+| double-sharp | ❌ Not Supported | |
+| flat-flat | ❌ Not Supported | |
+| sharp-flat | ❌ Not Supported | |
+| natural-sharp, natural-flat | ❌ Not Supported | |
+| quarter-flat, quarter-sharp, three-quarters-flat, three-quarters-sharp | ❌ Not Supported | |
+| sharp-down, sharp-up, natural-down, natural-up, flat-down, flat-up | ❌ Not Supported | |
+| double-sharp-down, double-sharp-up, flat-flat-down, flat-flat-up | ❌ Not Supported | |
+| arrow-down, arrow-up | ❌ Not Supported | |
+| triple-sharp, triple-flat | ❌ Not Supported | |
+| slash-quarter-sharp, slash-sharp, slash-flat, double-slash-flat | ❌ Not Supported | |
+| sharp-1, sharp-2, sharp-3, sharp-4, sharp-5 | ❌ Not Supported | |
+| flat-1, flat-2, flat-3, flat-4, flat-5 | ❌ Not Supported | |
+| sori, kokon, other | ❌ Not Supported | |
+| @bracket | ❌ Not Supported | |
+| @cautionary | ❌ Not Supported | |
+| @editorial | ❌ Not Supported | |
+| @parentheses | ❌ Not Supported | |
+| @size | ❌ Not Supported | |
+| **time-modification** | ❌ Not Supported | |
+| actual-notes | ❌ Not Supported | |
+| normal-notes | ❌ Not Supported | |
+| normal-type | ❌ Not Supported | |
+| normal-dot | ❌ Not Supported | |
+| **stem** | ❌ Not Supported | |
+| up | ❌ Not Supported | |
+| down | ❌ Not Supported | |
+| default | ❌ Not Supported | |
+| none | ❌ Not Supported | |
+| **notehead** | ❌ Not Supported | |
+| arrow down | ❌ Not Supported | |
+| arrow up | ❌ Not Supported | |
+| back slashed | ❌ Not Supported | |
+| circle dot | ❌ Not Supported | |
+| circle-x | ❌ Not Supported | |
+| circled | ❌ Not Supported | |
+| cluster | ❌ Not Supported | |
+| cross | ❌ Not Supported | |
+| diamond | ❌ Not Supported | |
+| do | ❌ Not Supported | |
+| fa | ❌ Not Supported | |
+| fa up | ❌ Not Supported | |
+| inverted triangle | ❌ Not Supported | |
+| la | ❌ Not Supported | |
+| left triangle | ❌ Not Supported | |
+| mi | ❌ Not Supported | |
+| none | ❌ Not Supported | |
+| normal | ❌ Not Supported | |
+| re | ❌ Not Supported | |
+| rectangle | ❌ Not Supported | |
+| slashed | ❌ Not Supported | |
+| so | ❌ Not Supported | |
+| square | ❌ Not Supported | |
+| ti | ❌ Not Supported | |
+| triangle | ❌ Not Supported | |
+| x | ❌ Not Supported | |
+| @filled | ❌ Not Supported | |
+| @parentheses | ❌ Not Supported | |
+| **notations** | ❌ Not Supported | |
+| tied | ❌ Not Supported | |
+| slur | ❌ Not Supported | |
+| tuplet | ❌ Not Supported | |
+| glissando | ❌ Not Supported | |
+| slide | ❌ Not Supported | |
+| ornaments | ❌ Not Supported | |
+| technical | ❌ Not Supported | |
+| articulations | ❌ Not Supported | |
+| dynamics | ❌ Not Supported | |
+| fermata | ❌ Not Supported | |
+| arpeggiate | ❌ Not Supported | |
+| non-arpeggiate | ❌ Not Supported | |
+| accidental-mark | ❌ Not Supported | |
+| other-notation | ❌ Not Supported | |
+| **tied** | ❌ Not Supported | |
+| @type | ❌ Not Supported | |
+| @bezier-offset | ❌ Not Supported | |
+| @bezier-offset2 | ❌ Not Supported | |
+| @bezier-x | ❌ Not Supported | |
+| @bezier-x2 | ❌ Not Supported | |
+| @bezier-y | ❌ Not Supported | |
+| @bezier-y2 | ❌ Not Supported | |
+| @line-type | ❌ Not Supported | |
+| @number | ❌ Not Supported | |
+| @orientation | ❌ Not Supported | |
+| @space-length | ❌ Not Supported | |
+| **slur** | ❌ Not Supported | |
+| @type | ❌ Not Supported | |
+| @bezier-offset | ❌ Not Supported | |
+| @bezier-offset2 | ❌ Not Supported | |
+| @bezier-x | ❌ Not Supported | |
+| @bezier-x2 | ❌ Not Supported | |
+| @bezier-y | ❌ Not Supported | |
+| @bezier-y2 | ❌ Not Supported | |
+| @dash-length | ❌ Not Supported | |
+| @line-type | ❌ Not Supported | |
+| @number | ❌ Not Supported | |
+| @orientation | ❌ Not Supported | |
+| @space-length | ❌ Not Supported | |
+| **glissando** | ❌ Not Supported | |
+| @type | ❌ Not Supported | |
+| @dash-length | ❌ Not Supported | |
+| @line-type | ❌ Not Supported | |
+| @number | ❌ Not Supported | |
+| @space-length | ❌ Not Supported | |
+| **slide** | ❌ Not Supported | |
+| @type | ❌ Not Supported | |
+| @accelerate | ❌ Not Supported | |
+| @beats | ❌ Not Supported | |
+| @dash-length | ❌ Not Supported | |
+| @first-beat | ❌ Not Supported | |
+| @last-beat | ❌ Not Supported | |
+| @line-type | ❌ Not Supported | |
+| @number | ❌ Not Supported | |
+| @space-length | ❌ Not Supported | |
+| **ornaments** | ❌ Not Supported | |
+| trill-mark | ❌ Not Supported | |
+| turn | ❌ Not Supported | |
+| delayed-turn | ❌ Not Supported | |
+| inverted-turn | ❌ Not Supported | |
+| delayed-inverted-turn | ❌ Not Supported | |
+| vertical-turn | ❌ Not Supported | |
+| inverted-vertical-turn | ❌ Not Supported | |
+| shake | ❌ Not Supported | |
+| wavy-line | ❌ Not Supported | |
+| mordent | ❌ Not Supported | |
+| inverted-mordent | ❌ Not Supported | |
+| schleifer | ❌ Not Supported | |
+| tremolo | ❌ Not Supported | |
+| hadyn | ❌ Not Supported | |
+| other-element | ❌ Not Supported | |
+| **trill-mark** | ❌ Not Supported | |
+| @accelerate | ❌ Not Supported | |
+| @beats | ❌ Not Supported | |
+| @last-beat | ❌ Not Supported | |
+| @second-beat | ❌ Not Supported | |
+| @start-note | ❌ Not Supported | |
+| @trill-step | ❌ Not Supported | |
+| @two-note-turn | ❌ Not Supported | |
+| **turn** | ❌ Not Supported | |
+| @accelerate | ❌ Not Supported | |
+| @beats | ❌ Not Supported | |
+| @last-beat | ❌ Not Supported | |
+| @second-beat | ❌ Not Supported | |
+| @slash | ❌ Not Supported | |
+| @start-note | ❌ Not Supported | |
+| @trill-step | ❌ Not Supported | |
+| @two-note-turn | ❌ Not Supported | |
+| **inverted-turn** | ❌ Not Supported | |
+| @accelerate | ❌ Not Supported | |
+| @beats | ❌ Not Supported | |
+| @last-beat | ❌ Not Supported | |
+| @second-beat | ❌ Not Supported | |
+| @slash | ❌ Not Supported | |
+| @start-note | ❌ Not Supported | |
+| @trill-step | ❌ Not Supported | |
+| @two-note-turn | ❌ Not Supported | |
+| **wavy-line** | ❌ Not Supported | |
+| @type | ❌ Not Supported | |
+| @accelerate | ❌ Not Supported | |
+| @beats | ❌ Not Supported | |
+| @last-beat | ❌ Not Supported | |
+| @number | ❌ Not Supported | |
+| @second-beat | ❌ Not Supported | |
+| @start-note | ❌ Not Supported | |
+| @trill-step | ❌ Not Supported | |
+| @two-note-turn | ❌ Not Supported | |
+| **mordent** | ❌ Not Supported | |
+| @accelerate | ❌ Not Supported | |
+| @approach | ❌ Not Supported | |
+| @departure | ❌ Not Supported | |
+| @beats | ❌ Not Supported | |
+| @last-beat | ❌ Not Supported | |
+| @long | ❌ Not Supported | |
+| @second-beat | ❌ Not Supported | |
+| @slash | ❌ Not Supported | |
+| @start-note | ❌ Not Supported | |
+| @trill-step | ❌ Not Supported | |
+| @two-note-turn | ❌ Not Supported | |
+| **inverted-mordent** | ❌ Not Supported | |
+| @accelerate | ❌ Not Supported | |
+| @approach | ❌ Not Supported | |
+| @departure | ❌ Not Supported | |
+| @beats | ❌ Not Supported | |
+| @last-beat | ❌ Not Supported | |
+| @long | ❌ Not Supported | |
+| @second-beat | ❌ Not Supported | |
+| @slash | ❌ Not Supported | |
+| @start-note | ❌ Not Supported | |
+| @trill-step | ❌ Not Supported | |
+| @two-note-turn | ❌ Not Supported | |
+| **tremolo** | ❌ Not Supported | |
+| @type | ❌ Not Supported | |
+| **technical** | ❌ Not Supported | |
+| up-bow | ❌ Not Supported | |
+| down-bow | ❌ Not Supported | |
+| harmonic | ❌ Not Supported | |
+| open-string | ❌ Not Supported | |
+| thumb-position | ❌ Not Supported | |
+| fingering | ❌ Not Supported | |
+| pluck | ❌ Not Supported | |
+| double-tongue | ❌ Not Supported | |
+| triple-tongue | ❌ Not Supported | |
+| stopped | ❌ Not Supported | |
+| snap-pizzicato | ❌ Not Supported | |
+| fret | ❌ Not Supported | |
+| string | ❌ Not Supported | |
+| hammer-on | ❌ Not Supported | |
+| pull-off | ❌ Not Supported | |
+| bend | ❌ Not Supported | |
+| tap | ❌ Not Supported | |
+| heel | ❌ Not Supported | |
+| toe | ❌ Not Supported | |
+| fingernails | ❌ Not Supported | |
+| hole | ❌ Not Supported | |
+| arrow | ❌ Not Supported | |
+| handbell | ❌ Not Supported | |
+| brass-bend | ❌ Not Supported | |
+| flip | ❌ Not Supported | |
+| smear | ❌ Not Supported | |
+| open | ❌ Not Supported | |
+| half-muted | ❌ Not Supported | |
+| harmon-mute | ❌ Not Supported | |
+| golpe | ❌ Not Supported | |
+| other-technical | ❌ Not Supported | |
+| **articulations** | ❌ Not Supported | |
+| accent | ❌ Not Supported | |
+| strong-accent | ❌ Not Supported | |
+| staccato | ❌ Not Supported | |
+| tenuto | ❌ Not Supported | |
+| detached-legato | ❌ Not Supported | |
+| staccatissimo | ❌ Not Supported | |
+| spiccato | ❌ Not Supported | |
+| scoop | ❌ Not Supported | |
+| plop | ❌ Not Supported | |
+| doit | ❌ Not Supported | |
+| falloff | ❌ Not Supported | |
+| breath-mark | ❌ Not Supported | |
+| caesura | ❌ Not Supported | |
+| stress | ❌ Not Supported | |
+| unstress | ❌ Not Supported | |
+| soft-accent | ❌ Not Supported | |
+| other-articulation | ❌ Not Supported | |
+| **fermata** | ❌ Not Supported | |
+| normal | ❌ Not Supported | |
+| angled | ❌ Not Supported | |
+| square | ❌ Not Supported | |
+| double-angled | ❌ Not Supported | |
+| double-square | ❌ Not Supported | |
+| double-dot | ❌ Not Supported | |
+| half-curve | ❌ Not Supported | |
+| curlew | ❌ Not Supported | |
+| @type | ❌ Not Supported | |
+| **arpeggiate** | ❌ Not Supported | |
+| @direction | ❌ Not Supported | |
+| @number | ❌ Not Supported | |
+| @unbroken | ❌ Not Supported | |
+| **lyric** | ❌ Not Supported | |
+| syllabic | ❌ Not Supported | |
+| text | ❌ Not Supported | |
+| elision | ❌ Not Supported | |
+| extend | ❌ Not Supported | |
+| laughing | ❌ Not Supported | |
+| humming | ❌ Not Supported | |
+| end-line | ❌ Not Supported | |
+| end-paragraph | ❌ Not Supported | |
+| @number | ❌ Not Supported | |
+| @time-only | ❌ Not Supported | |
+| **backup** | ❌ Not Supported | |
+| duration | ❌ Not Supported | |
+| **forward** | ❌ Not Supported | |
+| duration | ❌ Not Supported | |
+| voice | ❌ Not Supported | |
+| staff | ❌ Not Supported | |
+| **direction** | ❌ Not Supported | |
+| direction-type | ❌ Not Supported | |
+| offset | ❌ Not Supported | |
+| voice | ❌ Not Supported | |
+| staff | ❌ Not Supported | |
+| sound | ❌ Not Supported | |
+| listening | ❌ Not Supported | |
+| **direction-type** | ❌ Not Supported | |
+| rehearsal | ❌ Not Supported | |
+| segno | ❌ Not Supported | |
+| coda | ❌ Not Supported | |
+| words | ❌ Not Supported | |
+| symbol | ❌ Not Supported | |
+| wedge | ❌ Not Supported | |
+| dynamics | ❌ Not Supported | |
+| dynamics > other-dynamics | ❌ Not Supported | |
+| dashes (if preceeded by words LetRing) | ❌ Not Supported | |
+| dashes (if preceeded by words P.M.) | ❌ Not Supported | |
+| bracket | ❌ Not Supported | |
+| pedal | ❌ Not Supported | |
+| metronome | ❌ Not Supported | |
+| octave-shift | ❌ Not Supported | |
+| harp-pedals | ❌ Not Supported | |
+| damp | ❌ Not Supported | |
+| damp-all | ❌ Not Supported | |
+| eyeglasses | ❌ Not Supported | |
+| string-mute | ❌ Not Supported | |
+| scordatura | ❌ Not Supported | |
+| image | ❌ Not Supported | |
+| principal-voice | ❌ Not Supported | |
+| percussion | ❌ Not Supported | |
+| accordion-registration | ❌ Not Supported | |
+| staff-divide | ❌ Not Supported | |
+| other-direction | ❌ Not Supported | |
+| **wedge** | ❌ Not Supported | |
+| @type=crescendo | ❌ Not Supported | |
+| @type=diminuendo | ❌ Not Supported | |
+| @type=stop | ❌ Not Supported | |
+| @type=continue | ❌ Not Supported | |
+| @type=continue | ❌ Not Supported | |
+| @dash-length | ❌ Not Supported | |
+| @line-type | ❌ Not Supported | |
+| @niente | ❌ Not Supported | |
+| @number | ❌ Not Supported | |
+| @space-length | ❌ Not Supported | |
+| @spread | ❌ Not Supported | |
+| **dynamics** | ❌ Not Supported | |
+| p | ❌ Not Supported | |
+| pp | ❌ Not Supported | |
+| ppp | ❌ Not Supported | |
+| pppp | ❌ Not Supported | |
+| ppppp | ❌ Not Supported | |
+| pppppp | ❌ Not Supported | |
+| f | ❌ Not Supported | |
+| ff | ❌ Not Supported | |
+| fff | ❌ Not Supported | |
+| ffff | ❌ Not Supported | |
+| fffff | ❌ Not Supported | |
+| ffffff | ❌ Not Supported | |
+| mp | ❌ Not Supported | |
+| mf | ❌ Not Supported | |
+| sf | ❌ Not Supported | |
+| sfp | ❌ Not Supported | |
+| sfpp | ❌ Not Supported | |
+| fp | ❌ Not Supported | |
+| rf | ❌ Not Supported | |
+| rfz | ❌ Not Supported | |
+| sfz | ❌ Not Supported | |
+| sffz | ❌ Not Supported | |
+| fz | ❌ Not Supported | |
+| n | ❌ Not Supported | |
+| pf | ❌ Not Supported | |
+| sfzp | ❌ Not Supported | |
+| other-dynamics | ❌ Not Supported | |
+| **metronome** | ❌ Not Supported | |
+| beat-unit | ❌ Not Supported | |
+| beat-unit-dot | ❌ Not Supported | |
+| beat-unit-tied | ❌ Not Supported | |
+| per-minute | ❌ Not Supported | |
+| metronome-arrows | ❌ Not Supported | |
+| metronome-note | ❌ Not Supported | |
+| metronome-relation | ❌ Not Supported | |
+| @parentheses | ❌ Not Supported | |
+| **octave-shift** | ❌ Not Supported | |
+| @size=8 | ❌ Not Supported | |
+| @size=15 | ❌ Not Supported | |
+| @size=22 | ❌ Not Supported | |
+| **attributes (at measure start)** | ❌ Not Supported | |
+| divisions | ❌ Not Supported | |
+| key | ❌ Not Supported | |
+| time | ❌ Not Supported | |
+| staves | ❌ Not Supported | |
+| part-symbol | ❌ Not Supported | |
+| instruments | ❌ Not Supported | |
+| clef | ❌ Not Supported | |
+| staff-details | ❌ Not Supported | |
+| transpose | ❌ Not Supported | |
+| for-part | ❌ Not Supported | |
+| directive | ❌ Not Supported | |
+| measure-style | ❌ Not Supported | |
+| **attributes (mid-measure)** | ❌ Not Supported | |
+| divisions | ❌ Not Supported | |
+| key | ❌ Not Supported | |
+| time | ❌ Not Supported | |
+| part-symbol | ❌ Not Supported | |
+| instruments | ❌ Not Supported | |
+| clef | ❌ Not Supported | |
+| staff-details | ❌ Not Supported | |
+| transpose | ❌ Not Supported | |
+| for-part | ❌ Not Supported | |
+| measure-style | ❌ Not Supported | |
+| **key** | ❌ Not Supported | |
+| cancel | ❌ Not Supported | |
+| fifths | ❌ Not Supported | |
+| mode | ❌ Not Supported | |
+| key-step | ❌ Not Supported | |
+| key-alter | ❌ Not Supported | |
+| key-accidental | ❌ Not Supported | |
+| key-octave | ❌ Not Supported | |
+| @number | ❌ Not Supported | |
+| **time** | ❌ Not Supported | |
+| beats | ❌ Not Supported | |
+| beat-type | ❌ Not Supported | |
+| interchangable | ❌ Not Supported | |
+| senza-misura | ❌ Not Supported | |
+| @symbol=common | ❌ Not Supported | |
+| @symbol=cut | ❌ Not Supported | |
+| @symbol=dotted-note | ❌ Not Supported | |
+| @symbol=normal | ❌ Not Supported | |
+| @symbol=note | ❌ Not Supported | |
+| @symbol=single-number | ❌ Not Supported | |
+| @number | ❌ Not Supported | |
+| **clef** | ❌ Not Supported | |
+| sign | ❌ Not Supported | |
+| line | ❌ Not Supported | |
+| clef-octave-change | ❌ Not Supported | |
+| @additional | ❌ Not Supported | |
+| @after-barline | ❌ Not Supported | |
+| @number | ❌ Not Supported | |
+| @symbol-size | ❌ Not Supported | |
+| **staff-details** | ❌ Not Supported | |
+| staff-type | ❌ Not Supported | |
+| staff-lines | ❌ Not Supported | |
+| line-detail | ❌ Not Supported | |
+| staff-tuning | ❌ Not Supported | |
+| capo | ❌ Not Supported | |
+| staff-size | ❌ Not Supported | |
+| **transpose** | ❌ Not Supported | |
+| @number | ❌ Not Supported | |
+| diatonic | ❌ Not Supported | |
+| chromatic | ❌ Not Supported | |
+| octave-change | ❌ Not Supported | |
+| double | ❌ Not Supported | |
+| **measure-style** | ❌ Not Supported | |
+| multiple-rest | ❌ Not Supported | |
+| measure-repeat | ❌ Not Supported | |
+| beat-repeat | ❌ Not Supported | |
+| slash | ❌ Not Supported | |
+| **harmony** | ❌ Not Supported | |
+| root | ❌ Not Supported | |
+| numeral | ❌ Not Supported | |
+| function | ❌ Not Supported | |
+| kind | ❌ Not Supported | |
+| inversion | ❌ Not Supported | |
+| bass | ❌ Not Supported | |
+| degree | ❌ Not Supported | |
+| staff | ❌ Not Supported | |
+| **print** | ❌ Not Supported | |
+| page-layout | ❌ Not Supported | |
+| system-layout | ❌ Not Supported | |
+| staff-layout | ❌ Not Supported | |
+| measure-layout | ❌ Not Supported | |
+| measure-numbering | ❌ Not Supported | |
+| part-name-display | ❌ Not Supported | |
+| part-abbreviation-display | ❌ Not Supported | |
+| @blank-page | ❌ Not Supported | |
+| @new-page | ❌ Not Supported | |
+| @new-system | ❌ Not Supported | |
+| @page-number | ❌ Not Supported | |
+| @staff-spacing | ❌ Not Supported | |
+| **sound** | ❌ Not Supported | |
+| instrument-change | ❌ Not Supported | |
+| midi-device | ❌ Not Supported | |
+| midi-instrument | ❌ Not Supported | |
+| play | ❌ Not Supported | |
+| swing | ❌ Not Supported | |
+| offset | ❌ Not Supported | |
+| @coda | ❌ Not Supported | |
+| @dacapo | ❌ Not Supported | |
+| @dalsegno | ❌ Not Supported | |
+| @damper-pedal | ❌ Not Supported | |
+| @divisions | ❌ Not Supported | |
+| @dynamics | ❌ Not Supported | |
+| @elevation | ❌ Not Supported | |
+| @fine | ❌ Not Supported | |
+| @forward-repeat | ❌ Not Supported | |
+| @pan | ❌ Not Supported | |
+| @pizzicato | ❌ Not Supported | |
+| @segno | ❌ Not Supported | |
+| @soft-pedal | ❌ Not Supported | |
+| @sostenuto-pedal | ❌ Not Supported | |
+| @tempo | ❌ Not Supported | |
+| @time-only | ❌ Not Supported | |
+| @tocoda | ❌ Not Supported | |
+| **barline** | ❌ Not Supported | |
+| bar-style | ❌ Not Supported | |
+| wavy-line | ❌ Not Supported | |
+| segno | ❌ Not Supported | |
+| coda | ❌ Not Supported | |
+| fermata | ❌ Not Supported | |
+| ending | ❌ Not Supported | |
+| repeat | ❌ Not Supported | |
+| **ending** | ❌ Not Supported | |
+| @number | ❌ Not Supported | |
+| @type | ❌ Not Supported | |
+| @system | ❌ Not Supported | |
+| @end-length | ❌ Not Supported | |
+| **repeat** | ❌ Not Supported | |
+| @direction | ❌ Not Supported | |
+| @after-jump | ❌ Not Supported | |
+| @times | ❌ Not Supported | |
+| @wigned | ❌ Not Supported | |
+| **Commonly unsupported elements and attributes** | ❌ Not Supported | |
+| link | ❌ Not Supported | |
+| bookmark | ❌ Not Supported | |
+| @color | ❌ Not Supported | |
+| @default-x | ❌ Not Supported | |
+| @default-y | ❌ Not Supported | |
+| @relative-x | ❌ Not Supported | |
+| @relative-y | ❌ Not Supported | |
+| @xml:lang | ❌ Not Supported | |
+| @xml:space | ❌ Not Supported | |
+| @print-object | ❌ Not Supported | |
+| @font-family | ❌ Not Supported | |
+| @font-size | ❌ Not Supported | |
+| @font-style | ❌ Not Supported | |
+| @font-weight | ❌ Not Supported | |
+| @justify | ❌ Not Supported | |
+| @dir | ❌ Not Supported | |
+| @enclosure | ❌ Not Supported | |
+| @halign | ❌ Not Supported | |
+| @justify | ❌ Not Supported | |
+| @letter-spacing | ❌ Not Supported | |
+| @line-height | ❌ Not Supported | |
+| @line-through | ❌ Not Supported | |
+| @overline | ❌ Not Supported | |
+| @rotation | ❌ Not Supported | |
+| @underline | ❌ Not Supported | |
+| @valign | ❌ Not Supported | |
+| @smufl | ❌ Not Supported | |
+| @placement | ❌ Not Supported | |
+| footnote | ❌ Not Supported | |
+| level | ❌ Not Supported | |
+
+For the curious, I used the very useful [`xidel`](https://github.com/benibela/xidel) to quickly extract the initial table:
+```bash
+xidel https://www.alphatab.net/docs/formats/musicxml/ -e '//table[contains(@class, "featureTable_Ves1")]//tr/concat("| ", if (exists(td[1][strong])) then "**" || td[1] || "**" else td[1], " | ❌ Not Supported | |")'
+```
