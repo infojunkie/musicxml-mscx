@@ -1,736 +1,3475 @@
 Supported features
 ==================
 
-The table below is copied from [alphaTab's documentation of supported MusicXML features](https://www.alphatab.net/docs/formats/musicxml/).
+The table below was inspired by [alphaTab's documentation of supported MusicXML features](https://www.alphatab.net/docs/formats/musicxml/). It is produced by running `npm run --silent generate:supported` which traverses the MusicXML XSD schema to generate the full hierarchy of elements.
 
 | Feature | Status | Comment |
 | --- | --- | --- |
-| **General** | | |
-| Compressed MusicXML (.mxl) | ❌ Not Supported | |
-| score-partwise | ✅ Supported | |
-| score-timewise | ❌ Not Supported | As a workaround, use [timepart.xsl](https://www.w3.org/2021/06/musicxml40/listings/timepart.xsl/) to first convert to partwise. |
-| **score-partwise** | ❌ Not Supported | |
-| @version | ❌ Not Supported | |
-| work | ❌ Not Supported | |
-| movement-number | ❌ Not Supported | |
-| movement-title | ❌ Not Supported | |
-| identification | ❌ Not Supported | |
-| defaults | ❌ Not Supported | |
-| credit | ❌ Not Supported | |
-| part-list | ❌ Not Supported | |
-| part | ❌ Not Supported | |
-| **score-timewise** | ❌ Not Supported | |
-| @version | ❌ Not Supported | |
-| work | ❌ Not Supported | |
-| movement-number | ❌ Not Supported | |
-| movement-title | ❌ Not Supported | |
-| identification | ❌ Not Supported | |
-| defaults | ❌ Not Supported | |
-| credit | ❌ Not Supported | |
-| part-list | ❌ Not Supported | |
-| measure | ❌ Not Supported | |
-| **work** | ❌ Not Supported | |
-| work-number | ❌ Not Supported | |
-| work-title | ❌ Not Supported | |
-| opus | ❌ Not Supported | |
-| **identification** | ❌ Not Supported | |
-| creator | ❌ Not Supported | |
-| rights | ❌ Not Supported | |
-| encoding | ❌ Not Supported | |
-| source | ❌ Not Supported | |
-| relation | ❌ Not Supported | |
-| miscellaneous | ❌ Not Supported | |
-| **creator** | ❌ Not Supported | |
-| No @type | ❌ Not Supported | |
-| @type=composer | ❌ Not Supported | |
-| @type=lyricist | ❌ Not Supported | |
-| @type=arranger | ❌ Not Supported | |
-| **rights** | ❌ Not Supported | |
-| @type | ❌ Not Supported | |
-| **encoding** | ❌ Not Supported | |
-| encoding-date | ❌ Not Supported | |
-| encoder | ❌ Not Supported | |
-| software | ❌ Not Supported | |
-| encoding-description | ❌ Not Supported | |
-| supports | ❌ Not Supported | |
-| **encoder** | ❌ Not Supported | |
-| @type | ❌ Not Supported | |
-| **credit** | ❌ Not Supported | |
-| credit-type | ❌ Not Supported | |
-| credit-type > 'part name' | ❌ Not Supported | |
-| credit-image | ❌ Not Supported | |
-| credit-words | ❌ Not Supported | |
-| credit-symbol | ❌ Not Supported | |
-| **credit-words** | ❌ Not Supported | |
-| @dir | ❌ Not Supported | |
-| @enclosure | ❌ Not Supported | |
-| @halign | ❌ Not Supported | |
-| @justify | ❌ Not Supported | |
-| @letter-spacing | ❌ Not Supported | |
-| @line-height | ❌ Not Supported | |
-| @line-through | ❌ Not Supported | |
-| @overline | ❌ Not Supported | |
-| @rotation | ❌ Not Supported | |
-| @underline | ❌ Not Supported | |
-| @valign | ❌ Not Supported | |
-| **part-list** | ❌ Not Supported | |
-| part-group | ❌ Not Supported | |
-| score-part | ❌ Not Supported | |
-| **score-part** | ❌ Not Supported | |
-| identification | ❌ Not Supported | |
-| part-link | ❌ Not Supported | |
-| part-name | ❌ Not Supported | |
-| part-name-display | ❌ Not Supported | |
-| part-abbreviation | ❌ Not Supported | |
-| part-abbreviation-display | ❌ Not Supported | |
-| group | ❌ Not Supported | |
-| score-instrument | ❌ Not Supported | |
-| player | ❌ Not Supported | |
-| midi-device | ❌ Not Supported | |
-| midi-instrument | ❌ Not Supported | |
-| **part-name** | ❌ Not Supported | |
-| display-text | ❌ Not Supported | |
-| accidental-text | ❌ Not Supported | |
-| **score-instrument** | ❌ Not Supported | |
-| @id | ❌ Not Supported | |
-| instrument-name | ❌ Not Supported | |
-| instrument-abbreviation | ❌ Not Supported | |
-| instrument-sound | ❌ Not Supported | |
-| solo | ❌ Not Supported | |
-| ensemble | ❌ Not Supported | |
-| virtual-instrument | ❌ Not Supported | |
-| **midi-device** | ❌ Not Supported | |
-| @port | ❌ Not Supported | |
-| **midi-instrument** | ❌ Not Supported | |
-| @id | ❌ Not Supported | |
-| midi-channel | ❌ Not Supported | |
-| midi-name | ❌ Not Supported | |
-| midi-bank | ❌ Not Supported | |
-| midi-program | ❌ Not Supported | |
-| midi-unpitched | ❌ Not Supported | |
-| volume | ❌ Not Supported | |
-| pan | ❌ Not Supported | |
-| elevation | ❌ Not Supported | |
-| **part (partwise)** | ❌ Not Supported | |
-| @id | ❌ Not Supported | |
-| measure (partwise) | ❌ Not Supported | |
-| **measure (partwise)** | ❌ Not Supported | |
-| note | ❌ Not Supported | |
-| backup | ❌ Not Supported | |
-| forward | ❌ Not Supported | |
-| direction | ❌ Not Supported | |
-| attributes | ❌ Not Supported | |
-| harmony | ❌ Not Supported | |
-| figured-bass | ❌ Not Supported | |
-| print | ❌ Not Supported | |
-| sound | ❌ Not Supported | |
-| listening | ❌ Not Supported | |
-| barline | ❌ Not Supported | |
-| grouping | ❌ Not Supported | |
-| @number | ❌ Not Supported | |
-| @implicit | ❌ Not Supported | |
-| @non-controlling | ❌ Not Supported | |
-| @text | ❌ Not Supported | |
-| @width | ❌ Not Supported | |
-| **measure (timewise)** | ❌ Not Supported | |
-| part (timewise) | ❌ Not Supported | |
-| @number | ❌ Not Supported | |
-| @implicit | ❌ Not Supported | |
-| @non-controlling | ❌ Not Supported | |
-| @text | ❌ Not Supported | |
-| @width | ❌ Not Supported | |
-| **part (timewise)** | ❌ Not Supported | |
-| @id | ❌ Not Supported | |
-| note | ❌ Not Supported | |
-| backup | ❌ Not Supported | |
-| forward | ❌ Not Supported | |
-| direction | ❌ Not Supported | |
-| attributes | ❌ Not Supported | |
-| harmony | ❌ Not Supported | |
-| figured-bass | ❌ Not Supported | |
-| print | ❌ Not Supported | |
-| sound | ❌ Not Supported | |
-| listening | ❌ Not Supported | |
-| barline | ❌ Not Supported | |
-| grouping | ❌ Not Supported | |
-| **note** | ❌ Not Supported | |
-| grace | ❌ Not Supported | |
-| chord | ❌ Not Supported | |
-| pitch | ❌ Not Supported | |
-| unpitched | ❌ Not Supported | |
-| rest | ❌ Not Supported | |
-| cue | ❌ Not Supported | |
-| duration | ❌ Not Supported | |
-| tie | ❌ Not Supported | |
-| instrument | ❌ Not Supported | |
-| voice | ❌ Not Supported | |
-| type | ❌ Not Supported | |
-| dot | ❌ Not Supported | |
-| accidental | ❌ Not Supported | |
-| time-modification | ❌ Not Supported | |
-| stem | ❌ Not Supported | |
-| notehead | ❌ Not Supported | |
-| notehead-text | ❌ Not Supported | |
-| staff | ❌ Not Supported | |
-| beam | ❌ Not Supported | |
-| notations | ❌ Not Supported | |
-| lyric | ❌ Not Supported | |
-| play | ❌ Not Supported | |
-| listen | ❌ Not Supported | |
-| **play (note)** | ❌ Not Supported | |
-| ipa | ❌ Not Supported | |
-| mute | ❌ Not Supported | |
-| semi-pitched | ❌ Not Supported | |
-| other-sound | ❌ Not Supported | |
-| **grace** | ❌ Not Supported | |
-| @make-time | ❌ Not Supported | |
-| @slash | ❌ Not Supported | |
-| @steal-time-following | ❌ Not Supported | |
-| @steal-time-previous | ❌ Not Supported | |
-| **pitch** | ❌ Not Supported | |
-| step | ❌ Not Supported | |
-| alter | ❌ Not Supported | |
-| octave | ❌ Not Supported | |
-| **unpitched** | ❌ Not Supported | |
-| display-step | ❌ Not Supported | |
-| display-octave | ❌ Not Supported | |
-| **rest** | ❌ Not Supported | |
-| display-step | ❌ Not Supported | |
-| display-octave | ❌ Not Supported | |
-| @measure | ❌ Not Supported | |
-| **type** | ❌ Not Supported | |
-| @size | ❌ Not Supported | |
-| **accidental** | ❌ Not Supported | |
-| sharp | ❌ Not Supported | |
-| natural | ❌ Not Supported | |
-| flat | ❌ Not Supported | |
-| double-sharp | ❌ Not Supported | |
-| flat-flat | ❌ Not Supported | |
-| sharp-flat | ❌ Not Supported | |
-| natural-sharp, natural-flat | ❌ Not Supported | |
-| quarter-flat, quarter-sharp, three-quarters-flat, three-quarters-sharp | ❌ Not Supported | |
-| sharp-down, sharp-up, natural-down, natural-up, flat-down, flat-up | ❌ Not Supported | |
-| double-sharp-down, double-sharp-up, flat-flat-down, flat-flat-up | ❌ Not Supported | |
-| arrow-down, arrow-up | ❌ Not Supported | |
-| triple-sharp, triple-flat | ❌ Not Supported | |
-| slash-quarter-sharp, slash-sharp, slash-flat, double-slash-flat | ❌ Not Supported | |
-| sharp-1, sharp-2, sharp-3, sharp-4, sharp-5 | ❌ Not Supported | |
-| flat-1, flat-2, flat-3, flat-4, flat-5 | ❌ Not Supported | |
-| sori, kokon, other | ❌ Not Supported | |
-| @bracket | ❌ Not Supported | |
-| @cautionary | ❌ Not Supported | |
-| @editorial | ❌ Not Supported | |
-| @parentheses | ❌ Not Supported | |
-| @size | ❌ Not Supported | |
-| **time-modification** | ❌ Not Supported | |
-| actual-notes | ❌ Not Supported | |
-| normal-notes | ❌ Not Supported | |
-| normal-type | ❌ Not Supported | |
-| normal-dot | ❌ Not Supported | |
-| **stem** | ❌ Not Supported | |
-| up | ❌ Not Supported | |
-| down | ❌ Not Supported | |
-| default | ❌ Not Supported | |
-| none | ❌ Not Supported | |
-| **notehead** | ❌ Not Supported | |
-| arrow down | ❌ Not Supported | |
-| arrow up | ❌ Not Supported | |
-| back slashed | ❌ Not Supported | |
-| circle dot | ❌ Not Supported | |
-| circle-x | ❌ Not Supported | |
-| circled | ❌ Not Supported | |
-| cluster | ❌ Not Supported | |
-| cross | ❌ Not Supported | |
-| diamond | ❌ Not Supported | |
-| do | ❌ Not Supported | |
-| fa | ❌ Not Supported | |
-| fa up | ❌ Not Supported | |
-| inverted triangle | ❌ Not Supported | |
-| la | ❌ Not Supported | |
-| left triangle | ❌ Not Supported | |
-| mi | ❌ Not Supported | |
-| none | ❌ Not Supported | |
-| normal | ❌ Not Supported | |
-| re | ❌ Not Supported | |
-| rectangle | ❌ Not Supported | |
-| slashed | ❌ Not Supported | |
-| so | ❌ Not Supported | |
-| square | ❌ Not Supported | |
-| ti | ❌ Not Supported | |
-| triangle | ❌ Not Supported | |
-| x | ❌ Not Supported | |
-| @filled | ❌ Not Supported | |
-| @parentheses | ❌ Not Supported | |
-| **notations** | ❌ Not Supported | |
-| tied | ❌ Not Supported | |
-| slur | ❌ Not Supported | |
-| tuplet | ❌ Not Supported | |
-| glissando | ❌ Not Supported | |
-| slide | ❌ Not Supported | |
-| ornaments | ❌ Not Supported | |
-| technical | ❌ Not Supported | |
-| articulations | ❌ Not Supported | |
-| dynamics | ❌ Not Supported | |
-| fermata | ❌ Not Supported | |
-| arpeggiate | ❌ Not Supported | |
-| non-arpeggiate | ❌ Not Supported | |
-| accidental-mark | ❌ Not Supported | |
-| other-notation | ❌ Not Supported | |
-| **tied** | ❌ Not Supported | |
-| @type | ❌ Not Supported | |
-| @bezier-offset | ❌ Not Supported | |
-| @bezier-offset2 | ❌ Not Supported | |
-| @bezier-x | ❌ Not Supported | |
-| @bezier-x2 | ❌ Not Supported | |
-| @bezier-y | ❌ Not Supported | |
-| @bezier-y2 | ❌ Not Supported | |
-| @line-type | ❌ Not Supported | |
-| @number | ❌ Not Supported | |
-| @orientation | ❌ Not Supported | |
-| @space-length | ❌ Not Supported | |
-| **slur** | ❌ Not Supported | |
-| @type | ❌ Not Supported | |
-| @bezier-offset | ❌ Not Supported | |
-| @bezier-offset2 | ❌ Not Supported | |
-| @bezier-x | ❌ Not Supported | |
-| @bezier-x2 | ❌ Not Supported | |
-| @bezier-y | ❌ Not Supported | |
-| @bezier-y2 | ❌ Not Supported | |
-| @dash-length | ❌ Not Supported | |
-| @line-type | ❌ Not Supported | |
-| @number | ❌ Not Supported | |
-| @orientation | ❌ Not Supported | |
-| @space-length | ❌ Not Supported | |
-| **glissando** | ❌ Not Supported | |
-| @type | ❌ Not Supported | |
-| @dash-length | ❌ Not Supported | |
-| @line-type | ❌ Not Supported | |
-| @number | ❌ Not Supported | |
-| @space-length | ❌ Not Supported | |
-| **slide** | ❌ Not Supported | |
-| @type | ❌ Not Supported | |
-| @accelerate | ❌ Not Supported | |
-| @beats | ❌ Not Supported | |
-| @dash-length | ❌ Not Supported | |
-| @first-beat | ❌ Not Supported | |
-| @last-beat | ❌ Not Supported | |
-| @line-type | ❌ Not Supported | |
-| @number | ❌ Not Supported | |
-| @space-length | ❌ Not Supported | |
-| **ornaments** | ❌ Not Supported | |
-| trill-mark | ❌ Not Supported | |
-| turn | ❌ Not Supported | |
-| delayed-turn | ❌ Not Supported | |
-| inverted-turn | ❌ Not Supported | |
-| delayed-inverted-turn | ❌ Not Supported | |
-| vertical-turn | ❌ Not Supported | |
-| inverted-vertical-turn | ❌ Not Supported | |
-| shake | ❌ Not Supported | |
-| wavy-line | ❌ Not Supported | |
-| mordent | ❌ Not Supported | |
-| inverted-mordent | ❌ Not Supported | |
-| schleifer | ❌ Not Supported | |
-| tremolo | ❌ Not Supported | |
-| hadyn | ❌ Not Supported | |
-| other-element | ❌ Not Supported | |
-| **trill-mark** | ❌ Not Supported | |
-| @accelerate | ❌ Not Supported | |
-| @beats | ❌ Not Supported | |
-| @last-beat | ❌ Not Supported | |
-| @second-beat | ❌ Not Supported | |
-| @start-note | ❌ Not Supported | |
-| @trill-step | ❌ Not Supported | |
-| @two-note-turn | ❌ Not Supported | |
-| **turn** | ❌ Not Supported | |
-| @accelerate | ❌ Not Supported | |
-| @beats | ❌ Not Supported | |
-| @last-beat | ❌ Not Supported | |
-| @second-beat | ❌ Not Supported | |
-| @slash | ❌ Not Supported | |
-| @start-note | ❌ Not Supported | |
-| @trill-step | ❌ Not Supported | |
-| @two-note-turn | ❌ Not Supported | |
-| **inverted-turn** | ❌ Not Supported | |
-| @accelerate | ❌ Not Supported | |
-| @beats | ❌ Not Supported | |
-| @last-beat | ❌ Not Supported | |
-| @second-beat | ❌ Not Supported | |
-| @slash | ❌ Not Supported | |
-| @start-note | ❌ Not Supported | |
-| @trill-step | ❌ Not Supported | |
-| @two-note-turn | ❌ Not Supported | |
-| **wavy-line** | ❌ Not Supported | |
-| @type | ❌ Not Supported | |
-| @accelerate | ❌ Not Supported | |
-| @beats | ❌ Not Supported | |
-| @last-beat | ❌ Not Supported | |
-| @number | ❌ Not Supported | |
-| @second-beat | ❌ Not Supported | |
-| @start-note | ❌ Not Supported | |
-| @trill-step | ❌ Not Supported | |
-| @two-note-turn | ❌ Not Supported | |
-| **mordent** | ❌ Not Supported | |
-| @accelerate | ❌ Not Supported | |
-| @approach | ❌ Not Supported | |
-| @departure | ❌ Not Supported | |
-| @beats | ❌ Not Supported | |
-| @last-beat | ❌ Not Supported | |
-| @long | ❌ Not Supported | |
-| @second-beat | ❌ Not Supported | |
-| @slash | ❌ Not Supported | |
-| @start-note | ❌ Not Supported | |
-| @trill-step | ❌ Not Supported | |
-| @two-note-turn | ❌ Not Supported | |
-| **inverted-mordent** | ❌ Not Supported | |
-| @accelerate | ❌ Not Supported | |
-| @approach | ❌ Not Supported | |
-| @departure | ❌ Not Supported | |
-| @beats | ❌ Not Supported | |
-| @last-beat | ❌ Not Supported | |
-| @long | ❌ Not Supported | |
-| @second-beat | ❌ Not Supported | |
-| @slash | ❌ Not Supported | |
-| @start-note | ❌ Not Supported | |
-| @trill-step | ❌ Not Supported | |
-| @two-note-turn | ❌ Not Supported | |
-| **tremolo** | ❌ Not Supported | |
-| @type | ❌ Not Supported | |
-| **technical** | ❌ Not Supported | |
-| up-bow | ❌ Not Supported | |
-| down-bow | ❌ Not Supported | |
-| harmonic | ❌ Not Supported | |
-| open-string | ❌ Not Supported | |
-| thumb-position | ❌ Not Supported | |
-| fingering | ❌ Not Supported | |
-| pluck | ❌ Not Supported | |
-| double-tongue | ❌ Not Supported | |
-| triple-tongue | ❌ Not Supported | |
-| stopped | ❌ Not Supported | |
-| snap-pizzicato | ❌ Not Supported | |
-| fret | ❌ Not Supported | |
-| string | ❌ Not Supported | |
-| hammer-on | ❌ Not Supported | |
-| pull-off | ❌ Not Supported | |
-| bend | ❌ Not Supported | |
-| tap | ❌ Not Supported | |
-| heel | ❌ Not Supported | |
-| toe | ❌ Not Supported | |
-| fingernails | ❌ Not Supported | |
-| hole | ❌ Not Supported | |
-| arrow | ❌ Not Supported | |
-| handbell | ❌ Not Supported | |
-| brass-bend | ❌ Not Supported | |
-| flip | ❌ Not Supported | |
-| smear | ❌ Not Supported | |
-| open | ❌ Not Supported | |
-| half-muted | ❌ Not Supported | |
-| harmon-mute | ❌ Not Supported | |
-| golpe | ❌ Not Supported | |
-| other-technical | ❌ Not Supported | |
-| **articulations** | ❌ Not Supported | |
-| accent | ❌ Not Supported | |
-| strong-accent | ❌ Not Supported | |
-| staccato | ❌ Not Supported | |
-| tenuto | ❌ Not Supported | |
-| detached-legato | ❌ Not Supported | |
-| staccatissimo | ❌ Not Supported | |
-| spiccato | ❌ Not Supported | |
-| scoop | ❌ Not Supported | |
-| plop | ❌ Not Supported | |
-| doit | ❌ Not Supported | |
-| falloff | ❌ Not Supported | |
-| breath-mark | ❌ Not Supported | |
-| caesura | ❌ Not Supported | |
-| stress | ❌ Not Supported | |
-| unstress | ❌ Not Supported | |
-| soft-accent | ❌ Not Supported | |
-| other-articulation | ❌ Not Supported | |
-| **fermata** | ❌ Not Supported | |
-| normal | ❌ Not Supported | |
-| angled | ❌ Not Supported | |
-| square | ❌ Not Supported | |
-| double-angled | ❌ Not Supported | |
-| double-square | ❌ Not Supported | |
-| double-dot | ❌ Not Supported | |
-| half-curve | ❌ Not Supported | |
-| curlew | ❌ Not Supported | |
-| @type | ❌ Not Supported | |
-| **arpeggiate** | ❌ Not Supported | |
-| @direction | ❌ Not Supported | |
-| @number | ❌ Not Supported | |
-| @unbroken | ❌ Not Supported | |
-| **lyric** | ❌ Not Supported | |
-| syllabic | ❌ Not Supported | |
-| text | ❌ Not Supported | |
-| elision | ❌ Not Supported | |
-| extend | ❌ Not Supported | |
-| laughing | ❌ Not Supported | |
-| humming | ❌ Not Supported | |
-| end-line | ❌ Not Supported | |
-| end-paragraph | ❌ Not Supported | |
-| @number | ❌ Not Supported | |
-| @time-only | ❌ Not Supported | |
-| **backup** | ❌ Not Supported | |
-| duration | ❌ Not Supported | |
-| **forward** | ❌ Not Supported | |
-| duration | ❌ Not Supported | |
-| voice | ❌ Not Supported | |
-| staff | ❌ Not Supported | |
-| **direction** | ❌ Not Supported | |
-| direction-type | ❌ Not Supported | |
-| offset | ❌ Not Supported | |
-| voice | ❌ Not Supported | |
-| staff | ❌ Not Supported | |
-| sound | ❌ Not Supported | |
-| listening | ❌ Not Supported | |
-| **direction-type** | ❌ Not Supported | |
-| rehearsal | ❌ Not Supported | |
-| segno | ❌ Not Supported | |
-| coda | ❌ Not Supported | |
-| words | ❌ Not Supported | |
-| symbol | ❌ Not Supported | |
-| wedge | ❌ Not Supported | |
-| dynamics | ❌ Not Supported | |
-| dynamics > other-dynamics | ❌ Not Supported | |
-| dashes (if preceeded by words LetRing) | ❌ Not Supported | |
-| dashes (if preceeded by words P.M.) | ❌ Not Supported | |
-| bracket | ❌ Not Supported | |
-| pedal | ❌ Not Supported | |
-| metronome | ❌ Not Supported | |
-| octave-shift | ❌ Not Supported | |
-| harp-pedals | ❌ Not Supported | |
-| damp | ❌ Not Supported | |
-| damp-all | ❌ Not Supported | |
-| eyeglasses | ❌ Not Supported | |
-| string-mute | ❌ Not Supported | |
-| scordatura | ❌ Not Supported | |
-| image | ❌ Not Supported | |
-| principal-voice | ❌ Not Supported | |
-| percussion | ❌ Not Supported | |
-| accordion-registration | ❌ Not Supported | |
-| staff-divide | ❌ Not Supported | |
-| other-direction | ❌ Not Supported | |
-| **wedge** | ❌ Not Supported | |
-| @type=crescendo | ❌ Not Supported | |
-| @type=diminuendo | ❌ Not Supported | |
-| @type=stop | ❌ Not Supported | |
-| @type=continue | ❌ Not Supported | |
-| @type=continue | ❌ Not Supported | |
-| @dash-length | ❌ Not Supported | |
-| @line-type | ❌ Not Supported | |
-| @niente | ❌ Not Supported | |
-| @number | ❌ Not Supported | |
-| @space-length | ❌ Not Supported | |
-| @spread | ❌ Not Supported | |
-| **dynamics** | ❌ Not Supported | |
-| p | ❌ Not Supported | |
-| pp | ❌ Not Supported | |
-| ppp | ❌ Not Supported | |
-| pppp | ❌ Not Supported | |
-| ppppp | ❌ Not Supported | |
-| pppppp | ❌ Not Supported | |
-| f | ❌ Not Supported | |
-| ff | ❌ Not Supported | |
-| fff | ❌ Not Supported | |
-| ffff | ❌ Not Supported | |
-| fffff | ❌ Not Supported | |
-| ffffff | ❌ Not Supported | |
-| mp | ❌ Not Supported | |
-| mf | ❌ Not Supported | |
-| sf | ❌ Not Supported | |
-| sfp | ❌ Not Supported | |
-| sfpp | ❌ Not Supported | |
-| fp | ❌ Not Supported | |
-| rf | ❌ Not Supported | |
-| rfz | ❌ Not Supported | |
-| sfz | ❌ Not Supported | |
-| sffz | ❌ Not Supported | |
-| fz | ❌ Not Supported | |
-| n | ❌ Not Supported | |
-| pf | ❌ Not Supported | |
-| sfzp | ❌ Not Supported | |
-| other-dynamics | ❌ Not Supported | |
-| **metronome** | ❌ Not Supported | |
-| beat-unit | ❌ Not Supported | |
-| beat-unit-dot | ❌ Not Supported | |
-| beat-unit-tied | ❌ Not Supported | |
-| per-minute | ❌ Not Supported | |
-| metronome-arrows | ❌ Not Supported | |
-| metronome-note | ❌ Not Supported | |
-| metronome-relation | ❌ Not Supported | |
-| @parentheses | ❌ Not Supported | |
-| **octave-shift** | ❌ Not Supported | |
-| @size=8 | ❌ Not Supported | |
-| @size=15 | ❌ Not Supported | |
-| @size=22 | ❌ Not Supported | |
-| **attributes (at measure start)** | ❌ Not Supported | |
-| divisions | ❌ Not Supported | |
-| key | ❌ Not Supported | |
-| time | ❌ Not Supported | |
-| staves | ❌ Not Supported | |
-| part-symbol | ❌ Not Supported | |
-| instruments | ❌ Not Supported | |
-| clef | ❌ Not Supported | |
-| staff-details | ❌ Not Supported | |
-| transpose | ❌ Not Supported | |
-| for-part | ❌ Not Supported | |
-| directive | ❌ Not Supported | |
-| measure-style | ❌ Not Supported | |
-| **attributes (mid-measure)** | ❌ Not Supported | |
-| divisions | ❌ Not Supported | |
-| key | ❌ Not Supported | |
-| time | ❌ Not Supported | |
-| part-symbol | ❌ Not Supported | |
-| instruments | ❌ Not Supported | |
-| clef | ❌ Not Supported | |
-| staff-details | ❌ Not Supported | |
-| transpose | ❌ Not Supported | |
-| for-part | ❌ Not Supported | |
-| measure-style | ❌ Not Supported | |
-| **key** | ❌ Not Supported | |
-| cancel | ❌ Not Supported | |
-| fifths | ❌ Not Supported | |
-| mode | ❌ Not Supported | |
-| key-step | ❌ Not Supported | |
-| key-alter | ❌ Not Supported | |
-| key-accidental | ❌ Not Supported | |
-| key-octave | ❌ Not Supported | |
-| @number | ❌ Not Supported | |
-| **time** | ❌ Not Supported | |
-| beats | ❌ Not Supported | |
-| beat-type | ❌ Not Supported | |
-| interchangable | ❌ Not Supported | |
-| senza-misura | ❌ Not Supported | |
-| @symbol=common | ❌ Not Supported | |
-| @symbol=cut | ❌ Not Supported | |
-| @symbol=dotted-note | ❌ Not Supported | |
-| @symbol=normal | ❌ Not Supported | |
-| @symbol=note | ❌ Not Supported | |
-| @symbol=single-number | ❌ Not Supported | |
-| @number | ❌ Not Supported | |
-| **clef** | ❌ Not Supported | |
-| sign | ❌ Not Supported | |
-| line | ❌ Not Supported | |
-| clef-octave-change | ❌ Not Supported | |
-| @additional | ❌ Not Supported | |
-| @after-barline | ❌ Not Supported | |
-| @number | ❌ Not Supported | |
-| @symbol-size | ❌ Not Supported | |
-| **staff-details** | ❌ Not Supported | |
-| staff-type | ❌ Not Supported | |
-| staff-lines | ❌ Not Supported | |
-| line-detail | ❌ Not Supported | |
-| staff-tuning | ❌ Not Supported | |
-| capo | ❌ Not Supported | |
-| staff-size | ❌ Not Supported | |
-| **transpose** | ❌ Not Supported | |
-| @number | ❌ Not Supported | |
-| diatonic | ❌ Not Supported | |
-| chromatic | ❌ Not Supported | |
-| octave-change | ❌ Not Supported | |
-| double | ❌ Not Supported | |
-| **measure-style** | ❌ Not Supported | |
-| multiple-rest | ❌ Not Supported | |
-| measure-repeat | ❌ Not Supported | |
-| beat-repeat | ❌ Not Supported | |
-| slash | ❌ Not Supported | |
-| **harmony** | ❌ Not Supported | |
-| root | ❌ Not Supported | |
-| numeral | ❌ Not Supported | |
-| function | ❌ Not Supported | |
-| kind | ❌ Not Supported | |
-| inversion | ❌ Not Supported | |
-| bass | ❌ Not Supported | |
-| degree | ❌ Not Supported | |
-| staff | ❌ Not Supported | |
-| **print** | ❌ Not Supported | |
-| page-layout | ❌ Not Supported | |
-| system-layout | ❌ Not Supported | |
-| staff-layout | ❌ Not Supported | |
-| measure-layout | ❌ Not Supported | |
-| measure-numbering | ❌ Not Supported | |
-| part-name-display | ❌ Not Supported | |
-| part-abbreviation-display | ❌ Not Supported | |
-| @blank-page | ❌ Not Supported | |
-| @new-page | ❌ Not Supported | |
-| @new-system | ❌ Not Supported | |
-| @page-number | ❌ Not Supported | |
-| @staff-spacing | ❌ Not Supported | |
-| **sound** | ❌ Not Supported | |
-| instrument-change | ❌ Not Supported | |
-| midi-device | ❌ Not Supported | |
-| midi-instrument | ❌ Not Supported | |
-| play | ❌ Not Supported | |
-| swing | ❌ Not Supported | |
-| offset | ❌ Not Supported | |
-| @coda | ❌ Not Supported | |
-| @dacapo | ❌ Not Supported | |
-| @dalsegno | ❌ Not Supported | |
-| @damper-pedal | ❌ Not Supported | |
-| @divisions | ❌ Not Supported | |
-| @dynamics | ❌ Not Supported | |
-| @elevation | ❌ Not Supported | |
-| @fine | ❌ Not Supported | |
-| @forward-repeat | ❌ Not Supported | |
-| @pan | ❌ Not Supported | |
-| @pizzicato | ❌ Not Supported | |
-| @segno | ❌ Not Supported | |
-| @soft-pedal | ❌ Not Supported | |
-| @sostenuto-pedal | ❌ Not Supported | |
-| @tempo | ❌ Not Supported | |
-| @time-only | ❌ Not Supported | |
-| @tocoda | ❌ Not Supported | |
-| **barline** | ❌ Not Supported | |
-| bar-style | ❌ Not Supported | |
-| wavy-line | ❌ Not Supported | |
-| segno | ❌ Not Supported | |
-| coda | ❌ Not Supported | |
-| fermata | ❌ Not Supported | |
-| ending | ❌ Not Supported | |
-| repeat | ❌ Not Supported | |
-| **ending** | ❌ Not Supported | |
-| @number | ❌ Not Supported | |
-| @type | ❌ Not Supported | |
-| @system | ❌ Not Supported | |
-| @end-length | ❌ Not Supported | |
-| **repeat** | ❌ Not Supported | |
-| @direction | ❌ Not Supported | |
-| @after-jump | ❌ Not Supported | |
-| @times | ❌ Not Supported | |
-| @wigned | ❌ Not Supported | |
-| **Commonly unsupported elements and attributes** | ❌ Not Supported | |
-| link | ❌ Not Supported | |
-| bookmark | ❌ Not Supported | |
-| @color | ❌ Not Supported | |
-| @default-x | ❌ Not Supported | |
-| @default-y | ❌ Not Supported | |
-| @relative-x | ❌ Not Supported | |
-| @relative-y | ❌ Not Supported | |
-| @xml:lang | ❌ Not Supported | |
-| @xml:space | ❌ Not Supported | |
-| @print-object | ❌ Not Supported | |
-| @font-family | ❌ Not Supported | |
-| @font-size | ❌ Not Supported | |
-| @font-style | ❌ Not Supported | |
-| @font-weight | ❌ Not Supported | |
-| @justify | ❌ Not Supported | |
-| @dir | ❌ Not Supported | |
-| @enclosure | ❌ Not Supported | |
-| @halign | ❌ Not Supported | |
-| @justify | ❌ Not Supported | |
-| @letter-spacing | ❌ Not Supported | |
-| @line-height | ❌ Not Supported | |
-| @line-through | ❌ Not Supported | |
-| @overline | ❌ Not Supported | |
-| @rotation | ❌ Not Supported | |
-| @underline | ❌ Not Supported | |
-| @valign | ❌ Not Supported | |
-| @smufl | ❌ Not Supported | |
-| @placement | ❌ Not Supported | |
-| footnote | ❌ Not Supported | |
-| level | ❌ Not Supported | |
-
-For the curious, I used the very useful [`xidel`](https://github.com/benibela/xidel) to quickly extract the initial table:
-```bash
-xidel https://www.alphatab.net/docs/formats/musicxml/ -e '//table[contains(@class, "featureTable_Ves1")]//tr/concat("| ", if (exists(td[1][strong])) then "**" || td[1] || "**" else td[1], " | ❌ Not Supported | |")'
-```
+| score-timewise | ❌ Not Supported | |
+| score-partwise | ❌ Not Supported | |
+| - @version | ❌ Not Supported | |
+| - work | ❌ Not Supported | |
+| -- work-number | ❌ Not Supported | |
+| -- work-title | ❌ Not Supported | |
+| -- opus | ❌ Not Supported | |
+| --- @xlink:actuate | ❌ Not Supported | |
+| --- @xlink:href | ❌ Not Supported | |
+| --- @xlink:role | ❌ Not Supported | |
+| --- @xlink:show | ❌ Not Supported | |
+| --- @xlink:title | ❌ Not Supported | |
+| --- @xlink:type | ❌ Not Supported | |
+| - movement-number | ❌ Not Supported | |
+| - movement-title | ❌ Not Supported | |
+| - identification | ❌ Not Supported | |
+| -- creator | ❌ Not Supported | |
+| --- @type | ❌ Not Supported | |
+| -- rights | ❌ Not Supported | |
+| --- @type | ❌ Not Supported | |
+| -- encoding | ❌ Not Supported | |
+| --- encoding-date | ❌ Not Supported | |
+| --- encoder | ❌ Not Supported | |
+| ---- @type | ❌ Not Supported | |
+| --- software | ❌ Not Supported | |
+| --- encoding-description | ❌ Not Supported | |
+| --- supports | ❌ Not Supported | |
+| ---- @attribute | ❌ Not Supported | |
+| ---- @element | ❌ Not Supported | |
+| ---- @type | ❌ Not Supported | |
+| ---- @value | ❌ Not Supported | |
+| -- source | ❌ Not Supported | |
+| -- relation | ❌ Not Supported | |
+| --- @type | ❌ Not Supported | |
+| -- miscellaneous | ❌ Not Supported | |
+| --- miscellaneous-field | ❌ Not Supported | |
+| ---- @name | ❌ Not Supported | |
+| - defaults | ❌ Not Supported | |
+| -- scaling | ❌ Not Supported | |
+| --- millimeters | ❌ Not Supported | |
+| --- tenths | ❌ Not Supported | |
+| -- concert-score | ❌ Not Supported | |
+| -- page-layout | ❌ Not Supported | |
+| --- page-height | ❌ Not Supported | |
+| --- page-width | ❌ Not Supported | |
+| --- page-margins | ❌ Not Supported | |
+| ---- @type | ❌ Not Supported | |
+| ---- left-margin | ❌ Not Supported | |
+| ---- right-margin | ❌ Not Supported | |
+| ---- top-margin | ❌ Not Supported | |
+| ---- bottom-margin | ❌ Not Supported | |
+| -- system-layout | ❌ Not Supported | |
+| --- system-margins | ❌ Not Supported | |
+| ---- left-margin | ❌ Not Supported | |
+| ---- right-margin | ❌ Not Supported | |
+| --- system-distance | ❌ Not Supported | |
+| --- top-system-distance | ❌ Not Supported | |
+| --- system-dividers | ❌ Not Supported | |
+| ---- left-divider | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @print-object | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ---- right-divider | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @print-object | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| -- staff-layout | ❌ Not Supported | |
+| --- @number | ❌ Not Supported | |
+| --- staff-distance | ❌ Not Supported | |
+| -- appearance | ❌ Not Supported | |
+| --- line-width | ❌ Not Supported | |
+| ---- @type | ❌ Not Supported | |
+| --- note-size | ❌ Not Supported | |
+| ---- @type | ❌ Not Supported | |
+| --- distance | ❌ Not Supported | |
+| ---- @type | ❌ Not Supported | |
+| --- glyph | ❌ Not Supported | |
+| ---- @type | ❌ Not Supported | |
+| --- other-appearance | ❌ Not Supported | |
+| ---- @type | ❌ Not Supported | |
+| -- music-font | ❌ Not Supported | |
+| --- @font-family | ❌ Not Supported | |
+| --- @font-size | ❌ Not Supported | |
+| --- @font-style | ❌ Not Supported | |
+| --- @font-weight | ❌ Not Supported | |
+| -- word-font | ❌ Not Supported | |
+| --- @font-family | ❌ Not Supported | |
+| --- @font-size | ❌ Not Supported | |
+| --- @font-style | ❌ Not Supported | |
+| --- @font-weight | ❌ Not Supported | |
+| -- lyric-font | ❌ Not Supported | |
+| --- @font-family | ❌ Not Supported | |
+| --- @font-size | ❌ Not Supported | |
+| --- @font-style | ❌ Not Supported | |
+| --- @font-weight | ❌ Not Supported | |
+| --- @name | ❌ Not Supported | |
+| --- @number | ❌ Not Supported | |
+| -- lyric-language | ❌ Not Supported | |
+| --- @name | ❌ Not Supported | |
+| --- @number | ❌ Not Supported | |
+| --- @xml:lang | ❌ Not Supported | |
+| - credit | ❌ Not Supported | |
+| -- @id | ❌ Not Supported | |
+| -- @page | ❌ Not Supported | |
+| -- credit-type | ❌ Not Supported | |
+| -- link | ❌ Not Supported | |
+| --- @default-x | ❌ Not Supported | |
+| --- @default-y | ❌ Not Supported | |
+| --- @element | ❌ Not Supported | |
+| --- @name | ❌ Not Supported | |
+| --- @position | ❌ Not Supported | |
+| --- @relative-x | ❌ Not Supported | |
+| --- @relative-y | ❌ Not Supported | |
+| --- @xlink:actuate | ❌ Not Supported | |
+| --- @xlink:href | ❌ Not Supported | |
+| --- @xlink:role | ❌ Not Supported | |
+| --- @xlink:show | ❌ Not Supported | |
+| --- @xlink:title | ❌ Not Supported | |
+| --- @xlink:type | ❌ Not Supported | |
+| -- bookmark | ❌ Not Supported | |
+| --- @element | ❌ Not Supported | |
+| --- @id | ❌ Not Supported | |
+| --- @name | ❌ Not Supported | |
+| --- @position | ❌ Not Supported | |
+| -- credit-image | ❌ Not Supported | |
+| --- @default-x | ❌ Not Supported | |
+| --- @default-y | ❌ Not Supported | |
+| --- @halign | ❌ Not Supported | |
+| --- @height | ❌ Not Supported | |
+| --- @id | ❌ Not Supported | |
+| --- @relative-x | ❌ Not Supported | |
+| --- @relative-y | ❌ Not Supported | |
+| --- @source | ❌ Not Supported | |
+| --- @type | ❌ Not Supported | |
+| --- @valign | ❌ Not Supported | |
+| --- @width | ❌ Not Supported | |
+| -- credit-words | ❌ Not Supported | |
+| --- @color | ❌ Not Supported | |
+| --- @default-x | ❌ Not Supported | |
+| --- @default-y | ❌ Not Supported | |
+| --- @dir | ❌ Not Supported | |
+| --- @enclosure | ❌ Not Supported | |
+| --- @font-family | ❌ Not Supported | |
+| --- @font-size | ❌ Not Supported | |
+| --- @font-style | ❌ Not Supported | |
+| --- @font-weight | ❌ Not Supported | |
+| --- @halign | ❌ Not Supported | |
+| --- @id | ❌ Not Supported | |
+| --- @justify | ❌ Not Supported | |
+| --- @letter-spacing | ❌ Not Supported | |
+| --- @line-height | ❌ Not Supported | |
+| --- @line-through | ❌ Not Supported | |
+| --- @overline | ❌ Not Supported | |
+| --- @relative-x | ❌ Not Supported | |
+| --- @relative-y | ❌ Not Supported | |
+| --- @rotation | ❌ Not Supported | |
+| --- @underline | ❌ Not Supported | |
+| --- @valign | ❌ Not Supported | |
+| --- @xml:lang | ❌ Not Supported | |
+| --- @xml:space | ❌ Not Supported | |
+| -- credit-symbol | ❌ Not Supported | |
+| --- @color | ❌ Not Supported | |
+| --- @default-x | ❌ Not Supported | |
+| --- @default-y | ❌ Not Supported | |
+| --- @dir | ❌ Not Supported | |
+| --- @enclosure | ❌ Not Supported | |
+| --- @font-family | ❌ Not Supported | |
+| --- @font-size | ❌ Not Supported | |
+| --- @font-style | ❌ Not Supported | |
+| --- @font-weight | ❌ Not Supported | |
+| --- @halign | ❌ Not Supported | |
+| --- @id | ❌ Not Supported | |
+| --- @justify | ❌ Not Supported | |
+| --- @letter-spacing | ❌ Not Supported | |
+| --- @line-height | ❌ Not Supported | |
+| --- @line-through | ❌ Not Supported | |
+| --- @overline | ❌ Not Supported | |
+| --- @relative-x | ❌ Not Supported | |
+| --- @relative-y | ❌ Not Supported | |
+| --- @rotation | ❌ Not Supported | |
+| --- @underline | ❌ Not Supported | |
+| --- @valign | ❌ Not Supported | |
+| - part-list | ❌ Not Supported | |
+| -- part-group | ❌ Not Supported | |
+| --- @number | ❌ Not Supported | |
+| --- @type | ❌ Not Supported | |
+| --- group-name | ❌ Not Supported | |
+| ---- @color | ❌ Not Supported | |
+| ---- @default-x | ❌ Not Supported | |
+| ---- @default-y | ❌ Not Supported | |
+| ---- @font-family | ❌ Not Supported | |
+| ---- @font-size | ❌ Not Supported | |
+| ---- @font-style | ❌ Not Supported | |
+| ---- @font-weight | ❌ Not Supported | |
+| ---- @justify | ❌ Not Supported | |
+| ---- @relative-x | ❌ Not Supported | |
+| ---- @relative-y | ❌ Not Supported | |
+| --- group-name-display | ❌ Not Supported | |
+| ---- @print-object | ❌ Not Supported | |
+| ---- display-text | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @dir | ❌ Not Supported | |
+| ----- @enclosure | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @justify | ❌ Not Supported | |
+| ----- @letter-spacing | ❌ Not Supported | |
+| ----- @line-height | ❌ Not Supported | |
+| ----- @line-through | ❌ Not Supported | |
+| ----- @overline | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @rotation | ❌ Not Supported | |
+| ----- @underline | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ----- @xml:lang | ❌ Not Supported | |
+| ----- @xml:space | ❌ Not Supported | |
+| ---- accidental-text | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @dir | ❌ Not Supported | |
+| ----- @enclosure | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @justify | ❌ Not Supported | |
+| ----- @letter-spacing | ❌ Not Supported | |
+| ----- @line-height | ❌ Not Supported | |
+| ----- @line-through | ❌ Not Supported | |
+| ----- @overline | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @rotation | ❌ Not Supported | |
+| ----- @smufl | ❌ Not Supported | |
+| ----- @underline | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ----- @xml:lang | ❌ Not Supported | |
+| ----- @xml:space | ❌ Not Supported | |
+| --- group-abbreviation | ❌ Not Supported | |
+| ---- @color | ❌ Not Supported | |
+| ---- @default-x | ❌ Not Supported | |
+| ---- @default-y | ❌ Not Supported | |
+| ---- @font-family | ❌ Not Supported | |
+| ---- @font-size | ❌ Not Supported | |
+| ---- @font-style | ❌ Not Supported | |
+| ---- @font-weight | ❌ Not Supported | |
+| ---- @justify | ❌ Not Supported | |
+| ---- @relative-x | ❌ Not Supported | |
+| ---- @relative-y | ❌ Not Supported | |
+| --- group-abbreviation-display | ❌ Not Supported | |
+| ---- @print-object | ❌ Not Supported | |
+| ---- display-text | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @dir | ❌ Not Supported | |
+| ----- @enclosure | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @justify | ❌ Not Supported | |
+| ----- @letter-spacing | ❌ Not Supported | |
+| ----- @line-height | ❌ Not Supported | |
+| ----- @line-through | ❌ Not Supported | |
+| ----- @overline | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @rotation | ❌ Not Supported | |
+| ----- @underline | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ----- @xml:lang | ❌ Not Supported | |
+| ----- @xml:space | ❌ Not Supported | |
+| ---- accidental-text | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @dir | ❌ Not Supported | |
+| ----- @enclosure | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @justify | ❌ Not Supported | |
+| ----- @letter-spacing | ❌ Not Supported | |
+| ----- @line-height | ❌ Not Supported | |
+| ----- @line-through | ❌ Not Supported | |
+| ----- @overline | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @rotation | ❌ Not Supported | |
+| ----- @smufl | ❌ Not Supported | |
+| ----- @underline | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ----- @xml:lang | ❌ Not Supported | |
+| ----- @xml:space | ❌ Not Supported | |
+| --- group-symbol | ❌ Not Supported | |
+| ---- @color | ❌ Not Supported | |
+| ---- @default-x | ❌ Not Supported | |
+| ---- @default-y | ❌ Not Supported | |
+| ---- @relative-x | ❌ Not Supported | |
+| ---- @relative-y | ❌ Not Supported | |
+| --- group-barline | ❌ Not Supported | |
+| ---- @color | ❌ Not Supported | |
+| --- group-time | ❌ Not Supported | |
+| --- footnote | ❌ Not Supported | |
+| ---- @color | ❌ Not Supported | |
+| ---- @default-x | ❌ Not Supported | |
+| ---- @default-y | ❌ Not Supported | |
+| ---- @dir | ❌ Not Supported | |
+| ---- @enclosure | ❌ Not Supported | |
+| ---- @font-family | ❌ Not Supported | |
+| ---- @font-size | ❌ Not Supported | |
+| ---- @font-style | ❌ Not Supported | |
+| ---- @font-weight | ❌ Not Supported | |
+| ---- @halign | ❌ Not Supported | |
+| ---- @justify | ❌ Not Supported | |
+| ---- @letter-spacing | ❌ Not Supported | |
+| ---- @line-height | ❌ Not Supported | |
+| ---- @line-through | ❌ Not Supported | |
+| ---- @overline | ❌ Not Supported | |
+| ---- @relative-x | ❌ Not Supported | |
+| ---- @relative-y | ❌ Not Supported | |
+| ---- @rotation | ❌ Not Supported | |
+| ---- @underline | ❌ Not Supported | |
+| ---- @valign | ❌ Not Supported | |
+| ---- @xml:lang | ❌ Not Supported | |
+| ---- @xml:space | ❌ Not Supported | |
+| --- level | ❌ Not Supported | |
+| ---- @bracket | ❌ Not Supported | |
+| ---- @parentheses | ❌ Not Supported | |
+| ---- @reference | ❌ Not Supported | |
+| ---- @size | ❌ Not Supported | |
+| ---- @type | ❌ Not Supported | |
+| -- score-part | ❌ Not Supported | |
+| --- @id | ❌ Not Supported | |
+| --- identification | ❌ Not Supported | |
+| ---- creator | ❌ Not Supported | |
+| ----- @type | ❌ Not Supported | |
+| ---- rights | ❌ Not Supported | |
+| ----- @type | ❌ Not Supported | |
+| ---- encoding | ❌ Not Supported | |
+| ----- encoding-date | ❌ Not Supported | |
+| ----- encoder | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ----- software | ❌ Not Supported | |
+| ----- encoding-description | ❌ Not Supported | |
+| ----- supports | ❌ Not Supported | |
+| ------ @attribute | ❌ Not Supported | |
+| ------ @element | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ------ @value | ❌ Not Supported | |
+| ---- source | ❌ Not Supported | |
+| ---- relation | ❌ Not Supported | |
+| ----- @type | ❌ Not Supported | |
+| ---- miscellaneous | ❌ Not Supported | |
+| ----- miscellaneous-field | ❌ Not Supported | |
+| ------ @name | ❌ Not Supported | |
+| --- part-link | ❌ Not Supported | |
+| ---- @xlink:actuate | ❌ Not Supported | |
+| ---- @xlink:href | ❌ Not Supported | |
+| ---- @xlink:role | ❌ Not Supported | |
+| ---- @xlink:show | ❌ Not Supported | |
+| ---- @xlink:title | ❌ Not Supported | |
+| ---- @xlink:type | ❌ Not Supported | |
+| ---- instrument-link | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ---- group-link | ❌ Not Supported | |
+| --- part-name | ❌ Not Supported | |
+| ---- @color | ❌ Not Supported | |
+| ---- @default-x | ❌ Not Supported | |
+| ---- @default-y | ❌ Not Supported | |
+| ---- @font-family | ❌ Not Supported | |
+| ---- @font-size | ❌ Not Supported | |
+| ---- @font-style | ❌ Not Supported | |
+| ---- @font-weight | ❌ Not Supported | |
+| ---- @justify | ❌ Not Supported | |
+| ---- @print-object | ❌ Not Supported | |
+| ---- @relative-x | ❌ Not Supported | |
+| ---- @relative-y | ❌ Not Supported | |
+| --- part-name-display | ❌ Not Supported | |
+| ---- @print-object | ❌ Not Supported | |
+| ---- display-text | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @dir | ❌ Not Supported | |
+| ----- @enclosure | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @justify | ❌ Not Supported | |
+| ----- @letter-spacing | ❌ Not Supported | |
+| ----- @line-height | ❌ Not Supported | |
+| ----- @line-through | ❌ Not Supported | |
+| ----- @overline | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @rotation | ❌ Not Supported | |
+| ----- @underline | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ----- @xml:lang | ❌ Not Supported | |
+| ----- @xml:space | ❌ Not Supported | |
+| ---- accidental-text | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @dir | ❌ Not Supported | |
+| ----- @enclosure | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @justify | ❌ Not Supported | |
+| ----- @letter-spacing | ❌ Not Supported | |
+| ----- @line-height | ❌ Not Supported | |
+| ----- @line-through | ❌ Not Supported | |
+| ----- @overline | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @rotation | ❌ Not Supported | |
+| ----- @smufl | ❌ Not Supported | |
+| ----- @underline | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ----- @xml:lang | ❌ Not Supported | |
+| ----- @xml:space | ❌ Not Supported | |
+| --- part-abbreviation | ❌ Not Supported | |
+| ---- @color | ❌ Not Supported | |
+| ---- @default-x | ❌ Not Supported | |
+| ---- @default-y | ❌ Not Supported | |
+| ---- @font-family | ❌ Not Supported | |
+| ---- @font-size | ❌ Not Supported | |
+| ---- @font-style | ❌ Not Supported | |
+| ---- @font-weight | ❌ Not Supported | |
+| ---- @justify | ❌ Not Supported | |
+| ---- @print-object | ❌ Not Supported | |
+| ---- @relative-x | ❌ Not Supported | |
+| ---- @relative-y | ❌ Not Supported | |
+| --- part-abbreviation-display | ❌ Not Supported | |
+| ---- @print-object | ❌ Not Supported | |
+| ---- display-text | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @dir | ❌ Not Supported | |
+| ----- @enclosure | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @justify | ❌ Not Supported | |
+| ----- @letter-spacing | ❌ Not Supported | |
+| ----- @line-height | ❌ Not Supported | |
+| ----- @line-through | ❌ Not Supported | |
+| ----- @overline | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @rotation | ❌ Not Supported | |
+| ----- @underline | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ----- @xml:lang | ❌ Not Supported | |
+| ----- @xml:space | ❌ Not Supported | |
+| ---- accidental-text | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @dir | ❌ Not Supported | |
+| ----- @enclosure | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @justify | ❌ Not Supported | |
+| ----- @letter-spacing | ❌ Not Supported | |
+| ----- @line-height | ❌ Not Supported | |
+| ----- @line-through | ❌ Not Supported | |
+| ----- @overline | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @rotation | ❌ Not Supported | |
+| ----- @smufl | ❌ Not Supported | |
+| ----- @underline | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ----- @xml:lang | ❌ Not Supported | |
+| ----- @xml:space | ❌ Not Supported | |
+| --- group | ❌ Not Supported | |
+| --- score-instrument | ❌ Not Supported | |
+| ---- @id | ❌ Not Supported | |
+| ---- instrument-name | ❌ Not Supported | |
+| ---- instrument-abbreviation | ❌ Not Supported | |
+| ---- instrument-sound | ❌ Not Supported | |
+| ---- solo | ❌ Not Supported | |
+| ---- ensemble | ❌ Not Supported | |
+| ---- virtual-instrument | ❌ Not Supported | |
+| ----- virtual-library | ❌ Not Supported | |
+| ----- virtual-name | ❌ Not Supported | |
+| --- player | ❌ Not Supported | |
+| ---- @id | ❌ Not Supported | |
+| ---- player-name | ❌ Not Supported | |
+| --- midi-device | ❌ Not Supported | |
+| ---- @id | ❌ Not Supported | |
+| ---- @port | ❌ Not Supported | |
+| --- midi-instrument | ❌ Not Supported | |
+| ---- @id | ❌ Not Supported | |
+| ---- midi-channel | ❌ Not Supported | |
+| ---- midi-name | ❌ Not Supported | |
+| ---- midi-bank | ❌ Not Supported | |
+| ---- midi-program | ❌ Not Supported | |
+| ---- midi-unpitched | ❌ Not Supported | |
+| ---- volume | ❌ Not Supported | |
+| ---- pan | ❌ Not Supported | |
+| ---- elevation | ❌ Not Supported | |
+| - part | ❌ Not Supported | |
+| -- @id | ❌ Not Supported | |
+| -- measure | ❌ Not Supported | |
+| --- @id | ❌ Not Supported | |
+| --- @implicit | ❌ Not Supported | |
+| --- @non-controlling | ❌ Not Supported | |
+| --- @number | ❌ Not Supported | |
+| --- @text | ❌ Not Supported | |
+| --- @width | ❌ Not Supported | |
+| --- note | ❌ Not Supported | |
+| ---- @attack | ❌ Not Supported | |
+| ---- @color | ❌ Not Supported | |
+| ---- @default-x | ❌ Not Supported | |
+| ---- @default-y | ❌ Not Supported | |
+| ---- @dynamics | ❌ Not Supported | |
+| ---- @end-dynamics | ❌ Not Supported | |
+| ---- @font-family | ❌ Not Supported | |
+| ---- @font-size | ❌ Not Supported | |
+| ---- @font-style | ❌ Not Supported | |
+| ---- @font-weight | ❌ Not Supported | |
+| ---- @id | ❌ Not Supported | |
+| ---- @pizzicato | ❌ Not Supported | |
+| ---- @print-dot | ❌ Not Supported | |
+| ---- @print-leger | ❌ Not Supported | |
+| ---- @print-lyric | ❌ Not Supported | |
+| ---- @print-object | ❌ Not Supported | |
+| ---- @print-spacing | ❌ Not Supported | |
+| ---- @relative-x | ❌ Not Supported | |
+| ---- @relative-y | ❌ Not Supported | |
+| ---- @release | ❌ Not Supported | |
+| ---- @time-only | ❌ Not Supported | |
+| ---- grace | ❌ Not Supported | |
+| ----- @make-time | ❌ Not Supported | |
+| ----- @slash | ❌ Not Supported | |
+| ----- @steal-time-following | ❌ Not Supported | |
+| ----- @steal-time-previous | ❌ Not Supported | |
+| ---- chord | ❌ Not Supported | |
+| ---- pitch | ❌ Not Supported | |
+| ----- step | ❌ Not Supported | |
+| ----- alter | ❌ Not Supported | |
+| ----- octave | ❌ Not Supported | |
+| ---- unpitched | ❌ Not Supported | |
+| ----- display-step | ❌ Not Supported | |
+| ----- display-octave | ❌ Not Supported | |
+| ---- rest | ❌ Not Supported | |
+| ----- @measure | ❌ Not Supported | |
+| ----- display-step | ❌ Not Supported | |
+| ----- display-octave | ❌ Not Supported | |
+| ---- tie | ❌ Not Supported | |
+| ----- @time-only | ❌ Not Supported | |
+| ----- @type | ❌ Not Supported | |
+| ---- cue | ❌ Not Supported | |
+| ---- duration | ❌ Not Supported | |
+| ---- instrument | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ---- footnote | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @dir | ❌ Not Supported | |
+| ----- @enclosure | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @justify | ❌ Not Supported | |
+| ----- @letter-spacing | ❌ Not Supported | |
+| ----- @line-height | ❌ Not Supported | |
+| ----- @line-through | ❌ Not Supported | |
+| ----- @overline | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @rotation | ❌ Not Supported | |
+| ----- @underline | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ----- @xml:lang | ❌ Not Supported | |
+| ----- @xml:space | ❌ Not Supported | |
+| ---- level | ❌ Not Supported | |
+| ----- @bracket | ❌ Not Supported | |
+| ----- @parentheses | ❌ Not Supported | |
+| ----- @reference | ❌ Not Supported | |
+| ----- @size | ❌ Not Supported | |
+| ----- @type | ❌ Not Supported | |
+| ---- voice | ❌ Not Supported | |
+| ---- type | ❌ Not Supported | |
+| ----- @size | ❌ Not Supported | |
+| ---- dot | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @placement | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ---- accidental | ❌ Not Supported | |
+| ----- @bracket | ❌ Not Supported | |
+| ----- @cautionary | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @editorial | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @parentheses | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @size | ❌ Not Supported | |
+| ----- @smufl | ❌ Not Supported | |
+| ---- time-modification | ❌ Not Supported | |
+| ----- actual-notes | ❌ Not Supported | |
+| ----- normal-notes | ❌ Not Supported | |
+| ----- normal-type | ❌ Not Supported | |
+| ----- normal-dot | ❌ Not Supported | |
+| ---- stem | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ---- notehead | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @filled | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @parentheses | ❌ Not Supported | |
+| ----- @smufl | ❌ Not Supported | |
+| ---- notehead-text | ❌ Not Supported | |
+| ----- display-text | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @dir | ❌ Not Supported | |
+| ------ @enclosure | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @justify | ❌ Not Supported | |
+| ------ @letter-spacing | ❌ Not Supported | |
+| ------ @line-height | ❌ Not Supported | |
+| ------ @line-through | ❌ Not Supported | |
+| ------ @overline | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @rotation | ❌ Not Supported | |
+| ------ @underline | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ------ @xml:lang | ❌ Not Supported | |
+| ------ @xml:space | ❌ Not Supported | |
+| ----- accidental-text | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @dir | ❌ Not Supported | |
+| ------ @enclosure | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @justify | ❌ Not Supported | |
+| ------ @letter-spacing | ❌ Not Supported | |
+| ------ @line-height | ❌ Not Supported | |
+| ------ @line-through | ❌ Not Supported | |
+| ------ @overline | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @rotation | ❌ Not Supported | |
+| ------ @smufl | ❌ Not Supported | |
+| ------ @underline | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ------ @xml:lang | ❌ Not Supported | |
+| ------ @xml:space | ❌ Not Supported | |
+| ---- staff | ❌ Not Supported | |
+| ---- beam | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @fan | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- @number | ❌ Not Supported | |
+| ----- @repeater | ❌ Not Supported | |
+| ---- notations | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- @print-object | ❌ Not Supported | |
+| ----- footnote | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @dir | ❌ Not Supported | |
+| ------ @enclosure | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @justify | ❌ Not Supported | |
+| ------ @letter-spacing | ❌ Not Supported | |
+| ------ @line-height | ❌ Not Supported | |
+| ------ @line-through | ❌ Not Supported | |
+| ------ @overline | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @rotation | ❌ Not Supported | |
+| ------ @underline | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ------ @xml:lang | ❌ Not Supported | |
+| ------ @xml:space | ❌ Not Supported | |
+| ----- level | ❌ Not Supported | |
+| ------ @bracket | ❌ Not Supported | |
+| ------ @parentheses | ❌ Not Supported | |
+| ------ @reference | ❌ Not Supported | |
+| ------ @size | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ----- tied | ❌ Not Supported | |
+| ------ @bezier-offset | ❌ Not Supported | |
+| ------ @bezier-offset2 | ❌ Not Supported | |
+| ------ @bezier-x | ❌ Not Supported | |
+| ------ @bezier-x2 | ❌ Not Supported | |
+| ------ @bezier-y | ❌ Not Supported | |
+| ------ @bezier-y2 | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @dash-length | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @line-type | ❌ Not Supported | |
+| ------ @number | ❌ Not Supported | |
+| ------ @orientation | ❌ Not Supported | |
+| ------ @placement | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @space-length | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ----- slur | ❌ Not Supported | |
+| ------ @bezier-offset | ❌ Not Supported | |
+| ------ @bezier-offset2 | ❌ Not Supported | |
+| ------ @bezier-x | ❌ Not Supported | |
+| ------ @bezier-x2 | ❌ Not Supported | |
+| ------ @bezier-y | ❌ Not Supported | |
+| ------ @bezier-y2 | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @dash-length | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @line-type | ❌ Not Supported | |
+| ------ @number | ❌ Not Supported | |
+| ------ @orientation | ❌ Not Supported | |
+| ------ @placement | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @space-length | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ----- tuplet | ❌ Not Supported | |
+| ------ @bracket | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @line-shape | ❌ Not Supported | |
+| ------ @number | ❌ Not Supported | |
+| ------ @placement | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @show-number | ❌ Not Supported | |
+| ------ @show-type | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ------ tuplet-actual | ❌ Not Supported | |
+| ------- tuplet-number | ❌ Not Supported | |
+| -------- @color | ❌ Not Supported | |
+| -------- @font-family | ❌ Not Supported | |
+| -------- @font-size | ❌ Not Supported | |
+| -------- @font-style | ❌ Not Supported | |
+| -------- @font-weight | ❌ Not Supported | |
+| ------- tuplet-type | ❌ Not Supported | |
+| -------- @color | ❌ Not Supported | |
+| -------- @font-family | ❌ Not Supported | |
+| -------- @font-size | ❌ Not Supported | |
+| -------- @font-style | ❌ Not Supported | |
+| -------- @font-weight | ❌ Not Supported | |
+| ------- tuplet-dot | ❌ Not Supported | |
+| -------- @color | ❌ Not Supported | |
+| -------- @font-family | ❌ Not Supported | |
+| -------- @font-size | ❌ Not Supported | |
+| -------- @font-style | ❌ Not Supported | |
+| -------- @font-weight | ❌ Not Supported | |
+| ------ tuplet-normal | ❌ Not Supported | |
+| ------- tuplet-number | ❌ Not Supported | |
+| -------- @color | ❌ Not Supported | |
+| -------- @font-family | ❌ Not Supported | |
+| -------- @font-size | ❌ Not Supported | |
+| -------- @font-style | ❌ Not Supported | |
+| -------- @font-weight | ❌ Not Supported | |
+| ------- tuplet-type | ❌ Not Supported | |
+| -------- @color | ❌ Not Supported | |
+| -------- @font-family | ❌ Not Supported | |
+| -------- @font-size | ❌ Not Supported | |
+| -------- @font-style | ❌ Not Supported | |
+| -------- @font-weight | ❌ Not Supported | |
+| ------- tuplet-dot | ❌ Not Supported | |
+| -------- @color | ❌ Not Supported | |
+| -------- @font-family | ❌ Not Supported | |
+| -------- @font-size | ❌ Not Supported | |
+| -------- @font-style | ❌ Not Supported | |
+| -------- @font-weight | ❌ Not Supported | |
+| ----- glissando | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @dash-length | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @line-type | ❌ Not Supported | |
+| ------ @number | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @space-length | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ----- slide | ❌ Not Supported | |
+| ------ @accelerate | ❌ Not Supported | |
+| ------ @beats | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @dash-length | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @first-beat | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @last-beat | ❌ Not Supported | |
+| ------ @line-type | ❌ Not Supported | |
+| ------ @number | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @space-length | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ----- ornaments | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ trill-mark | ❌ Not Supported | |
+| ------- @accelerate | ❌ Not Supported | |
+| ------- @beats | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @last-beat | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @second-beat | ❌ Not Supported | |
+| ------- @start-note | ❌ Not Supported | |
+| ------- @trill-step | ❌ Not Supported | |
+| ------- @two-note-turn | ❌ Not Supported | |
+| ------ turn | ❌ Not Supported | |
+| ------- @accelerate | ❌ Not Supported | |
+| ------- @beats | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @last-beat | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @second-beat | ❌ Not Supported | |
+| ------- @slash | ❌ Not Supported | |
+| ------- @start-note | ❌ Not Supported | |
+| ------- @trill-step | ❌ Not Supported | |
+| ------- @two-note-turn | ❌ Not Supported | |
+| ------ delayed-turn | ❌ Not Supported | |
+| ------- @accelerate | ❌ Not Supported | |
+| ------- @beats | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @last-beat | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @second-beat | ❌ Not Supported | |
+| ------- @slash | ❌ Not Supported | |
+| ------- @start-note | ❌ Not Supported | |
+| ------- @trill-step | ❌ Not Supported | |
+| ------- @two-note-turn | ❌ Not Supported | |
+| ------ inverted-turn | ❌ Not Supported | |
+| ------- @accelerate | ❌ Not Supported | |
+| ------- @beats | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @last-beat | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @second-beat | ❌ Not Supported | |
+| ------- @slash | ❌ Not Supported | |
+| ------- @start-note | ❌ Not Supported | |
+| ------- @trill-step | ❌ Not Supported | |
+| ------- @two-note-turn | ❌ Not Supported | |
+| ------ delayed-inverted-turn | ❌ Not Supported | |
+| ------- @accelerate | ❌ Not Supported | |
+| ------- @beats | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @last-beat | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @second-beat | ❌ Not Supported | |
+| ------- @slash | ❌ Not Supported | |
+| ------- @start-note | ❌ Not Supported | |
+| ------- @trill-step | ❌ Not Supported | |
+| ------- @two-note-turn | ❌ Not Supported | |
+| ------ vertical-turn | ❌ Not Supported | |
+| ------- @accelerate | ❌ Not Supported | |
+| ------- @beats | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @last-beat | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @second-beat | ❌ Not Supported | |
+| ------- @start-note | ❌ Not Supported | |
+| ------- @trill-step | ❌ Not Supported | |
+| ------- @two-note-turn | ❌ Not Supported | |
+| ------ inverted-vertical-turn | ❌ Not Supported | |
+| ------- @accelerate | ❌ Not Supported | |
+| ------- @beats | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @last-beat | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @second-beat | ❌ Not Supported | |
+| ------- @start-note | ❌ Not Supported | |
+| ------- @trill-step | ❌ Not Supported | |
+| ------- @two-note-turn | ❌ Not Supported | |
+| ------ shake | ❌ Not Supported | |
+| ------- @accelerate | ❌ Not Supported | |
+| ------- @beats | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @last-beat | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @second-beat | ❌ Not Supported | |
+| ------- @start-note | ❌ Not Supported | |
+| ------- @trill-step | ❌ Not Supported | |
+| ------- @two-note-turn | ❌ Not Supported | |
+| ------ wavy-line | ❌ Not Supported | |
+| ------- @accelerate | ❌ Not Supported | |
+| ------- @beats | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @last-beat | ❌ Not Supported | |
+| ------- @number | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @second-beat | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ------- @start-note | ❌ Not Supported | |
+| ------- @trill-step | ❌ Not Supported | |
+| ------- @two-note-turn | ❌ Not Supported | |
+| ------- @type | ❌ Not Supported | |
+| ------ mordent | ❌ Not Supported | |
+| ------- @approach | ❌ Not Supported | |
+| ------- @departure | ❌ Not Supported | |
+| ------- @long | ❌ Not Supported | |
+| ------ inverted-mordent | ❌ Not Supported | |
+| ------- @approach | ❌ Not Supported | |
+| ------- @departure | ❌ Not Supported | |
+| ------- @long | ❌ Not Supported | |
+| ------ schleifer | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ tremolo | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ------- @type | ❌ Not Supported | |
+| ------ haydn | ❌ Not Supported | |
+| ------- @accelerate | ❌ Not Supported | |
+| ------- @beats | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @last-beat | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @second-beat | ❌ Not Supported | |
+| ------- @start-note | ❌ Not Supported | |
+| ------- @trill-step | ❌ Not Supported | |
+| ------- @two-note-turn | ❌ Not Supported | |
+| ------ other-ornament | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ------ accidental-mark | ❌ Not Supported | |
+| ------- @bracket | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @id | ❌ Not Supported | |
+| ------- @parentheses | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @size | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ----- technical | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ up-bow | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ down-bow | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ harmonic | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @print-object | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- natural | ❌ Not Supported | |
+| ------- artificial | ❌ Not Supported | |
+| ------- base-pitch | ❌ Not Supported | |
+| ------- touching-pitch | ❌ Not Supported | |
+| ------- sounding-pitch | ❌ Not Supported | |
+| ------ open-string | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ thumb-position | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ fingering | ❌ Not Supported | |
+| ------- @alternate | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @substitution | ❌ Not Supported | |
+| ------ pluck | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ double-tongue | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ triple-tongue | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ stopped | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ------ snap-pizzicato | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ fret | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------ string | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ hammer-on | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @number | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @type | ❌ Not Supported | |
+| ------ pull-off | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @number | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @type | ❌ Not Supported | |
+| ------ bend | ❌ Not Supported | |
+| ------- @accelerate | ❌ Not Supported | |
+| ------- @beats | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @first-beat | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @last-beat | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @shape | ❌ Not Supported | |
+| ------- bend-alter | ❌ Not Supported | |
+| ------- pre-bend | ❌ Not Supported | |
+| ------- release | ❌ Not Supported | |
+| -------- @offset | ❌ Not Supported | |
+| ------- with-bar | ❌ Not Supported | |
+| -------- @color | ❌ Not Supported | |
+| -------- @default-x | ❌ Not Supported | |
+| -------- @default-y | ❌ Not Supported | |
+| -------- @font-family | ❌ Not Supported | |
+| -------- @font-size | ❌ Not Supported | |
+| -------- @font-style | ❌ Not Supported | |
+| -------- @font-weight | ❌ Not Supported | |
+| -------- @placement | ❌ Not Supported | |
+| -------- @relative-x | ❌ Not Supported | |
+| -------- @relative-y | ❌ Not Supported | |
+| ------ tap | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @hand | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ heel | ❌ Not Supported | |
+| ------- @substitution | ❌ Not Supported | |
+| ------ toe | ❌ Not Supported | |
+| ------- @substitution | ❌ Not Supported | |
+| ------ fingernails | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ hole | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- hole-type | ❌ Not Supported | |
+| ------- hole-closed | ❌ Not Supported | |
+| -------- @location | ❌ Not Supported | |
+| ------- hole-shape | ❌ Not Supported | |
+| ------ arrow | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ------- arrow-direction | ❌ Not Supported | |
+| ------- arrow-style | ❌ Not Supported | |
+| ------- arrowhead | ❌ Not Supported | |
+| ------- circular-arrow | ❌ Not Supported | |
+| ------ handbell | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ brass-bend | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ flip | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ smear | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ open | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ------ half-muted | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ------ harmon-mute | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- harmon-closed | ❌ Not Supported | |
+| -------- @location | ❌ Not Supported | |
+| ------ golpe | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ other-technical | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ----- articulations | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ accent | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ strong-accent | ❌ Not Supported | |
+| ------- @type | ❌ Not Supported | |
+| ------ staccato | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ tenuto | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ detached-legato | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ staccatissimo | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ spiccato | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ scoop | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @dash-length | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @line-length | ❌ Not Supported | |
+| ------- @line-shape | ❌ Not Supported | |
+| ------- @line-type | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @space-length | ❌ Not Supported | |
+| ------ plop | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @dash-length | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @line-length | ❌ Not Supported | |
+| ------- @line-shape | ❌ Not Supported | |
+| ------- @line-type | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @space-length | ❌ Not Supported | |
+| ------ doit | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @dash-length | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @line-length | ❌ Not Supported | |
+| ------- @line-shape | ❌ Not Supported | |
+| ------- @line-type | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @space-length | ❌ Not Supported | |
+| ------ falloff | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @dash-length | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @line-length | ❌ Not Supported | |
+| ------- @line-shape | ❌ Not Supported | |
+| ------- @line-type | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @space-length | ❌ Not Supported | |
+| ------ breath-mark | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ caesura | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ stress | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ unstress | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ soft-accent | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ other-articulation | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ----- dynamics | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @enclosure | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @line-through | ❌ Not Supported | |
+| ------ @overline | ❌ Not Supported | |
+| ------ @placement | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @underline | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ------ p | ❌ Not Supported | |
+| ------ pp | ❌ Not Supported | |
+| ------ ppp | ❌ Not Supported | |
+| ------ pppp | ❌ Not Supported | |
+| ------ ppppp | ❌ Not Supported | |
+| ------ pppppp | ❌ Not Supported | |
+| ------ f | ❌ Not Supported | |
+| ------ ff | ❌ Not Supported | |
+| ------ fff | ❌ Not Supported | |
+| ------ ffff | ❌ Not Supported | |
+| ------ fffff | ❌ Not Supported | |
+| ------ ffffff | ❌ Not Supported | |
+| ------ mp | ❌ Not Supported | |
+| ------ mf | ❌ Not Supported | |
+| ------ sf | ❌ Not Supported | |
+| ------ sfp | ❌ Not Supported | |
+| ------ sfpp | ❌ Not Supported | |
+| ------ fp | ❌ Not Supported | |
+| ------ rf | ❌ Not Supported | |
+| ------ rfz | ❌ Not Supported | |
+| ------ sfz | ❌ Not Supported | |
+| ------ sffz | ❌ Not Supported | |
+| ------ fz | ❌ Not Supported | |
+| ------ n | ❌ Not Supported | |
+| ------ pf | ❌ Not Supported | |
+| ------ sfzp | ❌ Not Supported | |
+| ------ other-dynamics | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ----- fermata | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ----- arpeggiate | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @direction | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @number | ❌ Not Supported | |
+| ------ @placement | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @unbroken | ❌ Not Supported | |
+| ----- non-arpeggiate | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @number | ❌ Not Supported | |
+| ------ @placement | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ----- accidental-mark | ❌ Not Supported | |
+| ------ @bracket | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @parentheses | ❌ Not Supported | |
+| ------ @placement | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @size | ❌ Not Supported | |
+| ------ @smufl | ❌ Not Supported | |
+| ----- other-notation | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @number | ❌ Not Supported | |
+| ------ @placement | ❌ Not Supported | |
+| ------ @print-object | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @smufl | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ---- lyric | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- @justify | ❌ Not Supported | |
+| ----- @name | ❌ Not Supported | |
+| ----- @number | ❌ Not Supported | |
+| ----- @placement | ❌ Not Supported | |
+| ----- @print-object | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @time-only | ❌ Not Supported | |
+| ----- syllabic | ❌ Not Supported | |
+| ----- text | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @dir | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @letter-spacing | ❌ Not Supported | |
+| ------ @line-through | ❌ Not Supported | |
+| ------ @overline | ❌ Not Supported | |
+| ------ @rotation | ❌ Not Supported | |
+| ------ @underline | ❌ Not Supported | |
+| ------ @xml:lang | ❌ Not Supported | |
+| ----- elision | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @smufl | ❌ Not Supported | |
+| ----- extend | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ----- laughing | ❌ Not Supported | |
+| ----- humming | ❌ Not Supported | |
+| ----- end-line | ❌ Not Supported | |
+| ----- end-paragraph | ❌ Not Supported | |
+| ----- footnote | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @dir | ❌ Not Supported | |
+| ------ @enclosure | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @justify | ❌ Not Supported | |
+| ------ @letter-spacing | ❌ Not Supported | |
+| ------ @line-height | ❌ Not Supported | |
+| ------ @line-through | ❌ Not Supported | |
+| ------ @overline | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @rotation | ❌ Not Supported | |
+| ------ @underline | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ------ @xml:lang | ❌ Not Supported | |
+| ------ @xml:space | ❌ Not Supported | |
+| ----- level | ❌ Not Supported | |
+| ------ @bracket | ❌ Not Supported | |
+| ------ @parentheses | ❌ Not Supported | |
+| ------ @reference | ❌ Not Supported | |
+| ------ @size | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ---- play | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- ipa | ❌ Not Supported | |
+| ----- mute | ❌ Not Supported | |
+| ----- semi-pitched | ❌ Not Supported | |
+| ----- other-play | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ---- listen | ❌ Not Supported | |
+| ----- assess | ❌ Not Supported | |
+| ------ @player | ❌ Not Supported | |
+| ------ @time-only | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ----- wait | ❌ Not Supported | |
+| ------ @player | ❌ Not Supported | |
+| ------ @time-only | ❌ Not Supported | |
+| ----- other-listen | ❌ Not Supported | |
+| ------ @player | ❌ Not Supported | |
+| ------ @time-only | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| --- backup | ❌ Not Supported | |
+| ---- duration | ❌ Not Supported | |
+| ---- footnote | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @dir | ❌ Not Supported | |
+| ----- @enclosure | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @justify | ❌ Not Supported | |
+| ----- @letter-spacing | ❌ Not Supported | |
+| ----- @line-height | ❌ Not Supported | |
+| ----- @line-through | ❌ Not Supported | |
+| ----- @overline | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @rotation | ❌ Not Supported | |
+| ----- @underline | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ----- @xml:lang | ❌ Not Supported | |
+| ----- @xml:space | ❌ Not Supported | |
+| ---- level | ❌ Not Supported | |
+| ----- @bracket | ❌ Not Supported | |
+| ----- @parentheses | ❌ Not Supported | |
+| ----- @reference | ❌ Not Supported | |
+| ----- @size | ❌ Not Supported | |
+| ----- @type | ❌ Not Supported | |
+| --- forward | ❌ Not Supported | |
+| ---- duration | ❌ Not Supported | |
+| ---- footnote | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @dir | ❌ Not Supported | |
+| ----- @enclosure | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @justify | ❌ Not Supported | |
+| ----- @letter-spacing | ❌ Not Supported | |
+| ----- @line-height | ❌ Not Supported | |
+| ----- @line-through | ❌ Not Supported | |
+| ----- @overline | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @rotation | ❌ Not Supported | |
+| ----- @underline | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ----- @xml:lang | ❌ Not Supported | |
+| ----- @xml:space | ❌ Not Supported | |
+| ---- level | ❌ Not Supported | |
+| ----- @bracket | ❌ Not Supported | |
+| ----- @parentheses | ❌ Not Supported | |
+| ----- @reference | ❌ Not Supported | |
+| ----- @size | ❌ Not Supported | |
+| ----- @type | ❌ Not Supported | |
+| ---- voice | ❌ Not Supported | |
+| ---- staff | ❌ Not Supported | |
+| --- direction | ❌ Not Supported | |
+| ---- @directive | ❌ Not Supported | |
+| ---- @id | ❌ Not Supported | |
+| ---- @placement | ❌ Not Supported | |
+| ---- @system | ❌ Not Supported | |
+| ---- direction-type | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- rehearsal | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @dir | ❌ Not Supported | |
+| ------ @enclosure | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @justify | ❌ Not Supported | |
+| ------ @letter-spacing | ❌ Not Supported | |
+| ------ @line-height | ❌ Not Supported | |
+| ------ @line-through | ❌ Not Supported | |
+| ------ @overline | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @rotation | ❌ Not Supported | |
+| ------ @underline | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ------ @xml:lang | ❌ Not Supported | |
+| ------ @xml:space | ❌ Not Supported | |
+| ----- segno | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @smufl | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ----- coda | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @smufl | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ----- words | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @dir | ❌ Not Supported | |
+| ------ @enclosure | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @justify | ❌ Not Supported | |
+| ------ @letter-spacing | ❌ Not Supported | |
+| ------ @line-height | ❌ Not Supported | |
+| ------ @line-through | ❌ Not Supported | |
+| ------ @overline | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @rotation | ❌ Not Supported | |
+| ------ @underline | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ------ @xml:lang | ❌ Not Supported | |
+| ------ @xml:space | ❌ Not Supported | |
+| ----- symbol | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @dir | ❌ Not Supported | |
+| ------ @enclosure | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @justify | ❌ Not Supported | |
+| ------ @letter-spacing | ❌ Not Supported | |
+| ------ @line-height | ❌ Not Supported | |
+| ------ @line-through | ❌ Not Supported | |
+| ------ @overline | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @rotation | ❌ Not Supported | |
+| ------ @underline | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ----- wedge | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @dash-length | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @line-type | ❌ Not Supported | |
+| ------ @niente | ❌ Not Supported | |
+| ------ @number | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @space-length | ❌ Not Supported | |
+| ------ @spread | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ----- dynamics | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @enclosure | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @line-through | ❌ Not Supported | |
+| ------ @overline | ❌ Not Supported | |
+| ------ @placement | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @underline | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ------ p | ❌ Not Supported | |
+| ------ pp | ❌ Not Supported | |
+| ------ ppp | ❌ Not Supported | |
+| ------ pppp | ❌ Not Supported | |
+| ------ ppppp | ❌ Not Supported | |
+| ------ pppppp | ❌ Not Supported | |
+| ------ f | ❌ Not Supported | |
+| ------ ff | ❌ Not Supported | |
+| ------ fff | ❌ Not Supported | |
+| ------ ffff | ❌ Not Supported | |
+| ------ fffff | ❌ Not Supported | |
+| ------ ffffff | ❌ Not Supported | |
+| ------ mp | ❌ Not Supported | |
+| ------ mf | ❌ Not Supported | |
+| ------ sf | ❌ Not Supported | |
+| ------ sfp | ❌ Not Supported | |
+| ------ sfpp | ❌ Not Supported | |
+| ------ fp | ❌ Not Supported | |
+| ------ rf | ❌ Not Supported | |
+| ------ rfz | ❌ Not Supported | |
+| ------ sfz | ❌ Not Supported | |
+| ------ sffz | ❌ Not Supported | |
+| ------ fz | ❌ Not Supported | |
+| ------ n | ❌ Not Supported | |
+| ------ pf | ❌ Not Supported | |
+| ------ sfzp | ❌ Not Supported | |
+| ------ other-dynamics | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ----- dashes | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @dash-length | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @number | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @space-length | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ----- bracket | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @dash-length | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @end-length | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @line-end | ❌ Not Supported | |
+| ------ @line-type | ❌ Not Supported | |
+| ------ @number | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @space-length | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ----- pedal | ❌ Not Supported | |
+| ------ @abbreviated | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @line | ❌ Not Supported | |
+| ------ @number | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @sign | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ----- metronome | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @justify | ❌ Not Supported | |
+| ------ @parentheses | ❌ Not Supported | |
+| ------ @print-object | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ------ beat-unit | ❌ Not Supported | |
+| ------ beat-unit-dot | ❌ Not Supported | |
+| ------ beat-unit-tied | ❌ Not Supported | |
+| ------- beat-unit | ❌ Not Supported | |
+| ------- beat-unit-dot | ❌ Not Supported | |
+| ------ per-minute | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------ metronome-arrows | ❌ Not Supported | |
+| ------ metronome-note | ❌ Not Supported | |
+| ------- metronome-type | ❌ Not Supported | |
+| ------- metronome-dot | ❌ Not Supported | |
+| ------- metronome-beam | ❌ Not Supported | |
+| -------- @number | ❌ Not Supported | |
+| ------- metronome-tied | ❌ Not Supported | |
+| -------- @type | ❌ Not Supported | |
+| ------- metronome-tuplet | ❌ Not Supported | |
+| -------- @bracket | ❌ Not Supported | |
+| -------- @show-number | ❌ Not Supported | |
+| -------- @type | ❌ Not Supported | |
+| ------ metronome-relation | ❌ Not Supported | |
+| ----- octave-shift | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @dash-length | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @number | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @size | ❌ Not Supported | |
+| ------ @space-length | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ----- harp-pedals | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ------ pedal-tuning | ❌ Not Supported | |
+| ------- pedal-step | ❌ Not Supported | |
+| ------- pedal-alter | ❌ Not Supported | |
+| ----- damp | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ----- damp-all | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ----- eyeglasses | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ----- string-mute | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ----- scordatura | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ accord | ❌ Not Supported | |
+| ------- @string | ❌ Not Supported | |
+| ------- tuning-step | ❌ Not Supported | |
+| ------- tuning-alter | ❌ Not Supported | |
+| ------- tuning-octave | ❌ Not Supported | |
+| ----- image | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @height | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @source | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ------ @width | ❌ Not Supported | |
+| ----- principal-voice | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @symbol | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ----- percussion | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @enclosure | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ------ glass | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ------ metal | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ------ wood | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ------ pitched | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ------ membrane | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ------ effect | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ------ timpani | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ------ beater | ❌ Not Supported | |
+| ------- @tip | ❌ Not Supported | |
+| ------ stick | ❌ Not Supported | |
+| ------- @dashed-circle | ❌ Not Supported | |
+| ------- @parentheses | ❌ Not Supported | |
+| ------- @tip | ❌ Not Supported | |
+| ------- stick-type | ❌ Not Supported | |
+| ------- stick-material | ❌ Not Supported | |
+| ------ stick-location | ❌ Not Supported | |
+| ------ other-percussion | ❌ Not Supported | |
+| ------- @smufl | ❌ Not Supported | |
+| ----- accordion-registration | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ------ accordion-high | ❌ Not Supported | |
+| ------ accordion-middle | ❌ Not Supported | |
+| ------ accordion-low | ❌ Not Supported | |
+| ----- staff-divide | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ----- other-direction | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @print-object | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @smufl | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ---- offset | ❌ Not Supported | |
+| ----- @sound | ❌ Not Supported | |
+| ---- footnote | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @dir | ❌ Not Supported | |
+| ----- @enclosure | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @justify | ❌ Not Supported | |
+| ----- @letter-spacing | ❌ Not Supported | |
+| ----- @line-height | ❌ Not Supported | |
+| ----- @line-through | ❌ Not Supported | |
+| ----- @overline | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @rotation | ❌ Not Supported | |
+| ----- @underline | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ----- @xml:lang | ❌ Not Supported | |
+| ----- @xml:space | ❌ Not Supported | |
+| ---- level | ❌ Not Supported | |
+| ----- @bracket | ❌ Not Supported | |
+| ----- @parentheses | ❌ Not Supported | |
+| ----- @reference | ❌ Not Supported | |
+| ----- @size | ❌ Not Supported | |
+| ----- @type | ❌ Not Supported | |
+| ---- voice | ❌ Not Supported | |
+| ---- staff | ❌ Not Supported | |
+| ---- sound | ❌ Not Supported | |
+| ----- @coda | ❌ Not Supported | |
+| ----- @dacapo | ❌ Not Supported | |
+| ----- @dalsegno | ❌ Not Supported | |
+| ----- @damper-pedal | ❌ Not Supported | |
+| ----- @divisions | ❌ Not Supported | |
+| ----- @dynamics | ❌ Not Supported | |
+| ----- @elevation | ❌ Not Supported | |
+| ----- @fine | ❌ Not Supported | |
+| ----- @forward-repeat | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- @pan | ❌ Not Supported | |
+| ----- @pizzicato | ❌ Not Supported | |
+| ----- @segno | ❌ Not Supported | |
+| ----- @soft-pedal | ❌ Not Supported | |
+| ----- @sostenuto-pedal | ❌ Not Supported | |
+| ----- @tempo | ❌ Not Supported | |
+| ----- @time-only | ❌ Not Supported | |
+| ----- @tocoda | ❌ Not Supported | |
+| ----- instrument-change | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ instrument-sound | ❌ Not Supported | |
+| ------ solo | ❌ Not Supported | |
+| ------ ensemble | ❌ Not Supported | |
+| ------ virtual-instrument | ❌ Not Supported | |
+| ------- virtual-library | ❌ Not Supported | |
+| ------- virtual-name | ❌ Not Supported | |
+| ----- midi-device | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ @port | ❌ Not Supported | |
+| ----- midi-instrument | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ midi-channel | ❌ Not Supported | |
+| ------ midi-name | ❌ Not Supported | |
+| ------ midi-bank | ❌ Not Supported | |
+| ------ midi-program | ❌ Not Supported | |
+| ------ midi-unpitched | ❌ Not Supported | |
+| ------ volume | ❌ Not Supported | |
+| ------ pan | ❌ Not Supported | |
+| ------ elevation | ❌ Not Supported | |
+| ----- play | ❌ Not Supported | |
+| ------ @id | ❌ Not Supported | |
+| ------ ipa | ❌ Not Supported | |
+| ------ mute | ❌ Not Supported | |
+| ------ semi-pitched | ❌ Not Supported | |
+| ------ other-play | ❌ Not Supported | |
+| ------- @type | ❌ Not Supported | |
+| ----- swing | ❌ Not Supported | |
+| ------ straight | ❌ Not Supported | |
+| ------ first | ❌ Not Supported | |
+| ------ second | ❌ Not Supported | |
+| ------ swing-type | ❌ Not Supported | |
+| ------ swing-style | ❌ Not Supported | |
+| ----- offset | ❌ Not Supported | |
+| ------ @sound | ❌ Not Supported | |
+| ---- listening | ❌ Not Supported | |
+| ----- sync | ❌ Not Supported | |
+| ------ @latency | ❌ Not Supported | |
+| ------ @player | ❌ Not Supported | |
+| ------ @time-only | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ----- other-listening | ❌ Not Supported | |
+| ------ @player | ❌ Not Supported | |
+| ------ @time-only | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ----- offset | ❌ Not Supported | |
+| ------ @sound | ❌ Not Supported | |
+| --- attributes | ❌ Not Supported | |
+| ---- footnote | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @dir | ❌ Not Supported | |
+| ----- @enclosure | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @justify | ❌ Not Supported | |
+| ----- @letter-spacing | ❌ Not Supported | |
+| ----- @line-height | ❌ Not Supported | |
+| ----- @line-through | ❌ Not Supported | |
+| ----- @overline | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @rotation | ❌ Not Supported | |
+| ----- @underline | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ----- @xml:lang | ❌ Not Supported | |
+| ----- @xml:space | ❌ Not Supported | |
+| ---- level | ❌ Not Supported | |
+| ----- @bracket | ❌ Not Supported | |
+| ----- @parentheses | ❌ Not Supported | |
+| ----- @reference | ❌ Not Supported | |
+| ----- @size | ❌ Not Supported | |
+| ----- @type | ❌ Not Supported | |
+| ---- divisions | ❌ Not Supported | |
+| ---- key | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- @number | ❌ Not Supported | |
+| ----- @print-object | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- cancel | ❌ Not Supported | |
+| ------ @location | ❌ Not Supported | |
+| ----- fifths | ❌ Not Supported | |
+| ----- mode | ❌ Not Supported | |
+| ----- key-step | ❌ Not Supported | |
+| ----- key-alter | ❌ Not Supported | |
+| ----- key-accidental | ❌ Not Supported | |
+| ------ @smufl | ❌ Not Supported | |
+| ----- key-octave | ❌ Not Supported | |
+| ------ @cancel | ❌ Not Supported | |
+| ------ @number | ❌ Not Supported | |
+| ---- time | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- @number | ❌ Not Supported | |
+| ----- @print-object | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @separator | ❌ Not Supported | |
+| ----- @symbol | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ----- beats | ❌ Not Supported | |
+| ----- beat-type | ❌ Not Supported | |
+| ----- interchangeable | ❌ Not Supported | |
+| ------ @separator | ❌ Not Supported | |
+| ------ @symbol | ❌ Not Supported | |
+| ------ time-relation | ❌ Not Supported | |
+| ------ beats | ❌ Not Supported | |
+| ------ beat-type | ❌ Not Supported | |
+| ----- senza-misura | ❌ Not Supported | |
+| ---- staves | ❌ Not Supported | |
+| ---- part-symbol | ❌ Not Supported | |
+| ----- @bottom-staff | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @top-staff | ❌ Not Supported | |
+| ---- instruments | ❌ Not Supported | |
+| ---- clef | ❌ Not Supported | |
+| ----- @additional | ❌ Not Supported | |
+| ----- @after-barline | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- @number | ❌ Not Supported | |
+| ----- @print-object | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @size | ❌ Not Supported | |
+| ----- sign | ❌ Not Supported | |
+| ----- line | ❌ Not Supported | |
+| ----- clef-octave-change | ❌ Not Supported | |
+| ---- staff-details | ❌ Not Supported | |
+| ----- @number | ❌ Not Supported | |
+| ----- @print-object | ❌ Not Supported | |
+| ----- @print-spacing | ❌ Not Supported | |
+| ----- @show-frets | ❌ Not Supported | |
+| ----- staff-type | ❌ Not Supported | |
+| ----- staff-lines | ❌ Not Supported | |
+| ----- line-detail | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @line | ❌ Not Supported | |
+| ------ @line-type | ❌ Not Supported | |
+| ------ @print-object | ❌ Not Supported | |
+| ------ @width | ❌ Not Supported | |
+| ----- staff-tuning | ❌ Not Supported | |
+| ------ @line | ❌ Not Supported | |
+| ------ tuning-step | ❌ Not Supported | |
+| ------ tuning-alter | ❌ Not Supported | |
+| ------ tuning-octave | ❌ Not Supported | |
+| ----- capo | ❌ Not Supported | |
+| ----- staff-size | ❌ Not Supported | |
+| ------ @scaling | ❌ Not Supported | |
+| ---- transpose | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- @number | ❌ Not Supported | |
+| ----- diatonic | ❌ Not Supported | |
+| ----- chromatic | ❌ Not Supported | |
+| ----- octave-change | ❌ Not Supported | |
+| ----- double | ❌ Not Supported | |
+| ------ @above | ❌ Not Supported | |
+| ---- for-part | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- @number | ❌ Not Supported | |
+| ----- part-clef | ❌ Not Supported | |
+| ------ sign | ❌ Not Supported | |
+| ------ line | ❌ Not Supported | |
+| ------ clef-octave-change | ❌ Not Supported | |
+| ----- part-transpose | ❌ Not Supported | |
+| ------ diatonic | ❌ Not Supported | |
+| ------ chromatic | ❌ Not Supported | |
+| ------ octave-change | ❌ Not Supported | |
+| ------ double | ❌ Not Supported | |
+| ------- @above | ❌ Not Supported | |
+| ---- directive | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @xml:lang | ❌ Not Supported | |
+| ---- measure-style | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- @number | ❌ Not Supported | |
+| ----- multiple-rest | ❌ Not Supported | |
+| ------ @use-symbols | ❌ Not Supported | |
+| ----- measure-repeat | ❌ Not Supported | |
+| ------ @slashes | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ----- beat-repeat | ❌ Not Supported | |
+| ------ @slashes | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ------ @use-dots | ❌ Not Supported | |
+| ------ slash-type | ❌ Not Supported | |
+| ------ slash-dot | ❌ Not Supported | |
+| ------ except-voice | ❌ Not Supported | |
+| ----- slash | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ------ @use-dots | ❌ Not Supported | |
+| ------ @use-stems | ❌ Not Supported | |
+| ------ slash-type | ❌ Not Supported | |
+| ------ slash-dot | ❌ Not Supported | |
+| ------ except-voice | ❌ Not Supported | |
+| --- harmony | ❌ Not Supported | |
+| ---- @arrangement | ❌ Not Supported | |
+| ---- @color | ❌ Not Supported | |
+| ---- @default-x | ❌ Not Supported | |
+| ---- @default-y | ❌ Not Supported | |
+| ---- @font-family | ❌ Not Supported | |
+| ---- @font-size | ❌ Not Supported | |
+| ---- @font-style | ❌ Not Supported | |
+| ---- @font-weight | ❌ Not Supported | |
+| ---- @id | ❌ Not Supported | |
+| ---- @placement | ❌ Not Supported | |
+| ---- @print-frame | ❌ Not Supported | |
+| ---- @print-object | ❌ Not Supported | |
+| ---- @relative-x | ❌ Not Supported | |
+| ---- @relative-y | ❌ Not Supported | |
+| ---- @system | ❌ Not Supported | |
+| ---- @type | ❌ Not Supported | |
+| ---- root | ❌ Not Supported | |
+| ----- root-step | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @text | ❌ Not Supported | |
+| ----- root-alter | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @location | ❌ Not Supported | |
+| ------ @print-object | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ---- numeral | ❌ Not Supported | |
+| ----- numeral-root | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @text | ❌ Not Supported | |
+| ----- numeral-alter | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @location | ❌ Not Supported | |
+| ------ @print-object | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ----- numeral-key | ❌ Not Supported | |
+| ------ @print-object | ❌ Not Supported | |
+| ------ numeral-fifths | ❌ Not Supported | |
+| ------ numeral-mode | ❌ Not Supported | |
+| ---- function | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ---- kind | ❌ Not Supported | |
+| ----- @bracket-degrees | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @parentheses-degrees | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @stack-degrees | ❌ Not Supported | |
+| ----- @text | ❌ Not Supported | |
+| ----- @use-symbols | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ---- inversion | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @text | ❌ Not Supported | |
+| ---- bass | ❌ Not Supported | |
+| ----- @arrangement | ❌ Not Supported | |
+| ----- bass-separator | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ----- bass-step | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @text | ❌ Not Supported | |
+| ----- bass-alter | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @location | ❌ Not Supported | |
+| ------ @print-object | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ---- degree | ❌ Not Supported | |
+| ----- @print-object | ❌ Not Supported | |
+| ----- degree-value | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @symbol | ❌ Not Supported | |
+| ------ @text | ❌ Not Supported | |
+| ----- degree-alter | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @plus-minus | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ----- degree-type | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @text | ❌ Not Supported | |
+| ---- frame | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @height | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @unplayed | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ----- @width | ❌ Not Supported | |
+| ----- frame-strings | ❌ Not Supported | |
+| ----- frame-frets | ❌ Not Supported | |
+| ----- first-fret | ❌ Not Supported | |
+| ------ @location | ❌ Not Supported | |
+| ------ @text | ❌ Not Supported | |
+| ----- frame-note | ❌ Not Supported | |
+| ------ string | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------ fret | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------ fingering | ❌ Not Supported | |
+| ------- @alternate | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @placement | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @substitution | ❌ Not Supported | |
+| ------ barre | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @type | ❌ Not Supported | |
+| ---- offset | ❌ Not Supported | |
+| ----- @sound | ❌ Not Supported | |
+| ---- footnote | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @dir | ❌ Not Supported | |
+| ----- @enclosure | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @justify | ❌ Not Supported | |
+| ----- @letter-spacing | ❌ Not Supported | |
+| ----- @line-height | ❌ Not Supported | |
+| ----- @line-through | ❌ Not Supported | |
+| ----- @overline | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @rotation | ❌ Not Supported | |
+| ----- @underline | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ----- @xml:lang | ❌ Not Supported | |
+| ----- @xml:space | ❌ Not Supported | |
+| ---- level | ❌ Not Supported | |
+| ----- @bracket | ❌ Not Supported | |
+| ----- @parentheses | ❌ Not Supported | |
+| ----- @reference | ❌ Not Supported | |
+| ----- @size | ❌ Not Supported | |
+| ----- @type | ❌ Not Supported | |
+| ---- staff | ❌ Not Supported | |
+| --- figured-bass | ❌ Not Supported | |
+| ---- @color | ❌ Not Supported | |
+| ---- @default-x | ❌ Not Supported | |
+| ---- @default-y | ❌ Not Supported | |
+| ---- @font-family | ❌ Not Supported | |
+| ---- @font-size | ❌ Not Supported | |
+| ---- @font-style | ❌ Not Supported | |
+| ---- @font-weight | ❌ Not Supported | |
+| ---- @halign | ❌ Not Supported | |
+| ---- @id | ❌ Not Supported | |
+| ---- @parentheses | ❌ Not Supported | |
+| ---- @placement | ❌ Not Supported | |
+| ---- @print-dot | ❌ Not Supported | |
+| ---- @print-lyric | ❌ Not Supported | |
+| ---- @print-object | ❌ Not Supported | |
+| ---- @print-spacing | ❌ Not Supported | |
+| ---- @relative-x | ❌ Not Supported | |
+| ---- @relative-y | ❌ Not Supported | |
+| ---- @valign | ❌ Not Supported | |
+| ---- figure | ❌ Not Supported | |
+| ----- prefix | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ----- figure-number | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ----- suffix | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ----- extend | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ----- footnote | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @dir | ❌ Not Supported | |
+| ------ @enclosure | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @justify | ❌ Not Supported | |
+| ------ @letter-spacing | ❌ Not Supported | |
+| ------ @line-height | ❌ Not Supported | |
+| ------ @line-through | ❌ Not Supported | |
+| ------ @overline | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @rotation | ❌ Not Supported | |
+| ------ @underline | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ------ @xml:lang | ❌ Not Supported | |
+| ------ @xml:space | ❌ Not Supported | |
+| ----- level | ❌ Not Supported | |
+| ------ @bracket | ❌ Not Supported | |
+| ------ @parentheses | ❌ Not Supported | |
+| ------ @reference | ❌ Not Supported | |
+| ------ @size | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ---- duration | ❌ Not Supported | |
+| ---- footnote | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @dir | ❌ Not Supported | |
+| ----- @enclosure | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @justify | ❌ Not Supported | |
+| ----- @letter-spacing | ❌ Not Supported | |
+| ----- @line-height | ❌ Not Supported | |
+| ----- @line-through | ❌ Not Supported | |
+| ----- @overline | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @rotation | ❌ Not Supported | |
+| ----- @underline | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ----- @xml:lang | ❌ Not Supported | |
+| ----- @xml:space | ❌ Not Supported | |
+| ---- level | ❌ Not Supported | |
+| ----- @bracket | ❌ Not Supported | |
+| ----- @parentheses | ❌ Not Supported | |
+| ----- @reference | ❌ Not Supported | |
+| ----- @size | ❌ Not Supported | |
+| ----- @type | ❌ Not Supported | |
+| --- print | ❌ Not Supported | |
+| ---- @blank-page | ❌ Not Supported | |
+| ---- @id | ❌ Not Supported | |
+| ---- @new-page | ❌ Not Supported | |
+| ---- @new-system | ❌ Not Supported | |
+| ---- @page-number | ❌ Not Supported | |
+| ---- @staff-spacing | ❌ Not Supported | |
+| ---- page-layout | ❌ Not Supported | |
+| ----- page-height | ❌ Not Supported | |
+| ----- page-width | ❌ Not Supported | |
+| ----- page-margins | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ------ left-margin | ❌ Not Supported | |
+| ------ right-margin | ❌ Not Supported | |
+| ------ top-margin | ❌ Not Supported | |
+| ------ bottom-margin | ❌ Not Supported | |
+| ---- system-layout | ❌ Not Supported | |
+| ----- system-margins | ❌ Not Supported | |
+| ------ left-margin | ❌ Not Supported | |
+| ------ right-margin | ❌ Not Supported | |
+| ----- system-distance | ❌ Not Supported | |
+| ----- top-system-distance | ❌ Not Supported | |
+| ----- system-dividers | ❌ Not Supported | |
+| ------ left-divider | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @halign | ❌ Not Supported | |
+| ------- @print-object | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @valign | ❌ Not Supported | |
+| ------ right-divider | ❌ Not Supported | |
+| ------- @color | ❌ Not Supported | |
+| ------- @default-x | ❌ Not Supported | |
+| ------- @default-y | ❌ Not Supported | |
+| ------- @font-family | ❌ Not Supported | |
+| ------- @font-size | ❌ Not Supported | |
+| ------- @font-style | ❌ Not Supported | |
+| ------- @font-weight | ❌ Not Supported | |
+| ------- @halign | ❌ Not Supported | |
+| ------- @print-object | ❌ Not Supported | |
+| ------- @relative-x | ❌ Not Supported | |
+| ------- @relative-y | ❌ Not Supported | |
+| ------- @valign | ❌ Not Supported | |
+| ---- staff-layout | ❌ Not Supported | |
+| ----- @number | ❌ Not Supported | |
+| ----- staff-distance | ❌ Not Supported | |
+| ---- measure-layout | ❌ Not Supported | |
+| ----- measure-distance | ❌ Not Supported | |
+| ---- measure-numbering | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @multiple-rest-always | ❌ Not Supported | |
+| ----- @multiple-rest-range | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @staff | ❌ Not Supported | |
+| ----- @system | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ---- part-name-display | ❌ Not Supported | |
+| ----- @print-object | ❌ Not Supported | |
+| ----- display-text | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @dir | ❌ Not Supported | |
+| ------ @enclosure | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @justify | ❌ Not Supported | |
+| ------ @letter-spacing | ❌ Not Supported | |
+| ------ @line-height | ❌ Not Supported | |
+| ------ @line-through | ❌ Not Supported | |
+| ------ @overline | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @rotation | ❌ Not Supported | |
+| ------ @underline | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ------ @xml:lang | ❌ Not Supported | |
+| ------ @xml:space | ❌ Not Supported | |
+| ----- accidental-text | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @dir | ❌ Not Supported | |
+| ------ @enclosure | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @justify | ❌ Not Supported | |
+| ------ @letter-spacing | ❌ Not Supported | |
+| ------ @line-height | ❌ Not Supported | |
+| ------ @line-through | ❌ Not Supported | |
+| ------ @overline | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @rotation | ❌ Not Supported | |
+| ------ @smufl | ❌ Not Supported | |
+| ------ @underline | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ------ @xml:lang | ❌ Not Supported | |
+| ------ @xml:space | ❌ Not Supported | |
+| ---- part-abbreviation-display | ❌ Not Supported | |
+| ----- @print-object | ❌ Not Supported | |
+| ----- display-text | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @dir | ❌ Not Supported | |
+| ------ @enclosure | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @justify | ❌ Not Supported | |
+| ------ @letter-spacing | ❌ Not Supported | |
+| ------ @line-height | ❌ Not Supported | |
+| ------ @line-through | ❌ Not Supported | |
+| ------ @overline | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @rotation | ❌ Not Supported | |
+| ------ @underline | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ------ @xml:lang | ❌ Not Supported | |
+| ------ @xml:space | ❌ Not Supported | |
+| ----- accidental-text | ❌ Not Supported | |
+| ------ @color | ❌ Not Supported | |
+| ------ @default-x | ❌ Not Supported | |
+| ------ @default-y | ❌ Not Supported | |
+| ------ @dir | ❌ Not Supported | |
+| ------ @enclosure | ❌ Not Supported | |
+| ------ @font-family | ❌ Not Supported | |
+| ------ @font-size | ❌ Not Supported | |
+| ------ @font-style | ❌ Not Supported | |
+| ------ @font-weight | ❌ Not Supported | |
+| ------ @halign | ❌ Not Supported | |
+| ------ @justify | ❌ Not Supported | |
+| ------ @letter-spacing | ❌ Not Supported | |
+| ------ @line-height | ❌ Not Supported | |
+| ------ @line-through | ❌ Not Supported | |
+| ------ @overline | ❌ Not Supported | |
+| ------ @relative-x | ❌ Not Supported | |
+| ------ @relative-y | ❌ Not Supported | |
+| ------ @rotation | ❌ Not Supported | |
+| ------ @smufl | ❌ Not Supported | |
+| ------ @underline | ❌ Not Supported | |
+| ------ @valign | ❌ Not Supported | |
+| ------ @xml:lang | ❌ Not Supported | |
+| ------ @xml:space | ❌ Not Supported | |
+| --- sound | ❌ Not Supported | |
+| ---- @coda | ❌ Not Supported | |
+| ---- @dacapo | ❌ Not Supported | |
+| ---- @dalsegno | ❌ Not Supported | |
+| ---- @damper-pedal | ❌ Not Supported | |
+| ---- @divisions | ❌ Not Supported | |
+| ---- @dynamics | ❌ Not Supported | |
+| ---- @elevation | ❌ Not Supported | |
+| ---- @fine | ❌ Not Supported | |
+| ---- @forward-repeat | ❌ Not Supported | |
+| ---- @id | ❌ Not Supported | |
+| ---- @pan | ❌ Not Supported | |
+| ---- @pizzicato | ❌ Not Supported | |
+| ---- @segno | ❌ Not Supported | |
+| ---- @soft-pedal | ❌ Not Supported | |
+| ---- @sostenuto-pedal | ❌ Not Supported | |
+| ---- @tempo | ❌ Not Supported | |
+| ---- @time-only | ❌ Not Supported | |
+| ---- @tocoda | ❌ Not Supported | |
+| ---- instrument-change | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- instrument-sound | ❌ Not Supported | |
+| ----- solo | ❌ Not Supported | |
+| ----- ensemble | ❌ Not Supported | |
+| ----- virtual-instrument | ❌ Not Supported | |
+| ------ virtual-library | ❌ Not Supported | |
+| ------ virtual-name | ❌ Not Supported | |
+| ---- midi-device | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- @port | ❌ Not Supported | |
+| ---- midi-instrument | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- midi-channel | ❌ Not Supported | |
+| ----- midi-name | ❌ Not Supported | |
+| ----- midi-bank | ❌ Not Supported | |
+| ----- midi-program | ❌ Not Supported | |
+| ----- midi-unpitched | ❌ Not Supported | |
+| ----- volume | ❌ Not Supported | |
+| ----- pan | ❌ Not Supported | |
+| ----- elevation | ❌ Not Supported | |
+| ---- play | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- ipa | ❌ Not Supported | |
+| ----- mute | ❌ Not Supported | |
+| ----- semi-pitched | ❌ Not Supported | |
+| ----- other-play | ❌ Not Supported | |
+| ------ @type | ❌ Not Supported | |
+| ---- swing | ❌ Not Supported | |
+| ----- straight | ❌ Not Supported | |
+| ----- first | ❌ Not Supported | |
+| ----- second | ❌ Not Supported | |
+| ----- swing-type | ❌ Not Supported | |
+| ----- swing-style | ❌ Not Supported | |
+| ---- offset | ❌ Not Supported | |
+| ----- @sound | ❌ Not Supported | |
+| --- listening | ❌ Not Supported | |
+| ---- sync | ❌ Not Supported | |
+| ----- @latency | ❌ Not Supported | |
+| ----- @player | ❌ Not Supported | |
+| ----- @time-only | ❌ Not Supported | |
+| ----- @type | ❌ Not Supported | |
+| ---- other-listening | ❌ Not Supported | |
+| ----- @player | ❌ Not Supported | |
+| ----- @time-only | ❌ Not Supported | |
+| ----- @type | ❌ Not Supported | |
+| ---- offset | ❌ Not Supported | |
+| ----- @sound | ❌ Not Supported | |
+| --- barline | ❌ Not Supported | |
+| ---- @coda | ❌ Not Supported | |
+| ---- @divisions | ❌ Not Supported | |
+| ---- @id | ❌ Not Supported | |
+| ---- @location | ❌ Not Supported | |
+| ---- @segno | ❌ Not Supported | |
+| ---- bar-style | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ---- footnote | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @dir | ❌ Not Supported | |
+| ----- @enclosure | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @justify | ❌ Not Supported | |
+| ----- @letter-spacing | ❌ Not Supported | |
+| ----- @line-height | ❌ Not Supported | |
+| ----- @line-through | ❌ Not Supported | |
+| ----- @overline | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @rotation | ❌ Not Supported | |
+| ----- @underline | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ----- @xml:lang | ❌ Not Supported | |
+| ----- @xml:space | ❌ Not Supported | |
+| ---- level | ❌ Not Supported | |
+| ----- @bracket | ❌ Not Supported | |
+| ----- @parentheses | ❌ Not Supported | |
+| ----- @reference | ❌ Not Supported | |
+| ----- @size | ❌ Not Supported | |
+| ----- @type | ❌ Not Supported | |
+| ---- wavy-line | ❌ Not Supported | |
+| ----- @accelerate | ❌ Not Supported | |
+| ----- @beats | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @last-beat | ❌ Not Supported | |
+| ----- @number | ❌ Not Supported | |
+| ----- @placement | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @second-beat | ❌ Not Supported | |
+| ----- @smufl | ❌ Not Supported | |
+| ----- @start-note | ❌ Not Supported | |
+| ----- @trill-step | ❌ Not Supported | |
+| ----- @two-note-turn | ❌ Not Supported | |
+| ----- @type | ❌ Not Supported | |
+| ---- segno | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @smufl | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ---- coda | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @halign | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @smufl | ❌ Not Supported | |
+| ----- @valign | ❌ Not Supported | |
+| ---- fermata | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @id | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @type | ❌ Not Supported | |
+| ---- ending | ❌ Not Supported | |
+| ----- @color | ❌ Not Supported | |
+| ----- @default-x | ❌ Not Supported | |
+| ----- @default-y | ❌ Not Supported | |
+| ----- @end-length | ❌ Not Supported | |
+| ----- @font-family | ❌ Not Supported | |
+| ----- @font-size | ❌ Not Supported | |
+| ----- @font-style | ❌ Not Supported | |
+| ----- @font-weight | ❌ Not Supported | |
+| ----- @number | ❌ Not Supported | |
+| ----- @print-object | ❌ Not Supported | |
+| ----- @relative-x | ❌ Not Supported | |
+| ----- @relative-y | ❌ Not Supported | |
+| ----- @system | ❌ Not Supported | |
+| ----- @text-x | ❌ Not Supported | |
+| ----- @text-y | ❌ Not Supported | |
+| ----- @type | ❌ Not Supported | |
+| ---- repeat | ❌ Not Supported | |
+| ----- @after-jump | ❌ Not Supported | |
+| ----- @direction | ❌ Not Supported | |
+| ----- @times | ❌ Not Supported | |
+| ----- @winged | ❌ Not Supported | |
+| --- grouping | ❌ Not Supported | |
+| ---- @id | ❌ Not Supported | |
+| ---- @member-of | ❌ Not Supported | |
+| ---- @number | ❌ Not Supported | |
+| ---- @type | ❌ Not Supported | |
+| ---- feature | ❌ Not Supported | |
+| ----- @type | ❌ Not Supported | |
+| --- link | ❌ Not Supported | |
+| ---- @default-x | ❌ Not Supported | |
+| ---- @default-y | ❌ Not Supported | |
+| ---- @element | ❌ Not Supported | |
+| ---- @name | ❌ Not Supported | |
+| ---- @position | ❌ Not Supported | |
+| ---- @relative-x | ❌ Not Supported | |
+| ---- @relative-y | ❌ Not Supported | |
+| ---- @xlink:actuate | ❌ Not Supported | |
+| ---- @xlink:href | ❌ Not Supported | |
+| ---- @xlink:role | ❌ Not Supported | |
+| ---- @xlink:show | ❌ Not Supported | |
+| ---- @xlink:title | ❌ Not Supported | |
+| ---- @xlink:type | ❌ Not Supported | |
+| --- bookmark | ❌ Not Supported | |
+| ---- @element | ❌ Not Supported | |
+| ---- @id | ❌ Not Supported | |
+| ---- @name | ❌ Not Supported | |
+| ---- @position | ❌ Not Supported | |

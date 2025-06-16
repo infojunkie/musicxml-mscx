@@ -13,7 +13,7 @@
   xmlns:mscx="http://musescore.org"
   exclude-result-prefixes="#all"
 >
-  <xsl:include href="libmusicxml.xsl"/>
+  <xsl:include href="lib-musicxml.xsl"/>
 
   <xsl:output omit-xml-declaration="no" indent="yes" suppress-indentation="text"/>
 
