@@ -1,7 +1,7 @@
 Supported features
 ==================
 
-The table below was inspired by [alphaTab's documentation of supported MusicXML features](https://www.alphatab.net/docs/formats/musicxml/). It is produced by running `npm run --silent generate:supported` which traverses the MusicXML XSD schema to generate the full hierarchy of elements.
+The table below was inspired by [alphaTab's documentation of supported MusicXML features](https://www.alphatab.net/docs/formats/musicxml/). It is produced by running `npm run --silent build:doc` which traverses the MusicXML XSD schema to generate/re-generate the full hierarchy of elements.
 
 | Feature | Status | Comment |
 | --- | --- | --- |
