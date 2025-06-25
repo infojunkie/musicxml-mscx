@@ -13,7 +13,7 @@
   xmlns:mscx="http://musescore.org"
   exclude-result-prefixes="#all"
 >
-  <xsl:include href="libmusicxml.xsl"/>
+  <xsl:include href="lib-musicxml.xsl"/>
 
   <xsl:output omit-xml-declaration="no" indent="yes" suppress-indentation="text"/>
 
@@ -326,10 +326,10 @@
   -->
   <xsl:template match="measure">
     <xsl:param name="staff"/>
-    <xsl:if test="number(.//system-layout//left-margin) != 0">
+    <xsl:if test="number(.//system-layout/system-margins/left-margin) != 0">
       <HBox>
         <width>
-          <xsl:value-of select="format-number(mscx:tenthsToMillimeters(number(.//system-layout//left-margin)) div $spatium, '0.00')"/>
+          <xsl:value-of select="format-number(mscx:tenthsToMillimeters(number(.//system-layout/system-margins/left-margin)) div $spatium, '0.00')"/>
         </width>
       </HBox>
     </xsl:if>
@@ -342,7 +342,7 @@
     </xsl:if>
     <Measure>
       <xsl:attribute name="number"><xsl:value-of select="@number"/></xsl:attribute>
-      <xsl:if test="following-sibling::measure[1]/print[@new-system = 'yes'] and (not(.//system-layout//right-margin) or .//system-layout//right-margin = 0)">
+      <xsl:if test="following-sibling::measure[1]/print[@new-system = 'yes'] and (not(.//system-layout/system-margins/right-margin) or .//system-layout/system-margins/right-margin = 0)">
         <LayoutBreak>
           <subtype>line</subtype>
         </LayoutBreak>
@@ -391,11 +391,11 @@
         </xsl:otherwise>
       </xsl:choose>
     </Measure>
-    <xsl:if test="number(.//system-layout//right-margin) != 0">
+    <xsl:if test="number(.//system-layout/system-margins/right-margin) != 0">
       <HBox>
         <width>
           <xsl:value-of select="
-            format-number(($pagePrintableWidthInches * 25.4 - mscx:tenthsToMillimeters(number(.//system-layout//right-margin))) div $spatium, '0.00')
+            format-number(($pagePrintableWidthInches * 25.4 - mscx:tenthsToMillimeters(number(.//system-layout/system-margins/right-margin))) div $spatium, '0.00')
           "/>
         </width>
         <LayoutBreak>
@@ -535,7 +535,7 @@
       <style>Repeat Text Left</style>
       <xsl:choose>
         <xsl:when test="direction-type/words">
-          <text><xsl:call-template name="text"><xsl:with-param name=" node" select="direction-type/words"/></xsl:call-template></text>
+          <text><xsl:call-template name="text"><xsl:with-param name="node" select="direction-type/words"/></xsl:call-template></text>
         </xsl:when>
         <xsl:otherwise>
           <text><sym>coda</sym></text>
@@ -563,7 +563,7 @@
       <style>Repeat Text Left</style>
       <xsl:choose>
         <xsl:when test="direction-type/words">
-          <text><xsl:call-template name="text"><xsl:with-param name=" node" select="direction-type/words"/></xsl:call-template></text>
+          <text><xsl:call-template name="text"><xsl:with-param name="node" select="direction-type/words"/></xsl:call-template></text>
         </xsl:when>
         <xsl:otherwise>
           <text><sym>segno</sym></text>
@@ -605,10 +605,7 @@
   -->
   <xsl:template match="direction[direction-type/rehearsal]" mode="noteSibling">
     <RehearsalMark>
-      <text>
-        <xsl:call-template name="text">
-          <xsl:with-param name="node" select="direction-type/rehearsal"/>
-        </xsl:call-template>
+      <text><xsl:call-template name="text"><xsl:with-param name="node" select="direction-type/rehearsal"/></xsl:call-template>
       </text>
     </RehearsalMark>
   </xsl:template>
@@ -854,9 +851,7 @@
       <text>
         <xsl:choose>
           <xsl:when test="direction-type/words">
-            <xsl:call-template name="text">
-              <xsl:with-param name="node" select="direction-type/words"/>
-            </xsl:call-template>
+            <xsl:call-template name="text"><xsl:with-param name="node" select="direction-type/words"/></xsl:call-template>
           </xsl:when>
           <xsl:when test="direction-type/metronome[per-minute]">
             <xsl:choose>
@@ -991,7 +986,7 @@
           <xsl:choose>
             <xsl:when test="local-name() = 'slur'">
               <Slur>
-                <up><xsl:value-of select="if (placement = 'below') then 'down' else 'up'"/></up>
+                <up><xsl:value-of select="if (@placement = 'below') then 'down' else 'up'"/></up>
               </Slur>
             </xsl:when>
             <xsl:when test="local-name() = 'tied'">

@@ -4,6 +4,7 @@
   "description": "MuseScore to MusicXML converter and back.",
   "author": "Karim Ratib <karim.ratib@gmail.com> (https://github.com/infojunkie)",
   "license": "GPL-3.0-only",
+  "type": "module",
   "dependencies": {
     "saxon-js": "^2.6.0",
     "xslt3": "^2.6.0"
@@ -11,7 +12,9 @@
   "scripts": {
     "build": "npm run build:sef",
     "build:sef": "for xsl in src/*.xsl; do sef=$(basename \"$xsl\"); xslt3 -relocate:off -xsl:$xsl -export:build/${sef/.xsl/.sef.json} -nogo:1 -t -ns:##html5; done",
+    "build:supported": "cat doc/supported.md | src/supported.js > /tmp/supported.md; cp /tmp/supported.md doc/supported.md",
     "convert:mscx": "run() { xslt3 -xsl:src/mscx.xsl -s:\"$1\" ${@:2}; printf \"\n\"; }; run",
+    "debug:supported": "xslt3 -xsl:src/supported.xsl -s:src/musicxml.xsd",
     "debug:xpath": "run() { xslt3 -s:\"$1\" -xp:\"$2\"; printf \"\n\"; }; run",
     "test:spec": "node --test --test-name-pattern=\"${TEST:-.*}\"",
     "test": "npm run build && npm run test:spec"
