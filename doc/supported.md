@@ -12,7 +12,7 @@ The table below was inspired by [alphaTab's documentation of supported MusicXML 
 | - [work](https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/work/) | ⚠️ Partial | |
 | -- [work-number](https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/work-number/) | ✅ Supported | |
 | -- [work-title](https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/work-title/) | ✅ Supported | |
-| -- [opus](https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/opus/) | ❌ Not Supported | |
+| -- [opus](https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/opus-reference/) | ❌ Not Supported | |
 | --- @xlink:actuate | ❌ Not Supported | |
 | --- @xlink:href | ❌ Not Supported | |
 | --- @xlink:role | ❌ Not Supported | |

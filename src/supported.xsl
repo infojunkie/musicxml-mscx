@@ -35,7 +35,7 @@
   <xsl:template match="xs:element" mode="hierarchy">
     <xsl:element name="{@name}">
       <xsl:attribute name="musicxml-url">
-        <xsl:value-of select="'https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/' || @name || '/'"/>
+        <xsl:value-of select="'https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/' || (if (@name = 'opus') then 'opus-reference' else @name) || '/'"/>
       </xsl:attribute>
       <xsl:apply-templates select="
         xs:attribute |
